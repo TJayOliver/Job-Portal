@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{@apply m-0 p-0 box-border}
+
+html, body{@apply h-screen overflow-x-hidden select-none bg-[#111828] scroll-smooth}
+
+.latestJobs::-webkit-scrollbar{@apply hidden;}
+
+.job-hash{@apply bg-gray-300 rounded-md p-1 text-center}
+
+.headers{@apply 
+    flex 
+    relative 
+    before:absolute
+    before:-bottom-3.5 
+    before:bg-white
+    before:h-[3px]
+    before:w-0
+    hover:before:w-20
+    hover:before:duration-200
+    hover:before:ease-in
+}
+.headers{
+    @apply active:text-red-600
+}
+
+@media (max-width:360px) {
+    .stats{@apply w-[19rem]}
+    .viewData{@apply w-[19rem]}
+}
+
+@media (max-width:460px){
+    .schoboxWidth{@apply h-[21rem]}
+    .schoPic{@apply h-[21rem]}
+}
+
+@media (min-width:400px) and (max-width:422px){
+    .jobsSize{@apply grid grid-cols-2 gap-x-[9rem] overflow-x-scroll p-0}
+
+    .internshipSize{@apply grid grid-cols-2 gap-x-[15rem] overflow-x-scroll p-0}
+}
+
+@media (min-width:423px) and (max-width:470px){
+    .jobsSize{@apply grid grid-cols-2 gap-x-[9rem] overflow-x-scroll p-0}
+
+    .internshipSize{@apply grid grid-cols-2 gap-x-[12rem] overflow-x-scroll p-0}
+}
+
+@media (min-width:471px) and (max-width:537px){
+    .jobsSize{@apply grid grid-cols-2 gap-x-[5rem] overflow-x-scroll p-0}
+
+    .internshipSize{@apply grid grid-cols-2 gap-x-[9rem] overflow-x-scroll p-0}
+}
+
+@media (min-width:538px) and (max-width:555px){
+    .jobsSize{@apply grid grid-cols-2 gap-x-[3rem] overflow-x-scroll p-0}
+
+    .internshipSize{@apply grid grid-cols-2 gap-x-[5rem] overflow-x-scroll p-0}
+}
+
