@@ -36,22 +36,24 @@ const articleTable = () =>{
         setMove(thirdMove)
     }
 
-    const [aLL, setaLL] = useState([])
-    const [tODAY, settODAY] = useState([])
-
-    const articleAll = () =>{return axios.get('http://localhost:4040/api/articles-get');}
-    const articleToday = () =>{return axios.get('http://localhost:4040/api/articles-count');}
+    const [aLL, setaLL] = useState([]);
+    const [tODAY, settODAY] = useState([]);
+    const [todayCount, setTodayCount] = useState("")
 
     useEffect(()=>{
         axios.get('http://localhost:4040/api/articles-get')
-        .then((response) =>{
-            //console.log(response)
-            setaLL(response.data)
-        }) 
+        .then((response) =>{setaLL(response.data)}) 
         .catch(error => console.log(error))
-        }, []
-    )
+
+        axios.get('http://localhost:4040/api/articles-today-count')
+        .then((response) => {setTodayCount(response.data)})
+    },[])
     
+    useEffect(()=>{
+        axios.get('http://localhost:4040/api/articles-today')
+        .then((response)=>{settODAY(response.data)})
+        .catch(error => console.error(error));
+    },[today])
 
     return(
         <div className=" h-screen md:grid md:place-content-center bg-gray-300 relative">
@@ -86,7 +88,7 @@ const articleTable = () =>{
                         {/* Today */}
                         <small onClick={()=>handleToday()} className=" flex gap-1 cursor-pointer ">
                             <div className=" h-5 w-5 mt- rounded-full bg-black text-white flex items-center justify-center p-2">
-                                4
+                                {todayCount}
                             </div>
                             <p>Today</p>
                         </small>
@@ -102,7 +104,7 @@ const articleTable = () =>{
                 
                 {all &&
                     <div className=" flex flex-col md:flex-row md:flex md:flex-wrap gap-x-8 gap-y-2 justify-start">
-                        {
+                        {aLL.length == 0 ? 'No Data Available' :
                             aLL.map((data)=>(
                                 <ArticleTableBox key={data.id}
                                     title={data.title}
@@ -114,9 +116,15 @@ const articleTable = () =>{
 
                 {today &&
                 <div className=" flex flex-col md:flex-row md:flex md:flex-wrap gap-x-8 gap-y-2 justify-start">
-                    <ArticleTableBox />
-                    <ArticleTableBox />
-                    <ArticleTableBox />
+                    {tODAY.length == 0 ? 'No Data Available' : 
+                    
+                        tODAY.map((data)=>(
+                            <ArticleTableBox key={data.id}
+                                title={data.title}
+                            />
+                        ))
+                    
+                    }
                 </div>}
 
                 {date &&

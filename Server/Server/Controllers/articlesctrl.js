@@ -1,8 +1,17 @@
 import { database } from "../Database/database.js";
 import {v4 as uuid} from 'uuid';
 
+const date = () =>{
+    const today = new Date(), 
+    day = today.getDate(), 
+    month = Number(today.getMonth().toString()) + 1, 
+    year = today.getFullYear().toString();
+    const current = year + "-" + month + "-" + day;
+    return current;
+}
+
 export const ArticleGet = async(req, res) =>{
-    const query = `SELECT * FROM articles`;
+    const query = `SELECT * FROM articles ORDER BY datecreated DESC`;
     try{
         console.log('articles database connection successfull')
         const [data] = await database.query(query);
@@ -14,17 +23,29 @@ export const ArticleGet = async(req, res) =>{
 };
 
 export const ArticleToday = async(req, res) =>{
-    const today = new Date(), 
-    day = today.getUTCDay().toString(), 
-    month = today.getUTCMonth().toString(), 
-    year = today.getUTCFullYear().toString();
     
-    let current = year + "-" + month + "-" + day
     const query = `SELECT * FROM articles WHERE datecreated=?`
-    const parameter = [current]
+    const parameter = [date()]
     try{
         const [data] = await database.query(query, parameter);
+        console.log(data)
         res.send(data)
+    }catch(error){
+        console.error(error)
+    }
+}
+
+export const ArticleTodayCount = async(req,res) =>{
+    const query = `SELECT COUNT(datecreated) FROM articles WHERE datecreated=?`
+    const parameter = [date()]
+    try{
+        const [data] = await database.query(query, parameter)
+        let count = "";
+        data.map((newData)=>{
+            const c = Object.values(newData);
+            count += c;
+        });
+        return res.send(count)
     }catch(error){
         console.error(error)
     }
