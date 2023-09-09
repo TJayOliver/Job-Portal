@@ -13,6 +13,23 @@ export const ArticleGet = async(req, res) =>{
     }
 };
 
+export const ArticleToday = async(req, res) =>{
+    const today = new Date(), 
+    day = today.getUTCDay().toString(), 
+    month = today.getUTCMonth().toString(), 
+    year = today.getUTCFullYear().toString();
+    
+    let current = year + "-" + month + "-" + day
+    const query = `SELECT * FROM articles WHERE datecreated=?`
+    const parameter = [current]
+    try{
+        const [data] = await database.query(query, parameter);
+        res.send(data)
+    }catch(error){
+        console.error(error)
+    }
+}
+
 export const ArticleCount = async(req, res) =>{
     const query = `SELECT COUNT (id) FROM articles`
     try{

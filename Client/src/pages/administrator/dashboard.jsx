@@ -1,7 +1,7 @@
 import DashboardBox from "../../components/Dashboard/dashboardBox"
 import { useState } from "react";
 import { BiTrophy, BiCategory, BiBookReader } from "react-icons/bi";
-import { BsFillGrid3X3GapFill, BsBoxArrowDownRight, BsPersonFillGear, BsPeople, BsMortarboard, BsFillArrowRightCircleFill } from "react-icons/bs";
+import { BsFillGrid3X3GapFill, BsBoxArrowDownRight, BsPeople, BsMortarboard, BsBrowserChrome } from "react-icons/bs";
 import { FcManager } from "react-icons/fc";
 import {CiGlobe, CiMail, CiSettings} from "react-icons/ci";
 import ArticleForm from "../../components/Dashboard/articleForm";
@@ -168,6 +168,7 @@ const Dashboard = () =>{
                                 data={aCount}
                                 name='Articles Posted'
                                 logo={<BiBookReader className=" text-blue-600 text-3xl" />}
+                                href='/administrator/dashboard/article'
                             />
 
                             <Statistics 
