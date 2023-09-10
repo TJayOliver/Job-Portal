@@ -23,12 +23,10 @@ export const ArticleGet = async(req, res) =>{
 };
 
 export const ArticleToday = async(req, res) =>{
-    
     const query = `SELECT * FROM articles WHERE datecreated=?`
     const parameter = [date()]
     try{
         const [data] = await database.query(query, parameter);
-        console.log(data)
         res.send(data)
     }catch(error){
         console.error(error)
@@ -88,7 +86,7 @@ export const ArticleDelete = async(req,res) =>{
     const query = `DELETE FROM articles WHERE id=?`;
     const parameter = [id];
     try {
-        const [data] = await database.query(query, parameters);
+        const [data] = await database.query(query, parameter);
         console.log('deleted');
         return res.json('Successfully Deleted');
     } catch (error) {
@@ -96,14 +94,27 @@ export const ArticleDelete = async(req,res) =>{
     }
 }
 
-export const ArticleEdit = async(req,res) =>{
+// loads the article post page
+export const ArticleEdit = async(req, res) =>{
+    const query =  `SELECT * FROM articles WHERE id=?`
+    const parameter = [req.params.id]
+    try{
+        const [data] = await database.query(query, parameter)
+        res.send(data)
+    }catch(error){
+        console.log(error.message)
+    }
+}
+
+// posts the newly updated article 
+export const ArticleUpdate = async(req,res) =>{
     const {title, briefinfo, post} = req.body;
-    const query = `UPDATE articles SET title=?, briefinfo=?, post=?`;
-    const parameter = [title, briefinfo, post];
+    const query = `UPDATE articles SET title=?, briefinfo=?, post=? WHERE id=?`;
+    const parameter = [title, briefinfo, post, req.params.id];
     try {
         const [data] = await database.query(query, parameter);
-        
     } catch (error) {
         console.log(error.message)
     }
 }
+

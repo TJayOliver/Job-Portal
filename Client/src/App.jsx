@@ -7,6 +7,7 @@ import GraduateJobs from './pages/graduate jobs/graduate-jobs'
 import Administrator from './pages/administrator/administrator.jsx';
 import Dashboard from './pages/administrator/dashboard.jsx';
 import ArticleTable from './pages/administrator/dashdata/articleTable.jsx';
+import ArticleEditForm from './pages/administrator/dashdata/articleEditForm.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -16,6 +17,7 @@ const router = createBrowserRouter(
       <Route path='/administrator' element={<Administrator />} />
       <Route path='/administrator/dashboard' element={<Dashboard />} />
       <Route path='/administrator/dashboard/article' element={<ArticleTable />} />
+      <Route path='/administrator/dashboard/article/edit/:id' element={<ArticleEditForm />} />
       <Route path='/graduatejobs' element={<GraduateJobs />} />
       <Route path='/internships' element={<Internships />} />
       <Route path='/scholarships' element={<Scholarships />} />

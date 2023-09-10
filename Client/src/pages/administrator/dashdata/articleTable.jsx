@@ -1,19 +1,15 @@
 import ArticleTableBox from "../../../components/Dashboard/articleTableBox";
 import ConfirmDelete from "../../../components/Dashboard/confirmDelete";
+import ArticleForm from "../../../components/Dashboard/articleForm";
 import { useState, useEffect } from "react";
 import {Link} from 'react-router-dom'
 import { FiArrowLeftCircle,FiBarChart2, FiCalendar } from "react-icons/fi";
 import axios from 'axios'
 
 const articleTable = () =>{
-    let firstmove = `h-0.5 w-12 bg-black absolute -bottom-3 -left-2 duration-100 ease-out`
-    let secondMove = `h-0.5 w-16 bg-black absolute -bottom-3 left-[5.5rem] duration-100 ease-out`
-    let thirdMove = `h-0.5 w-24 bg-black absolute -bottom-3 left-[12.5rem] duration-100 ease-out`
+    let firstmove = `h-0.5 w-12 bg-black absolute -bottom-3 -left-2 duration-100 ease-out`, secondMove = `h-0.5 w-16 bg-black absolute -bottom-3 left-[5.5rem] duration-100 ease-out`, thirdMove = `h-0.5 w-24 bg-black absolute -bottom-3 left-[12.5rem] duration-100 ease-out`;
 
-    const[all, setAll] = useState(true);
-    const[today, setToday] = useState(false);
-    const[date, setDate] = useState(false);
-    const [move, setMove] = useState(firstmove)
+    const[all, setAll] = useState(true), [today, setToday] = useState(false), [date, setDate] = useState(false), [move, setMove] = useState(firstmove);
 
     const handleAll = () =>{
         setAll(true);
@@ -36,9 +32,7 @@ const articleTable = () =>{
         setMove(thirdMove)
     }
 
-    const [aLL, setaLL] = useState([]);
-    const [tODAY, settODAY] = useState([]);
-    const [todayCount, setTodayCount] = useState("")
+    const [aLL, setaLL] = useState([]), [tODAY, settODAY] = useState([]), [todayCount, setTodayCount] = useState("")
 
     useEffect(()=>{
         axios.get('http://localhost:4040/api/articles-get')
@@ -52,18 +46,16 @@ const articleTable = () =>{
     useEffect(()=>{
         axios.get('http://localhost:4040/api/articles-today')
         .then((response)=>{settODAY(response.data)})
-        .catch(error => console.error(error));
+        .catch(error => console.log(error.message));
     },[today])
 
     const [confirmDeleteBox, setConfirmDeleteBox] = useState(false);
 
-    const [iddelete, setidDelete] = useState(null)
-    
+    const [iddelete, setidDelete] = useState(null) // holds the id of the article
     const DeleteArticle = (id) =>{
-        setidDelete(id)
+        setidDelete(id);
         setConfirmDeleteBox(true);    
     }
- 
     const CancelDelete = () =>{
         setConfirmDeleteBox(false)
     }
@@ -112,7 +104,7 @@ const articleTable = () =>{
                 </div>
 
             </div>
-        
+
             <div className="flex rounded-md p-2 md:p-5 relative gap-4">
                 {all &&
                     <div className=" flex flex-col md:flex-row md:flex md:flex-wrap gap-x-8 gap-y-2 justify-start">
@@ -120,6 +112,7 @@ const articleTable = () =>{
                             aLL.map((data)=>(
                                 <ArticleTableBox key={data.id}
                                     title={data.title}
+                                    id={data.id}
                                     Delete={() => DeleteArticle(data.id)}
                                 />
                             ))
@@ -145,7 +138,6 @@ const articleTable = () =>{
                     <p>Street</p>
                 </div>}
             </div>
-
 
         </div>
     )

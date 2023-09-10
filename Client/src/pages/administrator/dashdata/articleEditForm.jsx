@@ -1,12 +1,30 @@
 import axios from "axios";
-import FormInputs from "./formInputs";
-import FormTextarea from "./formTextarea";
-import SubmittedBox from "./submittedBox";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import FormInputs from "../../../components/Dashboard/formInputs";
+import FormTextarea from "../../../components/Dashboard/formTextarea";
+import SubmittedBox from "../../../components/Dashboard/submittedBox";
 
-const ArticleForm = ({className}) =>{
+const ArticleEditForm = ({className}) =>{
+    const {id} = useParams();
 
-    const [aform, setAform] = useState({image:null,title:"",briefinfo:"",post: ""})
+    const [aform, setAform] = useState({image:null,title:"",briefinfo:"",post:""})
+
+    useEffect(()=>{
+        axios.get(`http://localhost:4040/api/articles-edit/${id}`)
+        .then((response)=>{
+            let eImage = null, eTitle = "", eBriefInfo = "", ePost = "";
+            response.data.map((data)=>(
+                eImage += data.image,
+                eTitle += data.title,
+                eBriefInfo += data.briefinfo,
+                ePost += data.post
+            ));
+            setAform({image:eImage,title:eTitle,briefinfo:eBriefInfo,post:ePost});
+        })
+        .catch(error => console.error(error.message));
+    },[]);
+
     const [submitted, setSubmitted] = useState(false);
 
     const formValues = (e) =>{
@@ -26,7 +44,7 @@ const ArticleForm = ({className}) =>{
             newformData.append(key, aform[key])
         }
         
-        axios.post('http://localhost:4040/api/articles-post',newformData, {headers :{'Content-Type': 'multipart/form-data'}})
+        axios.put(`http://localhost:4040/api/articles-update/${id}`,newformData, {headers :{'Content-Type': 'multipart/form-data'}})
         .then(response =>console.log(response))
         .catch(error =>console.log(error))
         
@@ -40,8 +58,8 @@ const ArticleForm = ({className}) =>{
     return(
         <>
             {submitted && <SubmittedBox successMessage={'Article Successfully Added'} /> }
-            <form className={className} onSubmit={submit}>   
-                <div className=" font-semibold text-2xl text-center md:sticky md:top-0 p-3 bg-white">Articles Panel</div>
+            <form className=' h-screen overflow-y-scroll py-2 flex flex-col px-6 gap-3 bg-white relative' onSubmit={submit}>   
+                <div className=" font-semibold text-2xl text-center sticky top-0 p-3 bg-white">Update Article</div>
 
                 <FormInputs 
                     label='Article Title' 
@@ -92,4 +110,4 @@ const ArticleForm = ({className}) =>{
     )
 }
 
-export default ArticleForm;
+export default ArticleEditForm;

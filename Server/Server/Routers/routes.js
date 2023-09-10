@@ -4,7 +4,7 @@ import { options } from '../../configurations/allowedsites.js';
 import multer from 'multer';
 import { ScholarshipCount,ScholarshipGet,ScholarshipPost } from '../Controllers/scholarshipctrl.js';
 import { InternshipsCount, InternshipsGet, InternshipsPost } from '../Controllers/internshipctrl.js';
-import { ArticleCount, ArticleDelete, ArticleGet, ArticlePost, ArticleToday, ArticleTodayCount } from '../Controllers/articlesctrl.js';
+import { ArticleCount, ArticleDelete, ArticleEdit, ArticleGet, ArticlePost, ArticleToday, ArticleTodayCount, ArticleUpdate } from '../Controllers/articlesctrl.js';
 import { GraduateJobCount, GraduateJobGet, GraduateJobPost } from '../Controllers/graduatejobctrl.js';
 import { CategoryDelete, CategoryGet, CategoryPost } from '../Controllers/categoryctrl.js';
 
@@ -17,9 +17,11 @@ export const routes = express.Router();
 routes.get('/api/articles-get', ArticleGet);
 routes.post('/api/articles-post', upload.single('image'),ArticlePost);
 routes.get('/api/articles-count', ArticleCount);
-routes.get('/api/articles-delete/:id', ArticleDelete);
+routes.delete('/api/articles-delete/:id', ArticleDelete);
 routes.get('/api/articles-today', ArticleToday);
 routes.get('/api/articles-today-count', ArticleTodayCount);
+routes.get('/api/articles-edit/:id', ArticleEdit);
+routes.put('/api/articles-update/:id', ArticleUpdate);
 
 routes.get('/api/categories-get', CategoryGet);
 routes.post('/api/categories-post',CategoryPost);
