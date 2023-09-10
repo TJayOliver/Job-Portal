@@ -17,7 +17,7 @@ export const routes = express.Router();
 routes.get('/api/articles-get', ArticleGet);
 routes.post('/api/articles-post', upload.single('image'),ArticlePost);
 routes.get('/api/articles-count', ArticleCount);
-routes.delete('/api/articles-delete/:id', ArticleDelete);
+routes.get('/api/articles-delete/:id', ArticleDelete);
 routes.get('/api/articles-today', ArticleToday);
 routes.get('/api/articles-today-count', ArticleTodayCount);
 routes.get('/api/articles-edit/:id', ArticleEdit);
