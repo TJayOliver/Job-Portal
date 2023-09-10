@@ -21,7 +21,7 @@ routes.get('/api/articles-delete/:id', ArticleDelete);
 routes.get('/api/articles-today', ArticleToday);
 routes.get('/api/articles-today-count', ArticleTodayCount);
 routes.get('/api/articles-edit/:id', ArticleEdit);
-routes.put('/api/articles-update/:id', ArticleUpdate);
+routes.put('/api/articles-update', ArticleUpdate);
 
 routes.get('/api/categories-get', CategoryGet);
 routes.post('/api/categories-post',CategoryPost);

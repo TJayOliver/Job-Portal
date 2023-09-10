@@ -65,7 +65,7 @@ const articleTable = () =>{
 
             {confirmDeleteBox && <ConfirmDelete confirmDeleteBox={confirmDeleteBox} Cancel={()=>CancelDelete()} erase={iddelete} /> }
 
-            <div className=" border-b-2 duration-100 ease-in h-[8rem] w-full p-5 fixed md:sticky  top-0 z-10 bg-white">
+            <div className=" border-b-2 duration-100 ease-in h-[8rem] w-full p-5 sticky top-0 z-10 bg-white">
                 
                 {/* Back */}
                 <small className=" flex gap-0.5">

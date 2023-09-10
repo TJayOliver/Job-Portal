@@ -109,12 +109,14 @@ export const ArticleEdit = async(req, res) =>{
 // posts the newly updated article 
 export const ArticleUpdate = async(req,res) =>{
     const {title, briefinfo, post} = req.body;
-    const query = `UPDATE articles SET title=?, briefinfo=?, post=? WHERE id=?`;
+    const query = "UPDATE articles SET title=?, briefinfo=?, post=? WHERE id=?"
     const parameter = [title, briefinfo, post, req.params.id];
     try {
         const [data] = await database.query(query, parameter);
+        console.log(data)
+        return res.json('Successfully Updated')
     } catch (error) {
-        console.log(error.message)
+        console.error(error.message)
     }
 }
 
