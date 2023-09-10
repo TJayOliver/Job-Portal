@@ -38,7 +38,7 @@ CREATE TABLE `articles`(
     `briefinfo` VARCHAR(80) NOT NULL,
     `author` VARCHAR(80) NOT NULL,
     `post` VARCHAR(800) NOT NULL,
-    `datecreated` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    `datecreated` DATE DEFAULT CURRENT_DATE NOT NULL,
     PRIMARY KEY(`id`)
 );
 

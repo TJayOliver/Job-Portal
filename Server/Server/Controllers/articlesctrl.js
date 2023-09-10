@@ -82,3 +82,28 @@ export const ArticlePost = async(req, res) =>{
         console.log(error);
     }
 }
+
+export const ArticleDelete = async(req,res) =>{
+    const {id} = req.params;
+    const query = `DELETE FROM articles WHERE id=?`;
+    const parameter = [id];
+    try {
+        const [data] = await database.query(query, parameters);
+        console.log('deleted');
+        return res.json('Successfully Deleted');
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+export const ArticleEdit = async(req,res) =>{
+    const {title, briefinfo, post} = req.body;
+    const query = `UPDATE articles SET title=?, briefinfo=?, post=?`;
+    const parameter = [title, briefinfo, post];
+    try {
+        const [data] = await database.query(query, parameter);
+        
+    } catch (error) {
+        console.log(error.message)
+    }
+}

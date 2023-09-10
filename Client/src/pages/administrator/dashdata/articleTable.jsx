@@ -55,59 +55,72 @@ const articleTable = () =>{
         .catch(error => console.error(error));
     },[today])
 
+    const [confirmDeleteBox, setConfirmDeleteBox] = useState(false);
+
+    const [iddelete, setidDelete] = useState(null)
+    
+    const DeleteArticle = (id) =>{
+        setidDelete(id)
+        setConfirmDeleteBox(true);    
+    }
+ 
+    const CancelDelete = () =>{
+        setConfirmDeleteBox(false)
+    }
+    
     return(
-        <div className=" h-screen md:grid md:place-content-center bg-gray-300 relative">
+        <div className="  h-screen bg-white relative overflow-x-hidden">
 
-            {/* <ConfirmDelete /> */}
+            {confirmDeleteBox && <ConfirmDelete confirmDeleteBox={confirmDeleteBox} Cancel={()=>CancelDelete()} erase={iddelete} /> }
 
-            <div className="flex flex-col h-[40rem] w-[68rem] bg-white rounded-md p-2 md:p-5 overflow-x-hidden relative gap-4">
-
-                <div className=" border-b-2 duration-100 ease-in h-28 p-2 sticky -top-2 z-10 bg-white">
+            <div className=" border-b-2 duration-100 ease-in h-[8rem] w-full p-5 fixed md:sticky  top-0 z-10 bg-white">
+                
+                {/* Back */}
+                <small className=" flex gap-0.5">
+                    <Link to="/administrator/dashboard" className=" flex gap-1 hover:text-blue-600">
+                    <FiArrowLeftCircle className="mt-1"/>
+                    <p>Back</p>
+                    </Link>
                     
-                    {/* Back */}
-                    <small className=" flex gap-0.5">
-                        <Link to="/administrator/dashboard" className=" flex gap-1 hover:text-blue-600">
-                        <FiArrowLeftCircle className="mt-1"/>
-                        <p>Back</p>
-                        </Link>
-                        
+                </small>
+
+                <p className=" font-bold text-3xl mb-5">Articles Data</p>
+
+                {/* navigation */}
+                <div className=" flex gap-14 relative">
+                    <div className={move}></div>
+
+                    {/* All */}
+                    <small onClick={()=>handleAll()} className=" flex gap-1 cursor-pointer">
+                        <FiBarChart2 className=" mt-1" />
+                        <p>All</p>
                     </small>
 
-                    <p className=" font-bold text-3xl mb-4">Articles Data</p>
+                    {/* Today */}
+                    <small onClick={()=>handleToday()} className=" flex gap-1 cursor-pointer ">
+                        <div className=" h-5 w-5 mt- rounded-full bg-black text-white flex items-center justify-center p-2">
+                            {todayCount}
+                        </div>
+                        <p>Today</p>
+                    </small>
 
-                    {/* navigation */}
-                    <div className=" flex gap-14 relative">
-                        <div className={move}></div>
-
-                        {/* All */}
-                        <small onClick={()=>handleAll()} className=" flex gap-1 cursor-pointer">
-                           <FiBarChart2 className=" mt-1" />
-                            <p>All</p>
-                        </small>
-
-                        {/* Today */}
-                        <small onClick={()=>handleToday()} className=" flex gap-1 cursor-pointer ">
-                            <div className=" h-5 w-5 mt- rounded-full bg-black text-white flex items-center justify-center p-2">
-                                {todayCount}
-                            </div>
-                            <p>Today</p>
-                        </small>
-
-                        {/* Select by date */}
-                        <small onClick={()=>handleDate()} className=" flex gap-1 cursor-pointer">
-                            <FiCalendar className=" mt-1"/>
-                            <p>Select by Date</p>
-                        </small>
-                    </div>
-
+                    {/* Select by date */}
+                    <small onClick={()=>handleDate()} className=" flex gap-1 cursor-pointer">
+                        <FiCalendar className=" mt-1"/>
+                        <p className=" whitespace-nowrap">Select by Date</p>
+                    </small>
                 </div>
-                
+
+            </div>
+        
+            <div className="flex rounded-md p-2 md:p-5 relative gap-4">
                 {all &&
                     <div className=" flex flex-col md:flex-row md:flex md:flex-wrap gap-x-8 gap-y-2 justify-start">
                         {aLL.length == 0 ? 'No Data Available' :
                             aLL.map((data)=>(
                                 <ArticleTableBox key={data.id}
                                     title={data.title}
+                                    Delete={() => DeleteArticle(data.id)}
                                 />
                             ))
                         }
