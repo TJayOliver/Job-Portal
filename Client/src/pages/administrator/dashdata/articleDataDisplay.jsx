@@ -1,6 +1,5 @@
 import ArticleTableBox from "../../../components/Dashboard/articleTableBox";
 import ConfirmDelete from "../../../components/Dashboard/confirmDelete";
-import ArticleForm from "../../../components/Dashboard/articleForm";
 import { useState, useEffect } from "react";
 import {Link} from 'react-router-dom'
 import { FiArrowLeftCircle,FiBarChart2, FiCalendar } from "react-icons/fi";
@@ -112,7 +111,6 @@ const articleTable = () =>{
                             aLL.map((data)=>(
                                 <ArticleTableBox key={data.id}
                                     title={data.title}
-                                    id={data.id}
                                     Delete={() => DeleteArticle(data.id)}
                                 />
                             ))
