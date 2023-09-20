@@ -1,14 +1,6 @@
 import { database } from "../Database/database.js";
 import {v4 as uuid} from 'uuid';
-
-const date = () =>{
-    const today = new Date(), 
-    day = today.getDate(), 
-    month = Number(today.getMonth().toString()) + 1, 
-    year = today.getFullYear().toString();
-    const current = year + "-" + month + "-" + day;
-    return current;
-}
+import { date } from "./datectrl.js";
 
 export const ArticleGet = async(req, res) =>{
     const query = `SELECT * FROM articles ORDER BY datecreated DESC`;

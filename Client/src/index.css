@@ -2,33 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 *{@apply m-0 p-0 box-border}
 
 html, body{@apply h-screen overflow-x-hidden select-none bg-[#111828] scroll-smooth}
 
-.latestJobs::-webkit-scrollbar{@apply hidden;}
+.scrollbar::-webkit-scrollbar{@apply hidden}
 
 .job-hash{@apply bg-gray-300 rounded-md p-1 text-center}
 
-.headers{@apply 
-    flex 
-    relative 
-    before:absolute
-    before:-bottom-3.5 
-    before:bg-white
-    before:h-[3px]
-    before:w-0
-    hover:before:w-20
-    hover:before:duration-200
-    hover:before:ease-in
-}
-.headers{
-    @apply active:text-red-600
-}
 
 @media (max-width:360px) {
     .stats{@apply w-[19rem]}

@@ -1,5 +1,5 @@
 import FormInputs from "./formInputs";
-import CategoriesDisplayBox from "./categoriesDisplayBox";
+//import CategoriesDisplayBox from "./categoriesDisplayBox";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import SubmittedBox from "./submittedBox";

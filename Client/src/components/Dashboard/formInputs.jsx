@@ -11,7 +11,7 @@ const FormInputs = ({label,htmlFor,type, id, name, placeholder, accept, value, o
             value={value}
             onChange={onChange}
             required
-            className="bg-transparent border-[1px] border-blue-600 p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" />
+            className="bg-transparent border-[1px] border-black p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" />
         </div>
     )
 }

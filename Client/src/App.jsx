@@ -5,8 +5,8 @@ import Internships from './pages/internships.jsx'
 import Articles from './pages/articles.jsx'
 import GraduateJobs from './pages/graduate jobs/graduate-jobs'
 import Administrator from './pages/administrator/administrator.jsx';
-import Dashboard from './pages/administrator/dashboard.jsx';
-import ArticleDataDisplay from './pages/administrator/dashdata/articleDataDisplay';
+import Dash from './pages/Dash.jsx';
+import ArticleForm from './components/Dashboard/articleForm.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -14,11 +14,11 @@ const router = createBrowserRouter(
       <Route path='/' element={<Home />} />
       <Route path='/articles' element={<Articles />} />
       <Route path='/administrator' element={<Administrator />} />
-      <Route path='/administrator/dashboard' element={<Dashboard />} />
-      <Route path='/administrator/dashboard/article' element={<ArticleDataDisplay />} />
       <Route path='/graduatejobs' element={<GraduateJobs />} />
       <Route path='/internships' element={<Internships />} />
       <Route path='/scholarships' element={<Scholarships />} />
+      <Route path='/dashboard' element={<Dash />} />
+      <Route path='/forms/articles' element={<ArticleForm />} />
     </Route>
   )
 )

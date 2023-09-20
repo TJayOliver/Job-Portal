@@ -3,6 +3,9 @@ import FormInputs from "./formInputs";
 import FormTextarea from "./formTextarea";
 import SubmittedBox from "./submittedBox";
 import { useState } from "react";
+import LeftPanel from "./LeftPanel";
+import {Link} from 'react-router-dom';
+import { FiArrowLeftCircle,FiBarChart2 } from "react-icons/fi";
 
 const ArticleForm = ({className}) =>{
 
@@ -38,57 +41,77 @@ const ArticleForm = ({className}) =>{
     }
 
     return(
-        <>
+        <main className=" bg-white h-full flex md:flex md:flex-row relative">
+
+            {/* Left Panel */}
+            <LeftPanel />
+
+            <section className=" w-full flex flex-col justify-center m-auto lg:justify-normal lg:m-0 max-w-7xl">
+
             {submitted && <SubmittedBox successMessage={'Article Successfully Added'} /> }
-            <form className={className} onSubmit={submit}>   
-                <div className=" font-semibold text-2xl text-center md:sticky md:top-0 p-3 bg-white">Articles Panel</div>
 
-                <FormInputs 
-                    label='Article Title' 
-                    htmlFor='title'
-                    type='text'
-                    id='title'
-                    name='title'
-                    value={aform.title}
-                    onChange={formValues}
-                    placeholder='e.g. How to write a Personal Statement'
-                />
+                <div className=" border-b-2 duration-100 ease-in h-[6rem] w-full p-5 sticky top-0 z-10 bg-white">
+                    {/* Back */}
+                    <small className=" flex gap-0.5">
+                        <Link to="/dashboard" className=" flex gap-1 hover:text-blue-600">
+                        <FiArrowLeftCircle className="mt-1"/>
+                        <p>Back</p>
+                        </Link>
+                    </small>
 
-                <FormTextarea 
-                    label='Article Brief Info' 
-                    htmlFor='briefinfo'
-                    id='briefinfo'
-                    name='briefinfo'
-                    value={aform.briefinfo}
-                    onChange={formValues}
-                    placeholder='e.g. Brief Info about the Article'
-                />
-
-                <FormTextarea
-                    label='Article Text'
-                    htmlFor='post'
-                    id='post'
-                    name='post'
-                    value={aform.post}
-                    onChange={formValues}
-                    placeholder='Type Article Here'
-                />
-
-                <FormInputs 
-                    label='Upload Article Flyer' 
-                    htmlFor='image'
-                    type='file'
-                    id='image'
-                    name='image'
-                    onChange={formFiles}
-                    accept='.jpg, .jpeg, .png, .JPG'
-                />
-
-                <button className=" text-xl bg-blue-600 p-2 rounded-md text-white hover:bg-blue-500">POST</button>
+                <p className=" font-bold text-3xl mb-5">Article Form</p>
+                </div>
                 
-            </form>
+                <form className=' p-3 flex flex-col gap-4' onSubmit={submit}>   
+                   
+                    <FormInputs 
+                        label='Article Title' 
+                        htmlFor='title'
+                        type='text'
+                        id='title'
+                        name='title'
+                        value={aform.title}
+                        onChange={formValues}
+                        placeholder='e.g. How to write a Personal Statement'
+                    />
+
+                    <FormTextarea 
+                        label='Article Brief Info' 
+                        htmlFor='briefinfo'
+                        id='briefinfo'
+                        name='briefinfo'
+                        value={aform.briefinfo}
+                        onChange={formValues}
+                        placeholder='e.g. Brief Info about the Article'
+                    />
+
+                    <FormTextarea
+                        label='Article Text'
+                        htmlFor='post'
+                        id='post'
+                        name='post'
+                        value={aform.post}
+                        onChange={formValues}
+                        placeholder='Type Article Here'
+                    />
+
+                    <FormInputs 
+                        label='Upload Article Flyer' 
+                        htmlFor='image'
+                        type='file'
+                        id='image'
+                        name='image'
+                        onChange={formFiles}
+                        accept='.jpg, .jpeg, .png, .JPG'
+                    />
+
+                    <button className=" text-xl p-2 bg-teal-600 rounded-md text-white hover:bg-teal-500 w-full">POST</button>
+                    
+                </form>
+                
+            </section>
         
-        </>
+        </main>
     )
 }
 

@@ -37,7 +37,6 @@ export const CategoryPost = async(req,res) =>{
     }
 }
 
-
 export const CategoryDelete = async(req,res) =>{
     const {id} = req.params;
     const query = `DELETE FROM categories WHERE id=?`;
@@ -48,5 +47,48 @@ export const CategoryDelete = async(req,res) =>{
         console.log('category successfully deleted')
     }catch(error){
         console.error(error);
+    }
+}
+
+export const CategoryToday = async(req, res) =>{
+    const query = `SELECT * FROM categories WHERE datecreated=?`
+    const parameter = [date()]
+    try{
+        const [data] = await database.query(query, parameter);
+        res.send(data)
+    }catch(error){
+        console.error(error)
+    }
+}
+
+export const CategoryTodayCount = async(req,res) =>{
+    const query = `SELECT COUNT(datecreated) FROM categories WHERE datecreated=?`
+    const parameter = [date()]
+    try{
+        const [data] = await database.query(query, parameter)
+        let count = "";
+        data.map((newData)=>{
+            const c = Object.values(newData);
+            count += c;
+        });
+        return res.send(count)
+    }catch(error){
+        console.error(error)
+    }
+}
+
+export const CategoryCount = async(req, res) =>{
+    const query = `SELECT COUNT (id) FROM categories`
+    try{
+        console.log('categories counting succesfull')
+        const [data] = await database.query(query);
+        let count = "";
+        data.map((newData)=>{
+            const c = Object.values(newData);
+            count += c;
+        })
+        return res.send(count);
+    }catch(error){
+        console.error(error)
     }
 }
