@@ -4,10 +4,9 @@ import FormTextarea from "./formTextarea";
 import SubmittedBox from "./submittedBox";
 import { useState } from "react";
 import LeftPanel from "./LeftPanel";
-import {Link} from 'react-router-dom';
-import { FiArrowLeftCircle,FiBarChart2 } from "react-icons/fi";
+import FormsDashboardHead from "./FormsDashboardHead";
 
-const ArticleForm = ({className}) =>{
+const ArticleForm = () =>{
 
     const [aform, setAform] = useState({image:null,title:"",briefinfo:"",post: ""})
     const [submitted, setSubmitted] = useState(false);
@@ -41,26 +40,16 @@ const ArticleForm = ({className}) =>{
     }
 
     return(
-        <main className=" bg-white h-full flex md:flex md:flex-row relative">
+        <main className=" bg-white h-full flex flex-col md:flex md:flex-row relative">
 
             {/* Left Panel */}
             <LeftPanel />
 
             <section className=" w-full flex flex-col justify-center m-auto lg:justify-normal lg:m-0 max-w-7xl">
 
-            {submitted && <SubmittedBox successMessage={'Article Successfully Added'} /> }
+                {submitted && <SubmittedBox successMessage={'Categories Successfully Added'} /> }
 
-                <div className=" border-b-2 duration-100 ease-in h-[6rem] w-full p-5 sticky top-0 z-10 bg-white">
-                    {/* Back */}
-                    <small className=" flex gap-0.5">
-                        <Link to="/dashboard" className=" flex gap-1 hover:text-blue-600">
-                        <FiArrowLeftCircle className="mt-1"/>
-                        <p>Back</p>
-                        </Link>
-                    </small>
-
-                <p className=" font-bold text-3xl mb-5">Article Form</p>
-                </div>
+                <FormsDashboardHead title='Article Form' />
                 
                 <form className=' p-3 flex flex-col gap-4' onSubmit={submit}>   
                    

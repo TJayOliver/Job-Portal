@@ -3,19 +3,18 @@ import { BiTrophy, BiCategory, BiBookReader } from "react-icons/bi";
 import { BsPeople, BsMortarboard } from "react-icons/bs";
 import {CiGlobe, CiMail} from "react-icons/ci";
 import DashboardBox from "./dashboardBox";
-import { Link } from "react-router-dom";
 
 const LeftPanel = () =>{
     const [mobileAnimation, setMobileAnimation] = useState(false);
     const animateMobile = () =>{
         setMobileAnimation(prev => !prev)
     }
-    let div1 = `h-1 w-8 bg-black rounded-sm duration-75 ease-in transfrom rotate-45 translate-y-2`,
-    div2 = `h-1 w-6 bg-black rounded-sm duration-100 ease-in -translate-x-8 opacity-0`,
-    div3 = `h-1 w-8 bg-black rounded-sm duration-75 ease-in transform -rotate-45 -translate-y-2`;
+    let div1 = `h-1 w-8 bg-black rounded-sm duration-150 ease-in transfrom rotate-45 translate-y-2`,
+    div2 = `h-1 w-6 bg-black rounded-sm duration-300 ease-in -translate-x-8 opacity-0`,
+    div3 = `h-1 w-8 bg-black rounded-sm duration-150 ease-in transform -rotate-45 -translate-y-2`;
 
     return(
-        <div className=" h-screen md:w-64 whitespace-nowrap p-2 flex flex-col justify-between border border-b-gray-200 border-r-0 md:border-r-2 md:border-r-gray-200 ">
+        <div className="  md:w-64 whitespace-nowrap p-2 flex flex-col justify-between border border-b-gray-200 border-r-0 md:border-r-2 md:border-r-gray-200 ">
 
             <div className=" flex justify-between md:hidden ">
                 <h1 className=" text-2xl p-3 font-bold ">Dashboard</h1> 
