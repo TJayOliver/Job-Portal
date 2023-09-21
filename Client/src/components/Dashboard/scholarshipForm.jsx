@@ -7,7 +7,7 @@ import SubmittedBox from "./submittedBox";
 import LeftPanel from "./LeftPanel";
 import FormsDashboardHead from "./FormsDashboardHead";
 
-const ScholarshipForm = ({className}) =>{
+const ScholarshipForm = () =>{
     const [sForm, setSForm] = useState({
         image : null, scholarshipname:"", deadline:"", scholarshiptype:"",
         agent : "", programs:"", applicant:"",hostuniversity:"",
@@ -45,12 +45,12 @@ const ScholarshipForm = ({className}) =>{
     }
 
     return(
-        <main className="ml-64 flex flex-col md:flex md:flex-row relative">
+        <main>
 
             {/* Left Panel */}
             <LeftPanel />
 
-            <section className=" w-full flex flex-col justify-center m-auto lg:justify-normal lg:m-0 max-w-7xl">
+            <section className=" md:ml-64 relative">
 
                 {submitted && <SubmittedBox successMessage={'Scholarship Successfully Added'} /> }
 

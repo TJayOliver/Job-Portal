@@ -44,3 +44,42 @@ export const InternshipsPost = async(req,res) =>{
         console.log(error);
     }
 };   
+
+export const InternshipsDelete = async(req,res) =>{
+    const {id} = req.params;
+    const query = `DELETE FROM internships WHERE id=?`;
+    const parameters = [id];
+    try{
+        console.log('internships delete connection successful')
+        const [data] = await database.query(query, parameters);
+        console.log('internships successfully deleted')
+    }catch(error){
+        console.error(error);
+    }
+}
+
+// loads the internships post page
+export const InternshipsEdit = async(req, res) =>{
+    const query =  `SELECT * FROM internships WHERE id=?`
+    const parameter = [req.params.id]
+    try{
+        const [data] = await database.query(query, parameter)
+        res.send(data)
+    }catch(error){
+        console.log(error.message)
+    }
+}
+
+// posts the newly updated internships
+export const InternshipsUpdate = async(req,res) =>{
+    const {image, internshipduration, internshipname, info, location, documents, requirements, apply, country} = req.body;
+    const query = "UPDATE internships SET image=?, internshipduration=?, internshipname=?, info=?, location=?, documents=?, requirements=?, apply=?, country=? WHERE id=?"
+    const parameter = [image, internshipduration, internshipname,info, location, documents, requirements, apply, country, req.params.id];
+    try {
+        const [data] = await database.query(query, parameter);
+        console.log(data)
+        return res.json('Successfully Updated')
+    } catch (error) {
+        console.error(error.message)
+    }
+}

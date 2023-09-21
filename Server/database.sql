@@ -31,7 +31,6 @@ CREATE TABLE `scholarships`(
     PRIMARY KEY(`id`)
 );
 
-
 CREATE TABLE `articles`(
     `id` VARCHAR(80) NOT NULL,
     `image` BLOB NOT NULL,

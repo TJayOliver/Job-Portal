@@ -40,18 +40,18 @@ const ArticleForm = () =>{
     }
 
     return(
-        <main className="ml-64 flex flex-col md:flex md:flex-row relative" >
+        <main>
 
             {/* Left Panel */}
             <LeftPanel />
 
-            <section className=" w-full flex flex-col justify-center m-auto lg:justify-normal lg:m-0 max-w-7xl">
+            <section className=" md:ml-64 relative">
 
                 {submitted && <SubmittedBox successMessage={'Categories Successfully Added'} /> }
 
                 <FormsDashboardHead title='Article Form' />
                 
-                <form className=' p-3 flex flex-col gap-4' onSubmit={submit}>   
+                <form className=' w-full p-3 flex flex-col gap-4 ' onSubmit={submit}>   
                    
                     <FormInputs 
                         label='Article Title' 
@@ -97,6 +97,7 @@ const ArticleForm = () =>{
                     <button className=" text-xl p-2 bg-teal-600 rounded-md text-white hover:bg-teal-500 w-full">POST</button>
                     
                 </form>
+                
                 
             </section>
         

@@ -1,7 +1,5 @@
 import {database} from '../Database/database.js';
 import {v4 as uuid} from 'uuid';
-import { date } from './datectrl.js';
-
 
 export const GraduateJobGet = async(req,res) =>{
     const query = `SELECT * FROM graduatejobs`;
@@ -61,22 +59,6 @@ export const GraduateJobDelete = async(req,res) =>{
     }
 }
 
-export const GraduateJobTodayCount = async(req,res) =>{
-    const query = `SELECT COUNT(datecreated) FROM graduatejobs WHERE datecreated=?`
-    const parameter = [date()]
-    try{
-        const [data] = await database.query(query, parameter)
-        let count = "";
-        data.map((newData)=>{
-            const c = Object.values(newData);
-            count += c;
-        });
-        return res.send(count)
-    }catch(error){
-        console.error(error)
-    }
-}
-
 // loads the graduatejobs post page
 export const GraduateJobsEdit = async(req, res) =>{
     const query =  `SELECT * FROM graduatejobs WHERE id=?`
@@ -91,9 +73,12 @@ export const GraduateJobsEdit = async(req, res) =>{
 
 // posts the newly updated graduate jobs 
 export const GraduateJobsUpdate = async(req,res) =>{
-    const {title, briefinfo, post} = req.body;
-    const query = "UPDATE graduatejobs SET title=?, briefinfo=?, post=? WHERE id=?"
-    const parameter = [title, briefinfo, post, req.params.id];
+    const {company,salary,location,duration,country,minimumqualification,experiencelevel,experiencelength,responsibilities,requirements,otherinformation,apply,category} = req.body;
+    const image = req.file.buffer;
+
+    const query = "UPDATE graduatejobs SET image=? company=?,salary=?,location=?,duration=?,country=?,minimumqualification=?,experiencelevel=?,experiencelength=?,responsibilities=?,requirements=?,otherinformation=?,apply=?,category=? WHERE id=?"
+    
+    const parameter = [image, company,salary,location,duration,country,minimumqualification,experiencelevel,experiencelength,responsibilities,requirements,otherinformation,apply,category, req.params.id];
     try {
         const [data] = await database.query(query, parameter);
         console.log(data)

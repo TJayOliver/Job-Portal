@@ -6,13 +6,10 @@ import LeftPanel from "./LeftPanel";
 import SubmittedBox from "./submittedBox";
 import FormsDashboardHead from "./FormsDashboardHead";
 
-const CategoriesForm = ({className}) =>{
+const CategoriesForm = () =>{
     const [cForm, setCForm] = useState({categoriesname:""});
-    const [retrievedCat, setretrievedCat] = useState([]);
     const [submitted, setSubmitted] = useState(false);
     const [Msg, SetMsg] = useState("")
-
-    
 
     const formValues = (e)=>{
         const {name, value} = e.target;
@@ -33,13 +30,6 @@ const CategoriesForm = ({className}) =>{
         
     }
 
-    const DeleteCategory = (id) =>{
-        axios.delete(`http://localhost:4040/api/categories-delete/${id}`)
-        .then(response => console.log(response))
-        .catch(error => console.error(error))
-        window.location.reload();
-    }
-
     useEffect(()=>{
         axios.get('http://localhost:4040/api/categories-get')
         .then((response)=>{
@@ -50,11 +40,11 @@ const CategoriesForm = ({className}) =>{
 
     return(
         
-        <main className=" ml-64 flex flex-col md:flex md:flex-row relative">
+        <main>
             {/* Left Panel */}
             <LeftPanel />
 
-            <section className=" w-full flex flex-col justify-center m-auto lg:justify-normal lg:m-0 max-w-7xl">
+            <section className=" md:ml-64 relative">
 
                 {submitted && <SubmittedBox successMessage={'Category Successfully Added'} /> }
 

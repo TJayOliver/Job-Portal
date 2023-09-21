@@ -7,7 +7,7 @@ import SubmittedBox from "./submittedBox";
 import LeftPanel from "./LeftPanel";
 import FormsDashboardHead from "./FormsDashboardHead";
 
-const InternshipForm = ({className}) =>{
+const InternshipForm = () =>{
     const [iform, setIform] = useState({
         image:null, internshipname:"", internshipduration:"",info:"",country:"",requirements:"",documents:"", apply:""
     });
@@ -43,12 +43,12 @@ const InternshipForm = ({className}) =>{
     }
 
     return(
-        <main className="ml-64 flex flex-col md:flex md:flex-row relative">
+        <main>
 
             {/* Left Panel */}
             <LeftPanel />
 
-            <section className=" w-full flex flex-col justify-center m-auto lg:justify-normal lg:m-0 max-w-7xl">
+            <section className=" md:ml-64 relative">
 
                 {submitted && <SubmittedBox successMessage={'Internship Successfully Added'} /> }
 

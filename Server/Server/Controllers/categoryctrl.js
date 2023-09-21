@@ -50,33 +50,6 @@ export const CategoryDelete = async(req,res) =>{
     }
 }
 
-export const CategoryToday = async(req, res) =>{
-    const query = `SELECT * FROM categories WHERE datecreated=?`
-    const parameter = [date()]
-    try{
-        const [data] = await database.query(query, parameter);
-        res.send(data)
-    }catch(error){
-        console.error(error)
-    }
-}
-
-export const CategoryTodayCount = async(req,res) =>{
-    const query = `SELECT COUNT(datecreated) FROM categories WHERE datecreated=?`
-    const parameter = [date()]
-    try{
-        const [data] = await database.query(query, parameter)
-        let count = "";
-        data.map((newData)=>{
-            const c = Object.values(newData);
-            count += c;
-        });
-        return res.send(count)
-    }catch(error){
-        console.error(error)
-    }
-}
-
 export const CategoryCount = async(req, res) =>{
     const query = `SELECT COUNT (id) FROM categories`
     try{
@@ -90,5 +63,31 @@ export const CategoryCount = async(req, res) =>{
         return res.send(count);
     }catch(error){
         console.error(error)
+    }
+}
+
+// loads the category post page
+export const CategoryEdit = async(req, res) =>{
+    const query =  `SELECT * FROM categories WHERE id=?`
+    const parameter = [req.params.id]
+    try{
+        const [data] = await database.query(query, parameter)
+        res.send(data)
+    }catch(error){
+        console.error(error.message)
+    }
+}
+
+// posts the newly updated category jobs 
+export const CategoryUpdate = async(req,res) =>{
+    const {categoriesname} = req.body;
+    const query = "UPDATE categories SET categoriesname=? WHERE id=?"
+    const parameter = [categoriesname, req.params.id];
+    try {
+        const [data] = await database.query(query, parameter);
+        console.log(data)
+        return res.json('Successfully Updated')
+    } catch (error) {
+        console.error(error.message)
     }
 }

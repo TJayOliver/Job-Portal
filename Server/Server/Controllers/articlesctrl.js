@@ -1,6 +1,5 @@
 import { database } from "../Database/database.js";
 import {v4 as uuid} from 'uuid';
-import { date } from "./datectrl.js";
 
 export const ArticleGet = async(req, res) =>{
     const query = `SELECT * FROM articles ORDER BY datecreated DESC`;
@@ -13,33 +12,6 @@ export const ArticleGet = async(req, res) =>{
         console.error(error)
     }
 };
-
-export const ArticleToday = async(req, res) =>{
-    const query = `SELECT * FROM articles WHERE datecreated=?`
-    const parameter = [date()]
-    try{
-        const [data] = await database.query(query, parameter);
-        res.send(data)
-    }catch(error){
-        console.error(error)
-    }
-}
-
-export const ArticleTodayCount = async(req,res) =>{
-    const query = `SELECT COUNT(datecreated) FROM articles WHERE datecreated=?`
-    const parameter = [date()]
-    try{
-        const [data] = await database.query(query, parameter)
-        let count = "";
-        data.map((newData)=>{
-            const c = Object.values(newData);
-            count += c;
-        });
-        return res.send(count)
-    }catch(error){
-        console.error(error)
-    }
-}
 
 export const ArticleCount = async(req, res) =>{
     const query = `SELECT COUNT (id) FROM articles`
@@ -101,8 +73,10 @@ export const ArticleEdit = async(req, res) =>{
 // posts the newly updated article 
 export const ArticleUpdate = async(req,res) =>{
     const {title, briefinfo, post} = req.body;
-    const query = "UPDATE articles SET title=?, briefinfo=?, post=? WHERE id=?"
-    const parameter = [title, briefinfo, post, req.params.id];
+    const image = req.file.buffer;
+
+    const query = "UPDATE image=?, articles SET title=?, briefinfo=?, post=? WHERE id=?"
+    const parameter = [image, title, briefinfo, post, req.params.id];
     try {
         const [data] = await database.query(query, parameter);
         console.log(data)

@@ -10,7 +10,7 @@ const DashBoardHeader = ({handleArticleTable, handleOverView, handleJobsTable, h
             <small className=" flex gap-0.5">
                 <Link to="/administrator/dashboard" className=" flex gap-1 hover:text-blue-600">
                 <FiArrowLeftCircle className="mt-1"/>
-                <p>Back</p>
+                <p>Log Out</p>
                 </Link>
             </small>
 
