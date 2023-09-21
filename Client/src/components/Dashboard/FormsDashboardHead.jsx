@@ -7,8 +7,8 @@ const FormsDashboardHead = ({title}) =>{
             {/* Back */}
             <small className=" flex gap-0.5">
                 <Link to="/dashboard" className=" flex gap-1 hover:text-blue-600">
-                <FiArrowLeftCircle className="mt-1"/>
-                <p>Back</p>
+                    <FiArrowLeftCircle className="mt-1"/>
+                    <p>Back</p>
                 </Link>
             </small>
 

@@ -50,7 +50,7 @@ const CategoriesForm = ({className}) =>{
 
     return(
         
-        <main className=" bg-white max-h-screen md:h-screen flex flex-col md:flex md:flex-row relative">
+        <main className=" ml-64 flex flex-col md:flex md:flex-row relative">
             {/* Left Panel */}
             <LeftPanel />
 

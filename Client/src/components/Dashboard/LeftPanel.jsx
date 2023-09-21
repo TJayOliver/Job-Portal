@@ -14,7 +14,7 @@ const LeftPanel = () =>{
     div3 = `h-1 w-8 bg-black rounded-sm duration-150 ease-in transform -rotate-45 -translate-y-2`;
 
     return(
-        <div className="  md:w-64 whitespace-nowrap p-2 flex flex-col justify-between border border-b-gray-200 border-r-0 md:border-r-2 md:border-r-gray-200 ">
+        <div className=" md:h-full w-full h-18 md:fixed z-50 top-0 left-0 md:overflow-x-hidden md:w-64 p-2 flex flex-col justify-between border border-b-gray-200 border-r-0 md:border-r-2 md:border-r-gray-200 ">
 
             <div className=" flex justify-between md:hidden ">
                 <h1 className=" text-2xl p-3 font-bold ">Dashboard</h1> 
@@ -32,7 +32,7 @@ const LeftPanel = () =>{
                 <DashboardBox Title='Add Categories' to="/forms/categories" icon={<BiCategory className=" mt-1"/>} />
                 <DashboardBox Title='Add Jobs' to="/forms/jobs" icon={<BsPeople className=" mt-1"/>} />
                 <DashboardBox Title='Add Internships' to="/forms/internships" icon={<BsMortarboard className=" mt-1"/>} />
-                <DashboardBox Title='Add Scholarships' to="forms/scholarships" icon={<BiTrophy className=" mt-1"/>} />
+                <DashboardBox Title='Add Scholarships' to="/forms/scholarships" icon={<BiTrophy className=" mt-1"/>} />
             </div>
             
             {/* Messages and Administrator Picture */}

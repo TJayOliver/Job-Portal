@@ -73,7 +73,7 @@ const RightPanel = () =>{
     const handledelete = () =>{setDelete(prev => !prev)};
 
     return(
-        <div className=" w-full">
+        <div className=" w-full md:ml-64 h-full">
 
             <DashBoardHeader handleArticleTable={handleArticleTable} handleOverView={handleOverView} handleJobsTable={handleJobsTable} handleInternshipsTable={handleInternshipsTable} handleScholarshipTable={handleScholarshipTable} move={move} />
 

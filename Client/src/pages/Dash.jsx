@@ -13,7 +13,7 @@ const Dash = () =>{
         setConfirmDeleteBox(prev => !prev)
     }
     return(
-        <main className=" bg-white h-full flex flex-col md:flex md:flex-row relative">
+        <main className=" h-screen relative flex flex-wrap">
            
            {confirmDeleteBox && <ConfirmDelete cancel={cancel}/>}
            

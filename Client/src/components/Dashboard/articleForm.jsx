@@ -40,7 +40,7 @@ const ArticleForm = () =>{
     }
 
     return(
-        <main className=" bg-white h-full flex flex-col md:flex md:flex-row relative">
+        <main className="ml-64 flex flex-col md:flex md:flex-row relative" >
 
             {/* Left Panel */}
             <LeftPanel />

@@ -8,6 +8,9 @@ import Administrator from './pages/administrator/administrator.jsx';
 import Dash from './pages/Dash.jsx';
 import ArticleForm from './components/Dashboard/articleForm.jsx';
 import CategoriesForm from './components/Dashboard/CategoriesForm.jsx';
+import GraduateJobForm from './components/Dashboard/GraduateJobForm.jsx';
+import InternshipForm from './components/Dashboard/InternshipForm.jsx';
+import ScholarshipForm from './components/Dashboard/ScholarshipForm.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -21,6 +24,9 @@ const router = createBrowserRouter(
       <Route path='/dashboard' element={<Dash />} />
       <Route path='/forms/articles' element={<ArticleForm />} />
       <Route path='/forms/categories' element={<CategoriesForm />} />
+      <Route path='/forms/jobs' element={<GraduateJobForm />} />
+      <Route path='/forms/internships' element={<InternshipForm />} />
+      <Route path='/forms/scholarships' element={<ScholarshipForm />} />
     </Route>
   )
 )

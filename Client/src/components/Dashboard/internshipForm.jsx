@@ -4,6 +4,8 @@ import { countries } from "./countries";
 import { useState } from "react";
 import axios from "axios";
 import SubmittedBox from "./submittedBox";
+import LeftPanel from "./LeftPanel";
+import FormsDashboardHead from "./FormsDashboardHead";
 
 const InternshipForm = ({className}) =>{
     const [iform, setIform] = useState({
@@ -41,101 +43,110 @@ const InternshipForm = ({className}) =>{
     }
 
     return(
-        <>
-        {submitted && <SubmittedBox successMessage='Internship Opportunity Submitted' />}
-        <form className={className} onSubmit={submit}>
+        <main className="ml-64 flex flex-col md:flex md:flex-row relative">
 
-            <div className=" font-semibold text-2xl text-center md:sticky md:top-0 p-3 bg-white">Internships Panel</div>
+            {/* Left Panel */}
+            <LeftPanel />
 
-            <FormInputs 
-                label='Internship Name' 
-                htmlFor='internshipname'
-                type='text'
-                id='internshipname'
-                name='internshipname'
-                value={iform.internshipname}
-                onChange={formValues}
-                placeholder='e.g. Google Internship for Africans'
-            />
+            <section className=" w-full flex flex-col justify-center m-auto lg:justify-normal lg:m-0 max-w-7xl">
 
-            <div className=" flex flex-col gap-1">
-                <label htmlFor='internshipduration' className=" text-xl">Internship Type</label>
-                <select 
-                id='internshipduration' 
-                name='internshipduration' 
-                value={iform.internshipduration}
-                onChange={formValues}
-                className="bg-transparent border-[1px] border-blue-600 p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" required>
-                    <option value='' disabled >-- Select Internship Duration -- </option>
-                    <option value='One Month'>One Month</option>
-                    <option value='Two - Three Months'>Two - Three Months</option>
-                    <option value='Four - Six Months'>Four - Six Months</option>
-                    <option value='Six - Seven Months'>Six - Seven Months</option>
-                    <option value='Seven Months +'>Seven Months +</option>
-                </select>                 
-            </div>
+                {submitted && <SubmittedBox successMessage={'Internship Successfully Added'} /> }
 
-            <FormTextarea 
-                label='Internship Info' 
-                htmlFor='info'
-                id='info'
-                name='info'
-                value={iform.info}
-                onChange={formValues}
-                placeholder='Details about the Internship Opportunity'
-            />
+                <FormsDashboardHead title='Internship Form' />
 
-            <div className=" flex flex-col gap-1">
-                <label htmlFor='country' className=" text-xl">Select Host Country</label>
-                <select id='country' name='country' className="bg-transparent border-[1px] border-blue-600 p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" required>
-                    <option value='' disabled >-- Select Country -- </option>
-                    {countries.map((country, id)=>(<option value={country} key={id}>{country}</option>))}
-                </select>                 
-            </div>
+                <form className=' p-3 flex flex-col gap-4' onSubmit={submit}>
 
-            <FormTextarea 
-                label='Internship Requirements' 
-                htmlFor='requirements'
-                id='requirements'
-                name='requirements'
-                value={iform.requirements}
-                onChange={formValues}
-                placeholder='e.g. Requirements for the Internship opportunity'
-            />
+                    <FormInputs 
+                        label='Internship Name' 
+                        htmlFor='internshipname'
+                        type='text'
+                        id='internshipname'
+                        name='internshipname'
+                        value={iform.internshipname}
+                        onChange={formValues}
+                        placeholder='e.g. Google Internship for Africans'
+                    />
 
-            <FormTextarea 
-                label='Documents Required' 
-                htmlFor='documents'
-                id='documents'
-                name='documents'
-                value={iform.documents}
-                onChange={formValues}
-                placeholder='e.g. Documents Requirements for the Internship opportunity'
-            />
+                    <div className=" flex flex-col gap-1">
+                        <label htmlFor='internshipduration' className=" text-xl">Internship Type</label>
+                        <select 
+                        id='internshipduration' 
+                        name='internshipduration' 
+                        value={iform.internshipduration}
+                        onChange={formValues}
+                        className="bg-transparent border-[1px] border-blue-600 p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" required>
+                            <option value='' disabled >-- Select Internship Duration -- </option>
+                            <option value='One Month'>One Month</option>
+                            <option value='Two - Three Months'>Two - Three Months</option>
+                            <option value='Four - Six Months'>Four - Six Months</option>
+                            <option value='Six - Seven Months'>Six - Seven Months</option>
+                            <option value='Seven Months +'>Seven Months +</option>
+                        </select>                 
+                    </div>
 
-            <FormTextarea
-                label='How to Apply'
-                htmlFor='apply'
-                id='apply'
-                name='apply'
-                value={iform.apply}
-                onChange={formValues}
-                placeholder='e.g. Apply through...'
-            />
+                    <FormTextarea 
+                        label='Internship Info' 
+                        htmlFor='info'
+                        id='info'
+                        name='info'
+                        value={iform.info}
+                        onChange={formValues}
+                        placeholder='Details about the Internship Opportunity'
+                    />
 
-            <FormInputs 
-                label='Upload Internships Flyer' 
-                htmlFor='image'
-                type='file'
-                id='image'
-                name='image'
-                onChange={formFiles}
-                accept='.jpg, .jpeg, .png, .JPG'
-            />
+                    <div className=" flex flex-col gap-1">
+                        <label htmlFor='country' className=" text-xl">Select Host Country</label>
+                        <select id='country' name='country' className="bg-transparent border-[1px] border-blue-600 p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" required>
+                            <option value='' disabled >-- Select Country -- </option>
+                            {countries.map((country, id)=>(<option value={country} key={id}>{country}</option>))}
+                        </select>                 
+                    </div>
 
-            <button className=" text-xl bg-blue-600 p-2 rounded-md text-white hover:bg-blue-500">POST</button>
-        </form>
-        </>
+                    <FormTextarea 
+                        label='Internship Requirements' 
+                        htmlFor='requirements'
+                        id='requirements'
+                        name='requirements'
+                        value={iform.requirements}
+                        onChange={formValues}
+                        placeholder='e.g. Requirements for the Internship opportunity'
+                    />
+
+                    <FormTextarea 
+                        label='Documents Required' 
+                        htmlFor='documents'
+                        id='documents'
+                        name='documents'
+                        value={iform.documents}
+                        onChange={formValues}
+                        placeholder='e.g. Documents Requirements for the Internship opportunity'
+                    />
+
+                    <FormTextarea
+                        label='How to Apply'
+                        htmlFor='apply'
+                        id='apply'
+                        name='apply'
+                        value={iform.apply}
+                        onChange={formValues}
+                        placeholder='e.g. Apply through...'
+                    />
+
+                    <FormInputs 
+                        label='Upload Internships Flyer' 
+                        htmlFor='image'
+                        type='file'
+                        id='image'
+                        name='image'
+                        onChange={formFiles}
+                        accept='.jpg, .jpeg, .png, .JPG'
+                    />
+
+                    <button className=" text-xl bg-blue-600 p-2 rounded-md text-white hover:bg-blue-500">POST</button>
+                </form>
+
+            </section>
+        </main>
     )
 };
 
