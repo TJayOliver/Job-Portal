@@ -72,7 +72,7 @@ export const CategoryEdit = async(req, res) =>{
     const parameter = [req.params.id]
     try{
         const [data] = await database.query(query, parameter)
-        res.redirect('/forms/articles', )
+
     }catch(error){
         console.error(error.message)
     }
