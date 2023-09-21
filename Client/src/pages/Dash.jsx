@@ -3,25 +3,31 @@ import LeftPanel from "../components/Dashboard/LeftPanel";
 import RightPanel from "../components/Dashboard/RightPanel";
 import { useState } from "react";
 
-
 const Dash = () =>{
     const [confirmDeleteBox, setConfirmDeleteBox] = useState(false);
+    const [ID, setID] = useState('');
+    const [route, setRoute] = useState('');
 
-    const [iddelete, setidDelete] = useState(null) // holds the id of the site section
-
-    const cancel = () =>{
-        setConfirmDeleteBox(prev => !prev)
+    const DisplayDeleteAlert = (id, route) =>{
+        setRoute(route)
+        setID(id);
+        setConfirmDeleteBox(true)
     }
+    
+    const CancelDeleteAlert = () =>{
+        setConfirmDeleteBox(false);
+    }
+
     return(
         <main className=" h-screen relative flex flex-wrap">
            
-           {confirmDeleteBox && <ConfirmDelete cancel={cancel}/>}
+           {confirmDeleteBox && <ConfirmDelete ID={ID} route={route} Cancel={CancelDeleteAlert} className="z-50"/>}
            
             {/* Left Panel */}
             <LeftPanel />
 
             {/* Right Panel */}
-            <RightPanel />
+            <RightPanel Delete={DisplayDeleteAlert}/>
             
         </main>
     )

@@ -1,14 +1,13 @@
 import DashBoardHeader from "./DashBoardHeader";
 import OverviewBox from "./OverviewBox";
-import { BiTrophy, BiCategory, BiBookReader } from "react-icons/bi";
+import { BiTrophy, BiBookReader } from "react-icons/bi";
 import {BsPeople, BsMortarboard} from "react-icons/bs";
 import { HiMiniTrash, HiMiniPencil } from "react-icons/hi2";
 import {CgArrowDown} from "react-icons/cg"
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-
-const RightPanel = () =>{
+const RightPanel = ({Delete}) =>{
     
     const [retrievedArticlesData, setRetrievedArticlesData] = useState([]),
     [retrievedCategoriesData, setRetrievedCategoriesData] = useState([]),
@@ -68,9 +67,7 @@ const RightPanel = () =>{
     fouthMove = `h-0.5 w-[5.1rem] bg-black absolute -bottom-3.5 left-[24.5rem] duration-100 ease-out `, 
     fifthMove = `h-0.5 w-[5.1rem] bg-black absolute -bottom-3.5 left-[33.3rem] duration-100 ease-out`;
 
-    const [move,setMove] = useState(firstmove), [Delete, setDelete] = useState(false);
-
-    const handledelete = () =>{setDelete(prev => !prev)};
+    const [move,setMove] = useState(firstmove);
 
     return(
         <div className=" w-full md:ml-64 h-full">
@@ -107,28 +104,28 @@ const RightPanel = () =>{
 
             {overView && <div className=" p-3">
                     <div className=" border border-gray-200 rounded-md">
-                        <table class=" min-w-full divide-y divide-gray-200">
+                        <table className=" min-w-full divide-y divide-gray-200">
                             <thead className=" bg-gray-50">
                                 <tr>
-                                    <th class="px-6 py-3 text-left text-sm font-medium flex gap-1" >Category Name <CgArrowDown className="mt-1"/></th>
-                                    <th class="px-6 py-3 text-left text-sm font-medium">Jobs</th>
-                                    <th class="px-6 py-3 text-left text-sm font-medium" ></th>
+                                    <th className="px-6 py-3 text-left text-sm font-medium flex gap-1" >Category Name <CgArrowDown className="mt-1"/></th>
+                                    <th className="px-6 py-3 text-left text-sm font-medium">Jobs</th>
+                                    <th className="px-6 py-3 text-left text-sm font-medium" ></th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-gray-200">
+                            <tbody className="divide-y divide-gray-200">
                                 {
                                     retrievedCategoriesData.length === 0 ? 
                                     <tr><td>No Data Available</td></tr> 
-                                    : 
+                                    :   
                                     retrievedCategoriesData.map(data=>(
-                                        <tr className=" hover:bg-gray-50">
-                                            <td class="px-6 py-4 text-left text-xs font-medium">{data.categoriesname}</td>
-                                            <td class="px-6 py-4 text-left text-xs font-medium">400</td>
+                                        <tr key={data.id} className=" hover:bg-gray-50">
+                                            <td className="px-6 py-4 text-left text-xs font-medium">{data.categoriesname}</td>
+                                            <td className="px-6 py-4 text-left text-xs font-medium">400</td>
                                             <td className="flex gap-2 px-6 py-4 text-left text-md font-medium">
                                                 <div className=" bg-gray-100 cursor-pointer p-2 rounded-md">
                                                     <HiMiniPencil />
                                                 </div>
-                                                <div onClick={Delete} className=" bg-gray-100 cursor-pointer p-2 rounded-md">
+                                                <div onClick={()=>Delete(data.id, 'categories-delete')} className=" bg-gray-100 cursor-pointer p-2 rounded-md">
                                                     <HiMiniTrash/>
                                                 </div>
                                             </td>
@@ -144,30 +141,30 @@ const RightPanel = () =>{
             {/* Article Panel */}
             {articleDataView && <div className=" p-3">
                 <div className=" border border-gray-200 rounded-md">
-                    <table class=" min-w-full divide-y divide-gray-200">
+                    <table className=" min-w-full divide-y divide-gray-200">
                         <thead className=" bg-gray-50">
                             <tr>
-                                <th class="px-6 py-3 text-left text-sm font-medium flex gap-1" >Article Title <CgArrowDown className="mt-1"/></th>
-                                <th class="px-6 py-3 text-left text-sm font-medium">Date Posted</th>
-                                <th class="px-6 py-3 text-left text-sm font-medium">Author</th>
-                                <th class="px-6 py-3 text-left text-sm font-medium" ></th>
+                                <th className="px-6 py-3 text-left text-sm font-medium flex gap-1" >Article Title <CgArrowDown className="mt-1"/></th>
+                                <th className="px-6 py-3 text-left text-sm font-medium">Date Posted</th>
+                                <th className="px-6 py-3 text-left text-sm font-medium">Author</th>
+                                <th className="px-6 py-3 text-left text-sm font-medium" ></th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-gray-200">
+                        <tbody className="divide-y divide-gray-200">
                             {
                                 retrievedArticlesData.length === 0 ? 
                                 <tr className=" flex justify-center p-3"><td>No Data Available</td></tr> 
                                 : 
                                 retrievedArticlesData.map(data=>(
-                                    <tr className=" hover:bg-gray-50">
-                                        <td class="px-6 py-4 text-left text-xs font-medium">{data.categoriesname}</td>
-                                        <td class="px-6 py-4 text-left text-xs font-medium">{data.datecreated}</td>
-                                        <td class="px-6 py-4 text-left text-xs font-medium">{data.author}</td>
+                                    <tr key={data.id} className=" hover:bg-gray-50">
+                                        <td className="px-6 py-4 text-left text-xs font-medium">{data.categoriesname}</td>
+                                        <td className="px-6 py-4 text-left text-xs font-medium">{data.datecreated}</td>
+                                        <td className="px-6 py-4 text-left text-xs font-medium">{data.author}</td>
                                         <td className="flex gap-2 px-6 py-4 text-left text-md font-medium">
                                             <div className=" bg-gray-100 cursor-pointer p-2 rounded-md">
                                                 <HiMiniPencil />
                                             </div>
-                                            <div className=" bg-gray-100 cursor-pointer p-2 rounded-md">
+                                            <div onClick={()=>Delete(data.id, 'articles-delete')} className=" bg-gray-100 cursor-pointer p-2 rounded-md">
                                                 <HiMiniTrash/>
                                             </div>
                                         </td>
@@ -182,32 +179,32 @@ const RightPanel = () =>{
             {/* Graduate Job Panel */}
             {jobsDataView && <div className=" p-3">
                 <div className=" border border-gray-200 rounded-md">
-                    <table class=" min-w-full divide-y divide-gray-200">
+                    <table className=" min-w-full divide-y divide-gray-200">
                         <thead className=" bg-gray-50">
                             <tr>
-                                <th class="px-6 py-3 text-left text-sm font-medium flex gap-1" >Job Position <CgArrowDown className="mt-1"/></th>
-                                <th class="px-6 py-3 text-left text-sm font-medium">Company</th>
-                                <th class="px-6 py-3 text-left text-sm font-medium">Location</th>
-                                <th class="px-6 py-3 text-left text-sm font-medium" >Date Posted</th>
-                                <th class="px-6 py-3 text-left text-sm font-medium" >Posted By</th>
+                                <th className="px-6 py-3 text-left text-sm font-medium flex gap-1" >Job Position <CgArrowDown className="mt-1"/></th>
+                                <th className="px-6 py-3 text-left text-sm font-medium">Company</th>
+                                <th className="px-6 py-3 text-left text-sm font-medium">Location</th>
+                                <th className="px-6 py-3 text-left text-sm font-medium" >Date Posted</th>
+                                <th className="px-6 py-3 text-left text-sm font-medium" >Posted By</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-gray-200">
+                        <tbody className="divide-y divide-gray-200">
                             {
                                 retrievedJobsData.length === 0 ? 
                                 <tr className=" flex justify-center p-3"><td>No Data Available</td></tr> 
                                 : 
                                 retrievedJobsData.map(data=>(
-                                    <tr className=" hover:bg-gray-50">
-                                        <td class="px-6 py-4 text-left text-xs font-medium">{data.position}</td>
-                                        <td class="px-6 py-4 text-left text-xs font-medium">{data.company}</td>
-                                        <td class="px-6 py-4 text-left text-xs font-medium">{data.location}</td>
-                                        <td class="px-6 py-4 text-left text-xs font-medium">{data.datecreated}</td>
+                                    <tr key={data.id} className=" hover:bg-gray-50">
+                                        <td className="px-6 py-4 text-left text-xs font-medium">{data.position}</td>
+                                        <td className="px-6 py-4 text-left text-xs font-medium">{data.company}</td>
+                                        <td className="px-6 py-4 text-left text-xs font-medium">{data.location}</td>
+                                        <td className="px-6 py-4 text-left text-xs font-medium">{data.datecreated}</td>
                                         <td className="flex gap-2 px-6 py-4 text-left text-md font-medium">
                                             <div className=" bg-gray-100 cursor-pointer p-2 rounded-md">
                                                 <HiMiniPencil />
                                             </div>
-                                            <div className=" bg-gray-100 cursor-pointer p-2 rounded-md">
+                                            <div onClick={()=>Delete(data.id, 'graduatesjobs-delete')} className=" bg-gray-100 cursor-pointer p-2 rounded-md">
                                                 <HiMiniTrash/>
                                             </div>
                                         </td>
@@ -222,32 +219,32 @@ const RightPanel = () =>{
             {/* Internship Panel */}
             {internshipsDataView && <div className=" p-3">
                 <div className=" border border-gray-200 rounded-md">
-                    <table class=" min-w-full divide-y divide-gray-200">
+                    <table className=" min-w-full divide-y divide-gray-200">
                         <thead className=" bg-gray-50">
                             <tr>
-                                <th class="px-6 py-3 text-left text-sm font-medium flex gap-1" >Internship Name <CgArrowDown className="mt-1"/></th>
-                                <th class="px-6 py-3 text-left text-sm font-medium">Internship Location</th>
-                                <th class="px-6 py-3 text-left text-sm font-medium">Date Posted</th>
-                                <th class="px-6 py-3 text-left text-sm font-medium">Posted By</th>
-                                <th class="px-6 py-3 text-left text-sm font-medium" ></th>
+                                <th className="px-6 py-3 text-left text-sm font-medium flex gap-1" >Internship Name <CgArrowDown className="mt-1"/></th>
+                                <th className="px-6 py-3 text-left text-sm font-medium">Internship Location</th>
+                                <th className="px-6 py-3 text-left text-sm font-medium">Date Posted</th>
+                                <th className="px-6 py-3 text-left text-sm font-medium">Posted By</th>
+                                <th className="px-6 py-3 text-left text-sm font-medium" ></th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-gray-200">
+                        <tbody className="divide-y divide-gray-200">
                             {
                                 retrievedInternshipData.length === 0 ? 
                                 <tr className=" flex justify-center p-3"><td>No Data Available</td></tr> 
                                 : 
                                 retrievedInternshipData.map(data=>(
-                                    <tr className=" hover:bg-gray-50">
-                                        <td class="px-6 py-4 text-left text-xs font-medium">{data.internshipname}</td>
-                                        <td class="px-6 py-4 text-left text-xs font-medium">{data.location}</td>
-                                        <td class="px-6 py-4 text-left text-xs font-medium">{data.datecreated}</td>
-                                        <td class="px-6 py-4 text-left text-xs font-medium">{data.author}</td>
+                                    <tr key={data.id} className=" hover:bg-gray-50">
+                                        <td className="px-6 py-4 text-left text-xs font-medium">{data.internshipname}</td>
+                                        <td className="px-6 py-4 text-left text-xs font-medium">{data.location}</td>
+                                        <td className="px-6 py-4 text-left text-xs font-medium">{data.datecreated}</td>
+                                        <td className="px-6 py-4 text-left text-xs font-medium">{data.author}</td>
                                         <td className="flex gap-2 px-6 py-4 text-left text-md font-medium">
                                             <div className=" bg-gray-100 cursor-pointer p-2 rounded-md">
                                                 <HiMiniPencil />
                                             </div>
-                                            <div className=" bg-gray-100 cursor-pointer p-2 rounded-md">
+                                            <div onClick={()=>Delete(data.id, 'internships-delete')} className=" bg-gray-100 cursor-pointer p-2 rounded-md">
                                                 <HiMiniTrash/>
                                             </div>
                                         </td>
@@ -262,34 +259,34 @@ const RightPanel = () =>{
             {/* Scholarship Panel */}
             {scholarshipDataView && <div className=" p-3">
                 <div className=" border border-gray-200 rounded-md">
-                    <table class=" min-w-full divide-y divide-gray-200">
+                    <table className=" min-w-full divide-y divide-gray-200">
                         <thead className=" bg-gray-50">
                             <tr>
-                                <th class="px-6 py-3 text-left text-sm font-medium flex gap-1" >Scholarship Name <CgArrowDown className="mt-1"/></th>
-                                <th class="px-6 py-3 text-left text-sm font-medium">Scholarship Type</th>
-                                <th class="px-6 py-3 text-left text-sm font-medium">Scholarship Location</th>
-                                <th class="px-6 py-3 text-left text-sm font-medium">Date Posted</th>
-                                <th class="px-6 py-3 text-left text-sm font-medium">Author</th>
-                                <th class="px-6 py-3 text-left text-sm font-medium" ></th>
+                                <th className="px-6 py-3 text-left text-sm font-medium flex gap-1" >Scholarship Name <CgArrowDown className="mt-1"/></th>
+                                <th className="px-6 py-3 text-left text-sm font-medium">Scholarship Type</th>
+                                <th className="px-6 py-3 text-left text-sm font-medium">Scholarship Location</th>
+                                <th className="px-6 py-3 text-left text-sm font-medium">Date Posted</th>
+                                <th className="px-6 py-3 text-left text-sm font-medium">Author</th>
+                                <th className="px-6 py-3 text-left text-sm font-medium" ></th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-gray-200">
+                        <tbody className="divide-y divide-gray-200">
                             {
                                 retrievedscholarshipData.length === 0 ? 
                                 <tr className=" flex justify-center p-3"><td>No Data Available</td></tr> 
                                 : 
                                 retrievedscholarshipData.map(data=>(
-                                    <tr className=" hover:bg-gray-50">
-                                        <td class="px-6 py-4 text-left text-xs font-medium">{data.scholarshipname}</td>
-                                        <td class="px-6 py-4 text-left text-xs font-medium">{data.scholarshiptype}</td>
-                                        <td class="px-6 py-4 text-left text-xs font-medium">{data.country}</td>
-                                        <td class="px-6 py-4 text-left text-xs font-medium">{data.datecreated}</td>
-                                        <td class="px-6 py-4 text-left text-xs font-medium">{data.author}</td>
+                                    <tr key={data.id} className=" hover:bg-gray-50">
+                                        <td className="px-6 py-4 text-left text-xs font-medium">{data.scholarshipname}</td>
+                                        <td className="px-6 py-4 text-left text-xs font-medium">{data.scholarshiptype}</td>
+                                        <td className="px-6 py-4 text-left text-xs font-medium">{data.country}</td>
+                                        <td className="px-6 py-4 text-left text-xs font-medium">{data.datecreated}</td>
+                                        <td className="px-6 py-4 text-left text-xs font-medium">{data.author}</td>
                                         <td className="flex gap-2 px-6 py-4 text-left text-md font-medium">
                                             <div className=" bg-gray-100 cursor-pointer p-2 rounded-md">
                                                 <HiMiniPencil />
                                             </div>
-                                            <div className=" bg-gray-100 cursor-pointer p-2 rounded-md">
+                                            <div onClick={()=>Delete(data.id, 'scholarships-delete')} className=" bg-gray-100 cursor-pointer p-2 rounded-md">
                                                 <HiMiniTrash/>
                                             </div>
                                         </td>
