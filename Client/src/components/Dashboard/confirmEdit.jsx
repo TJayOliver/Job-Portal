@@ -2,11 +2,11 @@ import { FiAlertTriangle } from "react-icons/fi";
 import { CgClose } from "react-icons/cg";
 import axios from 'axios'
 
-const ConfirmDelete = ({Cancel, ID, route, title}) =>{
+const ConfirmEdit = ({Cancel, ID, route, title}) =>{
     const id = ID;
     
-    const handleDelete = () =>{
-        axios.delete(`http://localhost:4040/api/${route}/${id}`)
+    const handleEdit = () =>{
+        axios.get(`http://localhost:4040/api/${route}/${id}`)
         .then(response=>response)
         .catch(error => console.error(error));  
         window.location.reload();      
@@ -29,15 +29,15 @@ const ConfirmDelete = ({Cancel, ID, route, title}) =>{
                     <FiAlertTriangle className="text-4xl text-red-700 text-bold" />
                 </div>
             
-                <p className=" font-bold text-xl">Delete {title}?</p>
+                <p className=" font-bold text-xl">Edit {title}?</p>
 
-                <p className=" text-center">Are you sure you want to delete this {title}? It will be permanently deleted from the servers forever. This action cannot be undone.</p>
+                <p className=" text-center">Are you sure you want to edit this {title}? Changes will be made to the already existing saved data.</p>
 
                 {/* buttons */}
                 <div className=" w-full flex flex-col md:flex md:flex-row gap-2">
-                    <button onClick={Cancel} className=" border border-black h-10 p-2 rounded-md w-full hover:bg-blue-600 hover:text-white hover:border-none hover:duration-300 hover:ease-in">CANCEL</button> 
+                    <button onClick={Cancel} className=" border border-black h-10 p-2 rounded-md w-full hover:bg-cyan-600 hover:text-white hover:border-none hover:duration-300 hover:ease-in">CANCEL</button> 
 
-                    <button onClick={()=>handleDelete()} className=" border border-black h-10 p-2 rounded-md w-full hover:bg-red-600 hover:text-white hover:border-none hover:duration-300 hover:ease-in">DELETE</button> 
+                    <button onClick={()=>handleEdit()} className=" border border-black h-10 p-2 rounded-md w-full hover:bg-teal-600 hover:text-white hover:border-none hover:duration-300 hover:ease-in">EDIT</button> 
                 </div>
             </div>
 
@@ -46,4 +46,4 @@ const ConfirmDelete = ({Cancel, ID, route, title}) =>{
 };
 
 
-export default ConfirmDelete;
+export default ConfirmEdit;

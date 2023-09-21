@@ -7,7 +7,7 @@ import {CgArrowDown} from "react-icons/cg"
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const RightPanel = ({Delete}) =>{
+const RightPanel = ({Delete, Edit}) =>{
     
     const [retrievedArticlesData, setRetrievedArticlesData] = useState([]),
     [retrievedCategoriesData, setRetrievedCategoriesData] = useState([]),
@@ -122,10 +122,10 @@ const RightPanel = ({Delete}) =>{
                                             <td className="px-6 py-4 text-left text-xs font-medium">{data.categoriesname}</td>
                                             <td className="px-6 py-4 text-left text-xs font-medium">400</td>
                                             <td className="flex gap-2 px-6 py-4 text-left text-md font-medium">
-                                                <div className=" bg-gray-100 cursor-pointer p-2 rounded-md">
+                                                <div onClick={()=>Edit(data.id, 'categories-edit', "Category")} className=" bg-gray-100 cursor-pointer p-2 rounded-md">
                                                     <HiMiniPencil />
                                                 </div>
-                                                <div onClick={()=>Delete(data.id, 'categories-delete')} className=" bg-gray-100 cursor-pointer p-2 rounded-md">
+                                                <div onClick={()=>Delete(data.id, 'categories-delete', "Categories")} className=" bg-gray-100 cursor-pointer p-2 rounded-md">
                                                     <HiMiniTrash/>
                                                 </div>
                                             </td>
@@ -161,10 +161,10 @@ const RightPanel = ({Delete}) =>{
                                         <td className="px-6 py-4 text-left text-xs font-medium">{data.datecreated}</td>
                                         <td className="px-6 py-4 text-left text-xs font-medium">{data.author}</td>
                                         <td className="flex gap-2 px-6 py-4 text-left text-md font-medium">
-                                            <div className=" bg-gray-100 cursor-pointer p-2 rounded-md">
+                                            <div onClick={()=>Edit(data.id, 'articles-edit', "Article")} className=" bg-gray-100 cursor-pointer p-2 rounded-md">
                                                 <HiMiniPencil />
                                             </div>
-                                            <div onClick={()=>Delete(data.id, 'articles-delete')} className=" bg-gray-100 cursor-pointer p-2 rounded-md">
+                                            <div onClick={()=>Delete(data.id, 'articles-delete', "Article")} className=" bg-gray-100 cursor-pointer p-2 rounded-md">
                                                 <HiMiniTrash/>
                                             </div>
                                         </td>
@@ -201,10 +201,10 @@ const RightPanel = ({Delete}) =>{
                                         <td className="px-6 py-4 text-left text-xs font-medium">{data.location}</td>
                                         <td className="px-6 py-4 text-left text-xs font-medium">{data.datecreated}</td>
                                         <td className="flex gap-2 px-6 py-4 text-left text-md font-medium">
-                                            <div className=" bg-gray-100 cursor-pointer p-2 rounded-md">
+                                            <div onClick={()=>Edit(data.id, 'graduatesjobs-edit')} className=" bg-gray-100 cursor-pointer p-2 rounded-md">
                                                 <HiMiniPencil />
                                             </div>
-                                            <div onClick={()=>Delete(data.id, 'graduatesjobs-delete')} className=" bg-gray-100 cursor-pointer p-2 rounded-md">
+                                            <div onClick={()=>Delete(data.id, 'graduatesjobs-delete', "Jobs")} className=" bg-gray-100 cursor-pointer p-2 rounded-md">
                                                 <HiMiniTrash/>
                                             </div>
                                         </td>
@@ -241,10 +241,10 @@ const RightPanel = ({Delete}) =>{
                                         <td className="px-6 py-4 text-left text-xs font-medium">{data.datecreated}</td>
                                         <td className="px-6 py-4 text-left text-xs font-medium">{data.author}</td>
                                         <td className="flex gap-2 px-6 py-4 text-left text-md font-medium">
-                                            <div className=" bg-gray-100 cursor-pointer p-2 rounded-md">
+                                            <div onClick={()=>Edit(data.id, 'internships-edit', "Internship")}  className=" bg-gray-100 cursor-pointer p-2 rounded-md">
                                                 <HiMiniPencil />
                                             </div>
-                                            <div onClick={()=>Delete(data.id, 'internships-delete')} className=" bg-gray-100 cursor-pointer p-2 rounded-md">
+                                            <div onClick={()=>Delete(data.id, 'internships-delete', "Internship")} className=" bg-gray-100 cursor-pointer p-2 rounded-md">
                                                 <HiMiniTrash/>
                                             </div>
                                         </td>
@@ -283,10 +283,10 @@ const RightPanel = ({Delete}) =>{
                                         <td className="px-6 py-4 text-left text-xs font-medium">{data.datecreated}</td>
                                         <td className="px-6 py-4 text-left text-xs font-medium">{data.author}</td>
                                         <td className="flex gap-2 px-6 py-4 text-left text-md font-medium">
-                                            <div className=" bg-gray-100 cursor-pointer p-2 rounded-md">
+                                            <div onClick={()=>Edit(data.id, 'scholarships-edit', "Scholarship")} className=" bg-gray-100 cursor-pointer p-2 rounded-md">
                                                 <HiMiniPencil />
                                             </div>
-                                            <div onClick={()=>Delete(data.id, 'scholarships-delete')} className=" bg-gray-100 cursor-pointer p-2 rounded-md">
+                                            <div onClick={()=>Delete(data.id, 'scholarships-delete', "Scholarship")} className=" bg-gray-100 cursor-pointer p-2 rounded-md">
                                                 <HiMiniTrash/>
                                             </div>
                                         </td>
