@@ -1,6 +1,6 @@
 import Footer from "../components/Footer/Footer"
 import Header from "../components/Header/Header"
-import SocialMedia from "../components/SocialMedia/SocialMedia"
+import SocialMedia from "../components/Homepage/SocialMedia/SocialMedia"
 import FeaturedArticle from "../components/Articles/FeaturedArticle"
 import LatestArticles from "../components/Articles/LatestArticles"
 

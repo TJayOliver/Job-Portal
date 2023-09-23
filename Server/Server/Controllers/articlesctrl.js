@@ -2,11 +2,9 @@ import { database } from "../Database/database.js";
 import {v4 as uuid} from 'uuid';
 
 export const ArticleGet = async(req, res) =>{
-    const query = `SELECT * FROM articles ORDER BY datecreated DESC`;
+    const query = `SELECT *,DATE_FORMAT(datecreated, '%d/%M/%Y') AS datecreated FROM articles ORDER BY datecreated DESC`;
     try{
-        console.log('articles database connection successfull')
         const [data] = await database.query(query);
-        console.log('articles data retrieved')
         res.send(data);
     }catch(error){
         console.error(error)
@@ -16,7 +14,6 @@ export const ArticleGet = async(req, res) =>{
 export const ArticleCount = async(req, res) =>{
     const query = `SELECT COUNT (id) FROM articles`
     try{
-        console.log('articles counting succesfull')
         const [data] = await database.query(query);
         let count = "";
         data.map((newData)=>{
@@ -39,7 +36,6 @@ export const ArticlePost = async(req, res) =>{
     const parameter = [uuid(),image, title, briefinfo, post];
     try{
         const [data] = await database.query(query, parameter);
-        console.log('articles successfully posted');
     }catch(error){
         console.log(error);
     }
@@ -51,7 +47,6 @@ export const ArticleDelete = async(req,res) =>{
     const parameter = [id];
     try {
         const [data] = await database.query(query, parameter);
-        console.log('deleted');
         return res.json('Successfully Deleted');
     } catch (error) {
         console.error(error)
@@ -75,11 +70,10 @@ export const ArticleUpdate = async(req,res) =>{
     const {title, briefinfo, post} = req.body;
     const image = req.file.buffer;
 
-    const query = "UPDATE image=?, articles SET title=?, briefinfo=?, post=? WHERE id=?"
+    const query = "UPDATE articles SET image=?, title=?, briefinfo=?, post=? WHERE id=?"
     const parameter = [image, title, briefinfo, post, req.params.id];
     try {
         const [data] = await database.query(query, parameter);
-        console.log(data)
         return res.json('Successfully Updated')
     } catch (error) {
         console.error(error.message)

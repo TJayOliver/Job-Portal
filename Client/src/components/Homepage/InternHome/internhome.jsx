@@ -1,4 +1,4 @@
-import One from '../../assets/in.jpg'
+import One from '../../../assets/in.jpg'
 import { Link } from 'react-router-dom'
 
 const InternHome =()=>{

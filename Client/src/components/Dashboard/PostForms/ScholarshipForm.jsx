@@ -1,11 +1,11 @@
-import FormInputs from "./formInputs";
-import FormTextarea from "./formTextarea";
-import { countries } from "./countries";
+import FormInputs from "../formInputs";
+import FormTextarea from "../formTextarea";
+import { countries } from "../countries";
 import Axios from "axios";
 import { useState } from "react";
-import SubmittedBox from "./submittedBox";
-import LeftPanel from "./LeftPanel";
-import FormsDashboardHead from "./FormsDashboardHead";
+import SubmittedBox from "../submittedBox";
+import LeftPanel from "../Panels/LeftPanel";
+import FormsDashboardHead from "../DashboardHeaders/FormsDashboardHead";
 
 const ScholarshipForm = () =>{
     const [sForm, setSForm] = useState({

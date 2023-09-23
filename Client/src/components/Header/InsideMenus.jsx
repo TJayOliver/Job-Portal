@@ -10,7 +10,7 @@ const InsideMenus = ()=>{
                 Home
             </Link>
 
-            <Link to='/graduatejobs' className='headers'>
+            <Link to='/jobs' className='headers'>
                 Graduate Jobs
             </Link>  
 

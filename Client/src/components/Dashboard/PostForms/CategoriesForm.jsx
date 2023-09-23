@@ -1,10 +1,10 @@
-import FormInputs from "./formInputs";
-//import CategoriesDisplayBox from "./categoriesDisplayBox";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import LeftPanel from "./LeftPanel";
-import SubmittedBox from "./submittedBox";
-import FormsDashboardHead from "./FormsDashboardHead";
+import FormInputs from "../formInputs";
+import SubmittedBox from "../submittedBox";
+import LeftPanel from "../Panels/LeftPanel";
+import FormsDashboardHead from "../DashboardHeaders/FormsDashboardHead";
+
 
 const CategoriesForm = () =>{
     const [cForm, setCForm] = useState({categoriesname:""});
@@ -31,7 +31,7 @@ const CategoriesForm = () =>{
     }
 
     useEffect(()=>{
-        axios.get('http://localhost:4040/api/categories-get')
+        axios.get('http://localhost:4040/api/categories-get/')
         .then((response)=>{
             setretrievedCat(response.data)
         })

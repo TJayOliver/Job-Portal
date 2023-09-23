@@ -8,7 +8,7 @@ const DashBoardHeader = ({handleArticleTable, handleOverView, handleJobsTable, h
                 
             {/* Back */}
             <small className=" flex gap-0.5">
-                <Link to="/administrator/dashboard" className=" flex gap-1 hover:text-blue-600">
+                <Link to="/administrator" className=" flex gap-1 hover:text-blue-600">
                 <FiArrowLeftCircle className="mt-1"/>
                 <p>Log Out</p>
                 </Link>
@@ -16,11 +16,10 @@ const DashBoardHeader = ({handleArticleTable, handleOverView, handleJobsTable, h
 
             <p className=" font-bold text-3xl mb-5">Data Grid</p>
 
-            {/* navigation */}
-            <div className=" flex gap-2 md:gap-14 relative scrollbar whitespace-nowrap ">
+            <div className={move}></div>
 
-                <div className={move}></div>
-               
+            {/* navigation */}
+            <div className=" overflow-x-scroll flex gap-14 relative scrollbar whitespace-nowrap ">
                 {/* Overview */}
                 <small onClick={handleOverView} className=" flex gap-1 cursor-pointer relative">
                     <FiBarChart2 className=" mt-1" />

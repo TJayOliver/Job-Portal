@@ -1,22 +1,17 @@
-import FormInputs from "./formInputs";
-import FormTextarea from "./formTextarea";
-import { countries } from "./countries";
+import FormInputs from "../formInputs";
+import FormTextarea from "../formTextarea";
+import { countries } from "../countries";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import SubmittedBox from "./submittedBox";
-import LeftPanel from "./LeftPanel";
-import FormsDashboardHead from "./FormsDashboardHead";
+import SubmittedBox from "../submittedBox";
+import LeftPanel from "../Panels/LeftPanel";
+import FormsDashboardHead from "../DashboardHeaders/FormsDashboardHead";
+import { useParams } from "react-router-dom";
 
-const GraduateJobForm = ({className}) =>{
+const JobEditForm = () =>{
+    const id = useParams(), ID = id.id;
+
     const [cData, setCData] = useState([]);
-
-    useEffect(()=>{
-        axios.get('http://localhost:4040/api/categories-get')
-        .then((response)=>{
-            setCData(response.data)
-        })
-        .catch(error=>console.error(error))
-    }, [])
 
     const [gform, setGForm] = useState({
         image:null,company:"",salary:"",location:"",duration:"",country:"",minimumqualification:"",experiencelevel:"",experiencelength:"",responsibilities:"",requirements:"",otherinformation:"",apply:"", categoriesname:""
@@ -38,7 +33,7 @@ const GraduateJobForm = ({className}) =>{
             newFormData.append(key, gform[key])
         }
 
-        axios.post('http://localhost:4040/api/categories-post',newFormData, {headers:{'Content-Type': 'multipart/form-data'}})
+        axios.put(`http://localhost:4040/api/graduatesjobs-update/${ID}`,newFormData, {headers:{'Content-Type': 'multipart/form-data'}})
         .then(response =>console.log(response))
         .catch(error =>console.log(error))
         
@@ -47,6 +42,14 @@ const GraduateJobForm = ({className}) =>{
             window.location.reload();
         }, 2000);
     }
+
+    useEffect(()=>{
+        axios.get(`http://localhost:4040/api/graduatesjobs-edit/${ID}`)
+        .then(response =>{
+            const retrievedData = response.data[0];
+            setGForm({ image:retrievedData.image,company:retrievedData.company,salary:retrievedData.salary,location:retrievedData.location,duration:retrievedData.duration,country:retrievedData.country,minimumqualification:retrievedData.minimumqualification,experiencelevel:retrievedData.experiencelevel,experiencelength:retrievedData,responsibilities:retrievedData.response,requirements:retrievedData.requirements,otherinformation:retrievedData.otherinformation,apply:retrievedData.apply, categoriesname:retrievedData.categoriesname})
+        }).catch(error => console.error(error.message))
+    },[])
 
     return(
         <main>
@@ -232,4 +235,4 @@ const GraduateJobForm = ({className}) =>{
     )
 }
 
-export default GraduateJobForm;
+export default JobEditForm;

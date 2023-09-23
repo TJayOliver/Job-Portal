@@ -4,7 +4,6 @@ import {v4 as uuid} from 'uuid';
 export const CategoryGet = async(req,res) =>{
     const query = `SELECT * FROM categories ORDER BY categoriesname ASC`;
     try{
-        console.log('category data retrieved')
         const [data] = await database.query(query);
         res.send(data);
     }catch(error){
@@ -42,9 +41,7 @@ export const CategoryDelete = async(req,res) =>{
     const query = `DELETE FROM categories WHERE id=?`;
     const parameters = [id];
     try{
-        console.log('categories delete connection successful')
         const [data] = await database.query(query, parameters);
-        console.log('category successfully deleted')
     }catch(error){
         console.error(error);
     }
@@ -53,7 +50,6 @@ export const CategoryDelete = async(req,res) =>{
 export const CategoryCount = async(req, res) =>{
     const query = `SELECT COUNT (id) FROM categories`
     try{
-        console.log('categories counting succesfull')
         const [data] = await database.query(query);
         let count = "";
         data.map((newData)=>{
@@ -71,8 +67,8 @@ export const CategoryEdit = async(req, res) =>{
     const query =  `SELECT * FROM categories WHERE id=?`
     const parameter = [req.params.id]
     try{
-        const [data] = await database.query(query, parameter)
-
+        const [data] = await database.query(query, parameter);
+        res.send(data)
     }catch(error){
         console.error(error.message)
     }
@@ -85,7 +81,6 @@ export const CategoryUpdate = async(req,res) =>{
     const parameter = [categoriesname, req.params.id];
     try {
         const [data] = await database.query(query, parameter);
-        console.log(data)
         return res.json('Successfully Updated')
     } catch (error) {
         console.error(error.message)

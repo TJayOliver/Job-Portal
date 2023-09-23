@@ -1,7 +1,7 @@
 import ConfirmDelete from "../components/Dashboard/confirmDelete";
 import ConfirmEdit from "../components/Dashboard/confirmEdit";
-import LeftPanel from "../components/Dashboard/LeftPanel";
-import RightPanel from "../components/Dashboard/RightPanel";
+import LeftPanel from "../components/Dashboard/Panels/LeftPanel";
+import RightPanel from "../components/Dashboard/Panels/RightPanel";
 import { useState } from "react";
 
 const Dash = () =>{

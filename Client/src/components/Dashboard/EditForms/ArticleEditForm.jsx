@@ -1,12 +1,15 @@
 import axios from "axios";
-import FormInputs from "./formInputs";
-import FormTextarea from "./formTextarea";
-import SubmittedBox from "./submittedBox";
+import FormInputs from "../formInputs";
+import FormTextarea from "../formTextarea";
+import SubmittedBox from "../submittedBox";
 import { useState } from "react";
-import LeftPanel from "./LeftPanel";
-import FormsDashboardHead from "./FormsDashboardHead";
+import LeftPanel from "../Panels/LeftPanel";
+import FormsDashboardHead from "../DashboardHeaders/FormsDashboardHead";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
 
-const ArticleForm = () =>{
+const ArticleEditForm = () =>{
+    const id = useParams(), ID = id.id;
 
     const [aform, setAform] = useState({image:null,title:"",briefinfo:"",post: ""})
     const [submitted, setSubmitted] = useState(false);
@@ -28,9 +31,9 @@ const ArticleForm = () =>{
             newformData.append(key, aform[key])
         }
         
-        axios.post('http://localhost:4040/api/articles-post',newformData, {headers :{'Content-Type': 'multipart/form-data'}})
+        axios.put(`http://localhost:4040/api/articles-update/${ID}`,newformData, {headers :{'Content-Type': 'multipart/form-data'}})
         .then(response =>console.log(response))
-        .catch(error =>console.log(error))
+        .catch(error =>console.error(error.message))
         
         setSubmitted(true);
         setTimeout(() => {
@@ -38,6 +41,14 @@ const ArticleForm = () =>{
         }, 2000);  
     
     }
+
+    useEffect(()=>{
+        axios.get(`http://localhost:4040/api/articles-edit/${ID}`)
+        .then(response => {
+            const retrievedData = response.data[0];
+            setAform({image:retrievedData.image, title:retrievedData.title, briefinfo:retrievedData.briefinfo, post:retrievedData.post})
+        }).catch(error => console.error(error.message))
+    },[])
 
     return(
         <main>
@@ -105,4 +116,4 @@ const ArticleForm = () =>{
     )
 }
 
-export default ArticleForm;
+export default ArticleEditForm;

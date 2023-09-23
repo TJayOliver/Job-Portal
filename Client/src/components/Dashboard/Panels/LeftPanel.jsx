@@ -2,7 +2,8 @@ import { useState } from "react";
 import { BiTrophy, BiCategory, BiBookReader } from "react-icons/bi";
 import { BsPeople, BsMortarboard } from "react-icons/bs";
 import {CiGlobe, CiMail} from "react-icons/ci";
-import DashboardBox from "./dashboardBox";
+import DashboardBox from "../dashboardBox";
+
 
 const LeftPanel = () =>{
     const [mobileAnimation, setMobileAnimation] = useState(false);
@@ -14,7 +15,7 @@ const LeftPanel = () =>{
     div3 = `h-1 w-8 bg-black rounded-sm duration-150 ease-in transform -rotate-45 -translate-y-2`;
 
     return(
-        <div className=" md:h-full w-full h-18 md:fixed z-50 top-0 left-0 md:overflow-x-hidden md:w-64 p-2 flex flex-col justify-between border border-b-gray-200 border-r-0 md:border-r-2 md:border-r-gray-200 ">
+        <div className=" md:h-full w-full h-18 md:fixed z-40 top-0 left-0 md:overflow-x-hidden md:w-64 p-2 flex flex-col justify-between border border-b-gray-200 border-r-0 md:border-r-2 md:border-r-gray-200 ">
 
             <div className=" flex justify-between md:hidden ">
                 <h1 className=" text-2xl p-3 font-bold ">Dashboard</h1> 

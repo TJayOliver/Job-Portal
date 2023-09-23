@@ -1,15 +1,19 @@
-import FormInputs from "./formInputs";
-import FormTextarea from "./formTextarea";
-import { countries } from "./countries";
+import FormInputs from "../formInputs";
+import FormTextarea from "../formTextarea";
+import { countries } from "../countries";
 import { useState } from "react";
 import axios from "axios";
-import SubmittedBox from "./submittedBox";
-import LeftPanel from "./LeftPanel";
-import FormsDashboardHead from "./FormsDashboardHead";
+import SubmittedBox from "../submittedBox";
+import LeftPanel from "../Panels/LeftPanel";
+import FormsDashboardHead from "../DashboardHeaders/FormsDashboardHead";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
 
-const InternshipForm = () =>{
+const InternshipEditForm = () =>{
+    const id = useParams(), ID = id.id;
+
     const [iform, setIform] = useState({
-        image:null, internshipname:"", internshipduration:"",info:"",country:"",requirements:"",documents:"", apply:""
+        image:null, internshipname:"", location:"", internshipduration:"",info:"",country:"",requirements:"",documents:"", apply:""
     });
     const [submitted, setSubmitted] = useState(false);
 
@@ -32,7 +36,7 @@ const InternshipForm = () =>{
             newFormData.append(key, iform[key])
         };
         
-       axios.post('http://localhost:4040/api/internships-post',newFormData, {headers:{'Content-Type': 'multipart/form-data'}})
+       axios.put(`http://localhost:4040/api/internships-update/${ID}`,newFormData, {headers:{'Content-Type': 'multipart/form-data'}})
         .then(response =>console.log(response))
         .catch(error =>console.log(error))
         
@@ -41,6 +45,14 @@ const InternshipForm = () =>{
             window.location.reload();
         }, 2000);
     }
+
+    useEffect(()=>{
+        axios.get(`http://localhost:4040/api/internships-edit/${ID}`)
+        .then(response => {
+            const retrievedData = response.data[0]
+            setIform({image:retrievedData.image, internshipname:retrievedData.internshipname, location:retrievedData.location, internshipduration:retrievedData.internshipduration,info:retrievedData.info,country:retrievedData.country,requirements:retrievedData.requirements,documents:retrievedData.documents, apply:retrievedData.apply})
+        }).catch(error=> console.error(error.message))
+    },[])
 
     return(
         <main>
@@ -52,7 +64,7 @@ const InternshipForm = () =>{
 
                 {submitted && <SubmittedBox successMessage={'Internship Successfully Added'} /> }
 
-                <FormsDashboardHead title='Internship Form' />
+                <FormsDashboardHead title='Internship Edit Form' />
 
                 <form className=' p-3 flex flex-col gap-4' onSubmit={submit}>
 
@@ -74,7 +86,7 @@ const InternshipForm = () =>{
                         name='internshipduration' 
                         value={iform.internshipduration}
                         onChange={formValues}
-                        className="bg-transparent border-[1px] border-blue-600 p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" required>
+                        className="bg-transparent border-[1px] border-black p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" required>
                             <option value='' disabled >-- Select Internship Duration -- </option>
                             <option value='One Month'>One Month</option>
                             <option value='Two - Three Months'>Two - Three Months</option>
@@ -96,11 +108,22 @@ const InternshipForm = () =>{
 
                     <div className=" flex flex-col gap-1">
                         <label htmlFor='country' className=" text-xl">Select Host Country</label>
-                        <select id='country' name='country' className="bg-transparent border-[1px] border-blue-600 p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" required>
-                            <option value='' disabled >-- Select Country -- </option>
+                        <select id='country' name='country' className="bg-transparent border-[1px] border-black p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" required>
+                            <option value='' selected disabled >-- Select Country -- </option>
                             {countries.map((country, id)=>(<option value={country} key={id}>{country}</option>))}
                         </select>                 
                     </div>
+
+                    <FormInputs 
+                        label='Location' 
+                        htmlFor='location'
+                        type='text'
+                        id='location'
+                        name='location'
+                        value={iform.location}
+                        onChange={formValues}
+                        placeholder='e.g. New York, 43'
+                    />
 
                     <FormTextarea 
                         label='Internship Requirements' 
@@ -150,4 +173,4 @@ const InternshipForm = () =>{
     )
 };
 
-export default InternshipForm;
+export default InternshipEditForm;
