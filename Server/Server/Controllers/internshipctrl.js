@@ -7,7 +7,7 @@ export const InternshipsGet = async(req,res) =>{
         const [data] = await database.query(query);
         res.send(data);
     }catch(error){
-        console.error(error)
+        console.error(error.message)
     }
 };   
 
@@ -28,7 +28,7 @@ export const InternshipsCount = async(req, res) =>{
 
 export const InternshipsPost = async(req,res) =>{
     const {internshipname,location,internshipduration,info,country,requirements,documents,apply} = req.body;
-    const image = req.file.buffer;
+    const image = req.file.path;
 
     const query = `
     INSERT INTO internships
@@ -38,7 +38,7 @@ export const InternshipsPost = async(req,res) =>{
     try{
         const [data] = await database.query(query, parameters);
     }catch(error){
-        console.log(error);
+        console.error(error.message);
     }
 };   
 
@@ -49,7 +49,7 @@ export const InternshipsDelete = async(req,res) =>{
     try{
         const [data] = await database.query(query, parameters);
     }catch(error){
-        console.error(error);
+        console.error(error.message);
     }
 }
 
@@ -61,13 +61,15 @@ export const InternshipsEdit = async(req, res) =>{
         const [data] = await database.query(query, parameter)
         res.send(data)
     }catch(error){
-        console.log(error.message)
+        console.error(error.message)
     }
 }
 
 // posts the newly updated internships
 export const InternshipsUpdate = async(req,res) =>{
-    const {image, internshipduration, internshipname, info, location, documents, requirements, apply, country} = req.body;
+    const {internshipduration, internshipname, info, location, documents, requirements, apply, country} = req.body;
+    const image = req.file.path;
+
     const query = "UPDATE internships SET image=?, internshipduration=?, internshipname=?, info=?, location=?, documents=?, requirements=?, apply=?, country=? WHERE id=?"
     const parameter = [image, internshipduration, internshipname,info, location, documents, requirements, apply, country, req.params.id];
     try {

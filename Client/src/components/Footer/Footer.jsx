@@ -5,7 +5,7 @@ const Footer = () =>{
     const date = new Date()
     const Year = date.getFullYear();
     return(
-        <div className=" h-full px-4 py-14 text-white
+        <div className="px-4 py-14 text-white
         bg-gradient-to-tr from-[#1B263C] to-[#203869]
         ">
             <div className=" flex flex-col justify-center md:flex md:flex-row md:justify-around mb-4 gap-4 justif">

@@ -28,7 +28,7 @@ export const ArticleCount = async(req, res) =>{
 
 export const ArticlePost = async(req, res) =>{
     const {title,briefinfo,post} = req.body;
-    const image = req.file.buffer;
+    const image = req.file.path;
 
     const query = `INSERT INTO articles
     (id,image,title,briefinfo,post)
@@ -37,7 +37,7 @@ export const ArticlePost = async(req, res) =>{
     try{
         const [data] = await database.query(query, parameter);
     }catch(error){
-        console.log(error);
+        console.error(error.message);
     }
 }
 
@@ -68,7 +68,7 @@ export const ArticleEdit = async(req, res) =>{
 // posts the newly updated article 
 export const ArticleUpdate = async(req,res) =>{
     const {title, briefinfo, post} = req.body;
-    const image = req.file.buffer;
+    const image = req.file.path;
 
     const query = "UPDATE articles SET image=?, title=?, briefinfo=?, post=? WHERE id=?"
     const parameter = [image, title, briefinfo, post, req.params.id];

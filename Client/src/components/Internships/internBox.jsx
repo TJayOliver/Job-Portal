@@ -1,9 +1,9 @@
 import One from '../../assets/One.jpg'
 
-const InternBox = ({internshipname, briefinfo}) =>{
+const InternBox = ({internshipname, briefinfo, image}) =>{
     return(
         <div className=" h-96 w-72 rounded-md bg-white shrink-0">
-            <img src={One} alt='Internship Flyer' className=' h-[12rem] p-2 rounded-md object-cover' />
+            <img src={image} alt='Internship Flyer' className=' h-[12rem] p-2 rounded-md object-cover' />
             <div className=" grid place-content-center text-center">
                 <p className=" font-bold">{internshipname}</p>
                 <p className=" p-2">{briefinfo}</p>

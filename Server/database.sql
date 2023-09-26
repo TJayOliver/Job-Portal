@@ -3,14 +3,14 @@ CREATE TABLE `administrator`(
     `username` VARCHAR(50) NOT NULL,
     `password` VARCHAR(100) NOT NULL,
     `admintype` ENUM('SuperAdmin', 'NormalAdmin'),
-    `image` BLOB NOT NULL,
+    `image` VARCHAR(50) NOT NULL,
     `datecreated` DATE DEFAULT CURRENT_DATE NOT NULL,
     PRIMARY KEY(`id`)
 );
 
 CREATE TABLE `scholarships`(
     `id` VARCHAR(80) NOT NULL,
-    `image` BLOB NOT NULL,
+    `image` VARCHAR(50) NOT NULL,
     `scholarshipname` VARCHAR(80) NOT NULL,
     `deadline` DATE NOT NULL,
     `scholarshiptype` ENUM('Fully Funded', 'Partial') NOT NULL,
@@ -33,7 +33,7 @@ CREATE TABLE `scholarships`(
 
 CREATE TABLE `articles`(
     `id` VARCHAR(80) NOT NULL,
-    `image` BLOB NOT NULL,
+    `image` VARCHAR(50) NOT NULL,
     `title` VARCHAR(80) NOT NULL,
     `briefinfo` VARCHAR(80) NOT NULL,
     `author` VARCHAR(80) NOT NULL,
@@ -44,7 +44,7 @@ CREATE TABLE `articles`(
 
 CREATE TABLE `graduatejobs`(
     `id` VARCHAR(80) NOT NULL,
-    `image` BLOB NOT NULL,
+    `image` VARCHAR(50) NOT NULL,
     `salary` INT NOT NULL,
     `company` VARCHAR(50) NOT NULL,
     `duration` ENUM('Full Time', 'Part Time') NOT NULL,
@@ -66,7 +66,7 @@ CREATE TABLE `graduatejobs`(
 
 CREATE TABLE `internships`(
     `id` VARCHAR(80) NOT NULL,
-    `image` BLOB NOT NULL,
+    `image` VARCHAR(50) NOT NULL,
     `internshipduration` ENUM('One Month', 'Two - Three Months', 'Four - Six Months', 'Six - Seven Months', 'Seven Months +') NOT NULL,
     `internshipname` VARCHAR(50) NOT NULL,
     `info` VARCHAR(200) NOT NULL,

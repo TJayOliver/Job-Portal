@@ -7,7 +7,7 @@ export const GraduateJobGet = async(req,res) =>{
         const [data] = await database.query(query);
         res.send(data);
     }catch(error){
-        console.log(error);
+        console.error(error.message);
     }
 }
 
@@ -28,7 +28,7 @@ export const GraduateJobCount = async(req, res) =>{
 
 export const GraduateJobPost = async(req,res) =>{
     const {company,salary,location,position,duration,country,minimumqualification,experiencelevel,experiencelength,responsibilities,requirements,otherinformation,apply,categoriesname} = req.body;
-    const image = req.file.buffer;
+    const image = req.file.path;
 
     const query = `INSERT INTO graduatejobs
     (id,image,company,salary,location,position,duration,country,minimumqualification,experiencelevel,experiencelength,responsibilities,requirements,otherinformation,apply,categoriesname)
@@ -37,7 +37,7 @@ export const GraduateJobPost = async(req,res) =>{
     try{
         const [data] = database.query(query, parameters);
     }catch(error){
-        console.log(error)
+        console.error(error.message)
     }
 }
 

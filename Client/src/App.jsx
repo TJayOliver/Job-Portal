@@ -1,7 +1,7 @@
 import {Route, createBrowserRouter, createRoutesFromElements, RouterProvider} from 'react-router-dom';
 import Home from './pages/home.jsx'
-import Jobs from './components/Jobs/Jobs';
-import Scholarships from './pages/scholarships.jsx'
+import Jobs from './pages/Jobs';
+import Scholarship from './pages/Scholarship.jsx';
 import Internships from './pages/internships.jsx'
 import Articles from './pages/articles.jsx'
 import Administrator from './pages/administrator/administrator.jsx';
@@ -25,7 +25,7 @@ const router = createBrowserRouter(
       <Route path='/administrator' element={<Administrator />} />
       <Route path='/jobs' element={<Jobs />} />
       <Route path='/internships' element={<Internships />} />
-      <Route path='/scholarships' element={<Scholarships />} />
+      <Route path='/scholarships' element={<Scholarship />} />
       <Route path='/dashboard' element={<Dash />} />
 
       <Route path='/forms/articles' element={<ArticleForm />} />

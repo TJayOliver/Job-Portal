@@ -6,7 +6,6 @@ import { HiMiniTrash, HiMiniPencil } from "react-icons/hi2";
 import {CgArrowDown} from "react-icons/cg"
 import { useState, useEffect } from "react";
 import Pagination from "../Pagination";
-
 import axios from "axios";
 
 const RightPanel = ({Delete, Edit}) =>{

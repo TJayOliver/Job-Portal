@@ -8,15 +8,10 @@ export const ScholarshipGet = async(req,res) =>{
     FROM scholarships`
     try{
         const [data] = await database.query(query)
-        const newData = await Promise.all(data.map(async(dat)=>{
-            const imageBuffer = await database.query('SELECT image FROM scholarships WHERE id=?', [dat.id]);
-            return{...dat, image:imageBuffer[0][0].image.toString('base64')}
-        }));
-
-        res.json(newData)
-    }
+        res.send(data)
+    } 
     catch(error){
-        console.log(error)
+        console.error(error.message)
     }
 };
 
@@ -37,7 +32,7 @@ export const ScholarshipCount = async(req, res) =>{
 
 export const ScholarshipPost = async(req,res)=>{
     const {scholarshipname, deadline, scholarshiptype, agent, programs, applicant,hostuniversity, offeredby, aboutscholarship,scholarshipbenefits, eligibilitycriteria, documentsrequired, country, apply, duration} = req.body;
-    const image = req.file.buffer;
+    const image = req.file.filename;
 
     const query = `INSERT INTO scholarships  
     (id, image, scholarshipname, deadline, scholarshiptype, agent, programs, applicant,hostuniversity, offeredby, aboutscholarship,scholarshipbenefits, eligibilitycriteria, documentsrequired, country, apply, duration) 
@@ -46,9 +41,8 @@ export const ScholarshipPost = async(req,res)=>{
 
     try{
         const [data] = await database.query(query, parameter)
-        console.log('scholarship post data retrieved by MYSQL')
     }catch(error){
-        console.log(error)
+        console.error(error.message)
     }
 }
 
@@ -60,7 +54,7 @@ export const ScholarshipDelete = async(req,res) =>{
         const [data] = await database.query(query, parameter);
         return res.json('Successfully Deleted');
     } catch (error) {
-        console.error(error)
+        console.error(error.message)
     }
 }
 
@@ -80,7 +74,7 @@ export const ScholarshipEdit = async(req, res) =>{
 export const ScholarshipsUpdate = async(req,res) =>{
     const {scholarshipname, deadline, scholarshiptype, agent, programs, applicant,hostuniversity, offeredby, aboutscholarship,scholarshipbenefits, eligibilitycriteria, documentsrequired, country, apply, duration} = req.body;
 
-    const image = req.file.buffer;
+    const image = req.file.path;
     
     const query = "UPDATE image, scholarships SET scholarshipname=?, deadline=?, scholarshiptype=?, agent=?, programs=?, applicant=?,hostuniversity=?, offeredby=?, aboutscholarship=?,scholarshipbenefits=?, eligibilitycriteria=?, documentsrequired=?, country=?, apply=?, duration=? WHERE id=?"
 

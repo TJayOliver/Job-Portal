@@ -1,12 +1,11 @@
 import two from '../../assets/Two.jpg'
 import three from '../../assets/Three.jpg'
 
-
 const FeaturedArticle = () =>{
     return(
         <div className=" h-[33rem] md:h-96 p-1">
 
-            <p className=" text-white text-center text-2xl mb-0 md:mb-4">Featured Articles</p>
+            <p className="  text-center text-2xl mb-0 md:mb-4">Featured Articles</p>
 
             <div className=" flex flex-col md:justify-evenly justify-center py-4 md:flex-row md:flex px-4 md:p-0 gap-4">
 
