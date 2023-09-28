@@ -4,7 +4,7 @@ import { useState } from "react"
 import Footer from "../components/Footer/Footer"
 import Header from "../components/Header/Header"
 import SocialMedia from "../components/Homepage/SocialMedia/SocialMedia.jsx"
-import FilterInternships from '../components/Internships/filterInternships.jsx'
+
 import InternBox from "../components/Internships/internBox"
 
 const Internships = () =>{
@@ -23,7 +23,7 @@ const Internships = () =>{
         <>
             <Header/>
             <div className=" h-screen flex p-4 gap-3 bg-gray-100">
-                <FilterInternships/>
+
                 <div className=" md:max-w-5xl lg:max-w-7xl xl:max-w-none m-auto ">
                     <div className=" flex flex-wrap justify-center md:flex md:flex-wrap gap-3 internshipSize">
                         { loading ? <div>Loading....</div> :

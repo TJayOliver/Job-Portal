@@ -14,6 +14,9 @@ export default {
         xxl: '1609px'
       },
     },
+    fontFamily : {
+      AliandoRocky : ['AliandoRocky', 'sans-serif']
+    }
   },
   plugins: [],
 }

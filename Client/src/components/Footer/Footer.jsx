@@ -1,22 +1,13 @@
 import {AiOutlineCopyright } from "react-icons/ai"
-import categories from "../categories"
 
 const Footer = () =>{
     const date = new Date()
     const Year = date.getFullYear();
     return(
-        <div className="px-4 py-14 text-white
+        <div className=" px-4 py-14 text-white
         bg-gradient-to-tr from-[#1B263C] to-[#203869]
         ">
-            <div className=" flex flex-col justify-center md:flex md:flex-row md:justify-around mb-4 gap-4 justif">
-                <div>
-                    <h1 className=" text-[#09AE79] font-bold">Categories</h1>
-                    {categories.map((cat, id)=>
-                        <p key={id}>
-                            {cat.categoryName}
-                        </p>
-                    )}
-                </div>
+            <div className=" flex flex-col justify-center md:flex md:flex-row md:justify-around mb-4 gap-4 justify">
 
                 <div>
                     <h1 className=" text-[#09AE79] font-bold">Employers</h1>

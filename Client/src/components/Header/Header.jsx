@@ -1,79 +1,51 @@
-import logo from '../../assets/logo.png'
-import Hamburger from './Hamburger'
-import { useState } from 'react'
-import InsideMenus from './InsideMenus'
-import {AiOutlineSearch} from 'react-icons/ai'
-import {FiArrowRightCircle} from 'react-icons/fi'
 import { Link } from 'react-router-dom'
+import { useState } from 'react';
 
 const Header=()=>{
-    const [animate, setAnimation] = useState(false)
-    const animation = () =>{setAnimation(prev => !prev)}
+    const [mobileAnimation, setMobileAnimation] = useState(false);
+    const animateMobile = () =>{
+        setMobileAnimation(prev => !prev)
+    }
+    const [displayMobileMenu, setDisplayMobileMenu] = useState(false);
+    let div1 = `h-1 w-8 bg-black rounded-sm duration-150 ease-in transfrom rotate-45 translate-y-2`,
+    div2 = `h-1 w-6 bg-black rounded-sm duration-300 ease-in -translate-x-8 opacity-0`,
+    div3 = `h-1 w-8 bg-black rounded-sm duration-150 ease-in transform -rotate-45 -translate-y-2`;
 
-    const incomingSlide = ' md:hidden h-screen bg-gradient-to-tr from-[#1B263C] to-[#203869] absolute top-0 w-full -translate-x-0 left-0 ease-in duration-700 overflow-y-scroll latestJobs'
-    const defaultSlide = ' md:hidden h-screen bg-gradient-to-tr from-[#1B263C] to-[#203869]  absolute top-0 w-full -translate-x-[800px] left-0 ease-in duration-700 opacity-10 latestJobs'
-
+    const mobileMenu = () =>{
+        setDisplayMobileMenu(prev => !prev)
+    }
+   
+   
     return(
-        <header className=" h-14 sticky top-0 z-50 bg-gradient-to-r from-[#1B263C] to-[#203869] 
-        ">
-            <div className=' px-1 relative'>
-      
-                <div className=' flex items-center justify-between md:justify-around  ease-linear duration-75'>
+        <header className='sticky top-0 z-50 bg-white'>
+            <nav className=' flex justify-between items-center p-2'>
 
-                    <div className=' flex items-center gap-3'>
-                        <Hamburger animate={animate} animation={animation} />
-                        <img src={logo} width={70} className=' ml-2'/>
-                    </div>
+                <ul className=' flex gap-4 items-center font-medium'>
+                    <li className='font-AliandoRocky text-xl whitespace-nowrap'><Link to='/'>Job Portal</Link></li>
+                    <li className='hidden md:block'><Link to='/articles'>Articles</Link></li>
+                    <li className='hidden md:block'><Link to='/scholarships'>Scholarships</Link></li>
+                    <li className='hidden md:block'><Link to='/internships'>Internships</Link></li>
+                    <li className='hidden md:block'><Link to='/jobs'>Jobs</Link></li>
+                </ul>
 
-                    <InsideMenus/>
-
-                    <div className=' ease-out duration-300 flex gap-3 items-center'>
-                        <div 
-                            role='button' 
-                            className=" bg-white p-2 text-center text-black rounded-full hover:bg-[#e7ecea] duration-75 ease-in">UPLOAD CV 
-                        </div>
-                        <div role='button' className=' text-white'>Log In</div>
-                    </div>
-
-                </div>
-     
-                {/* Mobile Menu */}
-                <div className={animate ? incomingSlide : defaultSlide}>
-                    <div className=' md:hidden mt-14 flex flex-col gap-0'>
-                        <form className=' relative'>
-                            <input 
-                                type='search'
-                                className=' text-3xl text-white py-2 px-10 bg-transparent relative w-full outline-none placeholder:text-xl placeholder:tracking-widest
-                                placeholder:text-white
-                                placeholder:py-2'
-                                placeholder='What are you looking for?'
-                            />
-                            <AiOutlineSearch className=' text-white absolute top-4 left-2 text-2xl'/>
-                        </form>
-                        <Link href='/' className=' text-3xl text-white border border-l-0 border-r-0 border-t-0 border-white p-4 relative hover:bg-[#132b35] group'>
-                            <FiArrowRightCircle className=' absolute right-8 group-hover:right-0 duration-100 ease-in cursor-pointer'/>
-                            <div>Home</div>
-                        </Link>
-                        <Link href='/scholarships' className=' text-3xl text-white border border-l-0 border-r-0 border-white p-4 relative hover:bg-[#132b35] group'>
-                            <FiArrowRightCircle className=' absolute right-8 group-hover:right-0 duration-100 ease-in cursor-pointer'/>
-                            <div>Scholarships</div>
-                        </Link>
-                        <Link href='/internships' className=' text-3xl text-white border border-l-0 border-r-0 border-t-0 border-white p-4 relative hover:bg-[#132b35] group'>
-                            <FiArrowRightCircle className=' absolute right-8 group-hover:right-0 duration-100 ease-in cursor-pointer'/>
-                            <div>Internships</div>
-                        </Link>
-                        <div className=' text-3xl text-white border border-l-0 border-r-0 border-t-0 border-white p-4 relative hover:bg-[#132b35] group'>
-                            <FiArrowRightCircle className=' absolute right-8 group-hover:right-0 duration-100 ease-in cursor-pointer'/>
-                            <div>Study Abroad</div>
-                        </div>
-                        <div className=' text-3xl text-white border border-l-0 border-r-0 border-t-0 border-white p-4 relative hover:bg-[#132b35] group'>
-                            <FiArrowRightCircle className=' absolute right-8 group-hover:right-0 duration-100 ease-in cursor-pointer'/>
-                            <div>Remote Jobs</div>
-                        </div>
+                 {/* mobile button */}
+                <div onClick={mobileMenu} className=" flex justify-between md:hidden ">
+                    <div onClick={animateMobile} className=" flex flex-col gap-1 justify-center cursor-pointer">
+                        <div className={mobileAnimation ? div1 : `h-1 w-8 bg-black rounded-sm duration-75 ease-in`}></div>
+                        <div className={mobileAnimation ? div2 : `h-1 w-6 bg-black rounded-sm duration-75 ease-in`}></div>
+                        <div className={mobileAnimation ? div3 : `h-1 w-8 bg-black rounded-sm duration-75 ease-in`}></div>
                     </div>
                 </div>
 
-            </div>
+                <input type='search' className=' hidden md:block md:h-8 md:drop-shadow-sm md:w-96 md:rounded-md' />
+
+                <ul className=' hidden md:flex md:gap-4 md:items-center md:font-medium'>
+                <li>Upload CV</li>
+                <li>Post a Job</li>
+                <li>Sign In</li>
+                </ul>
+            </nav>
+
         </header>
     )
 }

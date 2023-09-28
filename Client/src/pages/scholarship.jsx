@@ -1,9 +1,7 @@
 import SchoBox from "../components/Scholarships/SchoBox"
-import FilterSchoSearch from "../components/Scholarships/FilterSchoSearch"
 import { useState,useEffect } from "react"
 import axios from "axios"
 import Header from "../components/Header/Header"
-import FeaturedArticle from "../components/Scholarships/FeaturedArticle"
 import SocialMedia from "../components/Homepage/SocialMedia/SocialMedia"
 import Footer from "../components/Footer/Footer"
 
@@ -22,9 +20,9 @@ const Scholarship = ()=>{
     return(
         <>
             <Header />
-            <FeaturedArticle />
+            
             <div className=" h-screen flex p-4 gap-3 bg-gray-100">
-                <FilterSchoSearch />
+  
                 <div className=" md:max-w-5xl lg:max-w-7xl xl:max-w-none m-auto ">
                     <div className=" flex flex-wrap justify-center md:flex md:flex-wrap gap-3">
                         { loading ? <div>loading ....</div> :
