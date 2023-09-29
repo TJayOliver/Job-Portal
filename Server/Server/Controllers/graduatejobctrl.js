@@ -61,14 +61,14 @@ export const GraduateJobsEdit = async(req, res) =>{
         const [data] = await database.query(query, parameter)
         res.send(data)
     }catch(error){
-        console.log(error.message)
+        console.error(error.message)
     }
 }
 
 // posts the newly updated graduate jobs 
 export const GraduateJobsUpdate = async(req,res) =>{
     const {company,salary,location,position,duration,country,minimumqualification,experiencelevel,experiencelength,responsibilities,requirements,otherinformation,apply,category} = req.body;
-    const image = req.file.buffer;
+    const image = req.file.path;
 
     const query = "UPDATE graduatejobs SET image=? company=?,salary=?,location=?,position=?,duration=?,country=?,minimumqualification=?,experiencelevel=?,experiencelength=?,responsibilities=?,requirements=?,otherinformation=?,apply=?,category=? WHERE id=?"
     

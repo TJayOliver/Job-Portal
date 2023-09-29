@@ -14,7 +14,7 @@ const JobEditForm = () =>{
     const [cData, setCData] = useState([]);
 
     const [gform, setGForm] = useState({
-        image:null,company:"",salary:"",location:"",duration:"",country:"",minimumqualification:"",experiencelevel:"",experiencelength:"",responsibilities:"",requirements:"",otherinformation:"",apply:"", categoriesname:""
+        image:null,company:"",salary:"",location:"",duration:"",country:"", position:"",minimumqualification:"",experiencelevel:"",experiencelength:"",responsibilities:"",requirements:"",otherinformation:"",apply:"", categoriesname:""
     });
     const [submitted, setSubmitted] = useState(false);
 
@@ -60,7 +60,7 @@ const JobEditForm = () =>{
 
                 {submitted && <SubmittedBox successMessage='Job Opportunity Submitted' />}
 
-                <FormsDashboardHead title='Graduates Jobs Form' />
+                <FormsDashboardHead title='Jobs Edit Form' />
 
                 <form className=' p-3 flex flex-col gap-4' onSubmit={submit}>
                     
@@ -92,6 +92,8 @@ const JobEditForm = () =>{
                         type='text'
                         id='position'
                         name='position'
+                        value={gform.position}
+                        onChange={formValues}
                         placeholder='e.g. General Manager'
                     />
 

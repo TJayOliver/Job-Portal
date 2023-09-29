@@ -220,7 +220,7 @@ const RightPanel = ({Delete, Edit}) =>{
                                         <td className="px-2 md:px-4 py-4 text-left text-xs font-medium">{data.company}</td>
                                         <td className="px-2 md:px-4 py-4 text-left text-xs font-medium">{data.datecreated}</td>
                                         <td className="flex flex-col md:flex md:flex-row gap-2 py-2 md:py-4 text-left text-md font-medium">
-                                            <div onClick={()=>Edit(data.id, 'graduatesjobs-edit')} className=" hover:bg-blue-300 cursor-pointer p-1 md:p-2 rounded-md">
+                                            <div onClick={()=>Edit(data.id, 'jobs-edit')} className=" hover:bg-blue-300 cursor-pointer p-1 md:p-2 rounded-md">
                                                 <HiMiniPencil />
                                             </div>
                                             <div onClick={()=>Delete(data.id, 'graduatesjobs-delete', "Jobs")} className=" hover:bg-red-300 cursor-pointer p-1 md:p-2 rounded-md">

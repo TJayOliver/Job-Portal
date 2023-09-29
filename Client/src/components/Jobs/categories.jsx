@@ -1,11 +1,8 @@
-const Categories = ({color}) =>{
+const Categories = ({Category}) =>{
     
     return(
-        <div className='h-24 w-32 border-[1px] rounded-lg border-gray-200  '>
-            <div className=" p-2">
-                <p className=" font-medium">Data Management</p>
-                <div className=" bg-gray-200 rounded-full h-8 w-8 float-right"></div>
-            </div>
+        <div className=" h-12 w-44 rounded-3xl shrink-0 border-gray-200 border-[1px] flex items-center justify-center ">
+            <p className=" font-bold">{Category}</p>
         </div>
     )
 }

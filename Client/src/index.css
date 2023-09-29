@@ -11,8 +11,6 @@ html, body{@apply h-screen overflow-x-hidden select-none scroll-smooth}
     src: url('./fonts/AliandoRocky.ttf');
 }
 
-
-
 .scrollbar::-webkit-scrollbar{@apply hidden}
 
 .job-hash{@apply bg-gray-300 rounded-md p-1 text-center}

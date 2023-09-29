@@ -7,9 +7,9 @@ const Header=()=>{
         setMobileAnimation(prev => !prev)
     }
     const [displayMobileMenu, setDisplayMobileMenu] = useState(false);
-    let div1 = `h-1 w-8 bg-black rounded-sm duration-150 ease-in transfrom rotate-45 translate-y-2`,
-    div2 = `h-1 w-6 bg-black rounded-sm duration-300 ease-in -translate-x-8 opacity-0`,
-    div3 = `h-1 w-8 bg-black rounded-sm duration-150 ease-in transform -rotate-45 -translate-y-2`;
+    let div1 = `h-1 w-8 bg-black rounded-md duration-150 ease-in transfrom rotate-45 translate-y-2`,
+    div2 = `h-1 w-6 bg-black rounded-md duration-300 ease-in -translate-x-8 opacity-0`,
+    div3 = `h-1 w-8 bg-black rounded-md duration-150 ease-in transform -rotate-45 -translate-y-2`;
 
     const mobileMenu = () =>{
         setDisplayMobileMenu(prev => !prev)
