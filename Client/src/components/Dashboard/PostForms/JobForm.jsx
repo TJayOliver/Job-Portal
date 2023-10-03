@@ -19,7 +19,7 @@ const JobForm = () =>{
     }, [])
 
     const [gform, setGForm] = useState({
-        image:null,company:"",salary:"",location:"",position:"",duration:"",country:"",minimumqualification:"",experiencelevel:"",experiencelength:"",responsibilities:"",requirements:"",otherinformation:"",apply:"", categoriesname:""
+        image:null,company:"",salary:"",location:"",position:"",duration:"",responsibilities:"",requirements:"",otherinformation:"",apply:"", categoriesname:""
     });
     const [submitted, setSubmitted] = useState(false);
 
@@ -38,7 +38,7 @@ const JobForm = () =>{
             newFormData.append(key, gform[key])
         }
 
-        axios.post('http://localhost:4040/api/graduatejobs-post',newFormData, {headers:{'Content-Type': 'multipart/form-data'}})
+        axios.post('http://localhost:4040/api/jobs-post',newFormData, {headers:{'Content-Type': 'multipart/form-data'}})
         .then(response =>console.log(response))
         .catch(error =>console.log(error))
         
@@ -102,7 +102,7 @@ const JobForm = () =>{
                         name='location'
                         value={gform.location}
                         onChange={formValues}
-                        placeholder='e.g. New Weija, Accra'
+                        placeholder='e.g. Accra'
                     />
 
                     <div className=" flex flex-col gap-1">
@@ -120,19 +120,6 @@ const JobForm = () =>{
                     </div>
 
                     <div className=" flex flex-col gap-1">
-                        <label htmlFor='country' className=" text-xl">Select Host Country</label>
-                        <select 
-                        id='country' 
-                        name='country' 
-                        value={gform.country}
-                        onChange={formValues}
-                        className="bg-transparent border-[1px] border-black p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" required>
-                            <option value='' disabled>-- Select Country -- </option>
-                            {countries.map((country, id)=>(<option value={country} key={id}>{country}</option>))}
-                        </select>                 
-                    </div>
-
-                    <div className=" flex flex-col gap-1">
                         <label htmlFor='categoriesname' className=" text-xl">Select Job Category</label>
                         <select 
                         id='categoriesname' 
@@ -144,36 +131,6 @@ const JobForm = () =>{
                             {cData.map((cat,id)=>(<option key={id} value={cat.categoriesname}>{cat.categoriesname}</option>))}
                         </select>                 
                     </div>
-                    
-                    <FormTextarea
-                        label='Minimum Qualification'
-                        htmlFor='minimumqualification'
-                        id='minimumqualification'
-                        name='minimumqualification'
-                        value={gform.minimumqualification}
-                        onChange={formValues}
-                        placeholder='e.g. Bachelors Degree in Accounting'
-                    />
-                    
-                    <FormTextarea
-                        label='Experience Level'
-                        htmlFor='experiencelevel'
-                        id='experiencelevel'
-                        name='experiencelevel'
-                        value={gform.experiencelevel}
-                        onChange={formValues}
-                        placeholder='experience level'
-                    />
-                    
-                    <FormTextarea
-                        label='Experience Length'
-                        htmlFor='experiencelength'
-                        id='experiencelength'
-                        name='experiencelength'
-                        value={gform.experiencelength}
-                        onChange={formValues}
-                        placeholder='e.g. Three - Five experience'
-                    />
                     
                     <FormTextarea
                         label='Job Responsibilities'
@@ -216,19 +173,19 @@ const JobForm = () =>{
                     />
 
                     <FormInputs 
-                        label='Upload Job Flyer' 
+                        label='Upload Job Flyer / Logo' 
                         htmlFor='image'
                         type='file'
                         id='image'
                         name='image'
                         onChange={formFiles}
-                        accept='image/*'
+                        accept='.jpg, .jpeg, .png, .JPG'
                     />
 
                     <button className=" text-xl bg-blue-600 p-2 rounded-md text-white hover:bg-blue-500">POST</button>
 
                 </form>
-
+                
             </section>
         </main>
     )

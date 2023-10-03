@@ -10,10 +10,7 @@ export default function Home() {
     <>
     <Header /> 
     <Information />
-    <LatestJobs />
     <SchoHome/>
-    <Groups />
-    <InternHome />
     <SocialMedia />
     <Footer />
     </>

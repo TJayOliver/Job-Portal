@@ -24,7 +24,6 @@ const Header=()=>{
                     <li className='font-AliandoRocky text-xl whitespace-nowrap'><Link to='/'>Job Portal</Link></li>
                     <li className='hidden md:block'><Link to='/articles'>Articles</Link></li>
                     <li className='hidden md:block'><Link to='/scholarships'>Scholarships</Link></li>
-                    <li className='hidden md:block'><Link to='/internships'>Internships</Link></li>
                     <li className='hidden md:block'><Link to='/jobs'>Jobs</Link></li>
                 </ul>
 

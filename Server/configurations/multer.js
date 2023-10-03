@@ -27,18 +27,9 @@ const scholarshipStorage = multer.diskStorage({
     }
 });
 
-const internshipStorage = multer.diskStorage({
+const jobStorage = multer.diskStorage({
     destination : (req, file, cb) =>{
-        cb(null,'uploads/internship');
-    },
-    filename : (req, file, cb) =>{
-        cb(null, date() + '-' + 'internship' + '-' + file.originalname)
-    }
-});
-
-const graduatejobStorage = multer.diskStorage({
-    destination : (req, file, cb) =>{
-        cb(null,'uploads/graduatejob');
+        cb(null,'uploads/job');
     },
     filename : (req, file, cb) =>{
         cb(null, date() + '-' + 'job' + '-' + file.originalname)
@@ -47,6 +38,5 @@ const graduatejobStorage = multer.diskStorage({
 
 export const articleUpload = multer({storage : articleStorage});
 export const scholarshipUpload = multer({storage : scholarshipStorage});
-export const internshipUpload = multer({storage : internshipStorage});
-export const graduateUpload = multer({storage : graduatejobStorage});
+export const jobsUpload = multer({storage : jobStorage});
 

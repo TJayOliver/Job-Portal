@@ -15,33 +15,27 @@ const RightPanel = ({Delete, Edit}) =>{
     const [retrievedArticlesData, setRetrievedArticlesData] = useState([]),
     [retrievedCategoriesData, setRetrievedCategoriesData] = useState([]),
     [retrievedJobsData, setRetrievedJobsData] = useState([]),
-    [retrievedInternshipData, setRetrievedInternshipData] = useState([]),
     [retrievedscholarshipData, setRetrievedScholarshipData] = useState([]),
     [retrievedCountArticle, setCountArticle] = useState(""),
     [retrievedCountJobs, setCountJobs] = useState(""),
-    [retrievedCountInternship, setCountInternship] = useState(""),
     [retrievedCountScholarship, setCountScholarship] = useState("");
 
     const [overView, setOverview] = useState(true),
     [articleDataView, setArticleDataView] = useState(false),
     [jobsDataView, setJobsDataView] = useState(false),
-    [internshipsDataView, setInternshipsDataView] = useState(false),
     [scholarshipDataView, setScholarshipsDataView] = useState(false);
     
     const handleOverView = () =>{
-        setOverview(true); setArticleDataView(false); setJobsDataView(false); setInternshipsDataView(false); setScholarshipsDataView(false); setMove(firstmove);
+        setOverview(true); setArticleDataView(false); setJobsDataView(false); setScholarshipsDataView(false); setMove(firstmove);
     }
     const handleArticleTable = () =>{
-        setArticleDataView(true); setOverview(false); setJobsDataView(false); setInternshipsDataView(false);setScholarshipsDataView(false); setMove(secondMove);
+        setArticleDataView(true); setOverview(false); setJobsDataView(false);setScholarshipsDataView(false); setMove(secondMove);
     }
     const handleJobsTable = () =>{
-        setJobsDataView(true); setOverview(false); setArticleDataView(false); setInternshipsDataView(false);setScholarshipsDataView(false); setMove(thirdMove);
-    }
-    const handleInternshipsTable = () =>{
-        setInternshipsDataView(true); setOverview(false); setArticleDataView(false); setJobsDataView(false);setScholarshipsDataView(false); setMove(fouthMove);
+        setJobsDataView(true); setOverview(false); setArticleDataView(false);setScholarshipsDataView(false); setMove(thirdMove);
     }
     const handleScholarshipTable = () =>{
-        setScholarshipsDataView(true); setInternshipsDataView(false); setOverview(false); setArticleDataView(false); setJobsDataView(false);setMove(fifthMove);
+        setScholarshipsDataView(true); setOverview(false); setArticleDataView(false); setJobsDataView(false);setMove(fourthMove);
     }
 
     useEffect(() =>{
@@ -49,17 +43,13 @@ const RightPanel = ({Delete, Edit}) =>{
 
         axios.get('http://localhost:4040/api/categories-get').then(response => setRetrievedCategoriesData(response.data)).catch(error => console.error(error.message));
 
-        axios.get('http://localhost:4040/api/internships-get').then(response => setRetrievedInternshipData(response.data)).catch(error => console.error(error.message));
-
-        axios.get('http://localhost:4040/api/graduatesjobs-get').then(response => setRetrievedJobsData(response.data)).catch(error => console.error(error.message));
+        axios.get('http://localhost:4040/api/jobs-get').then(response => setRetrievedJobsData(response.data)).catch(error => console.error(error.message));
 
         axios.get('http://localhost:4040/api/scholarships-get').then(response => setRetrievedScholarshipData(response.data)).catch(error => console.error(error.message));
         
         axios.get('http://localhost:4040/api/articles-count').then(response => setCountArticle(response.data)).catch(error => console.error(error.message));
 
-        axios.get('http://localhost:4040/api/graduatesjobs-count').then(response => setCountJobs(response.data)).catch(error => console.error(error.message));
-
-        axios.get('http://localhost:4040/api/internships-count').then(response => setCountInternship(response.data)).catch(error => console.error(error.message));
+        axios.get('http://localhost:4040/api/jobs-count').then(response => setCountJobs(response.data)).catch(error => console.error(error.message));
 
         axios.get('http://localhost:4040/api/scholarships-count').then(response => setCountScholarship(response.data)).catch(error => console.error(error.message));
     }, [])
@@ -68,22 +58,20 @@ const RightPanel = ({Delete, Edit}) =>{
     const firstPostIndex = lastPostIndex - postPerPage;
     const currentArticlePost = retrievedArticlesData.slice(firstPostIndex, lastPostIndex); 
     const currentCategoryPost = retrievedCategoriesData.slice(firstPostIndex, lastPostIndex); 
-    const currentInternshipPost = retrievedInternshipData.slice(firstPostIndex, lastPostIndex); 
     const currentJobPost = retrievedJobsData.slice(firstPostIndex, lastPostIndex); 
     const currentScholarshipPost = retrievedscholarshipData.slice(firstPostIndex, lastPostIndex); 
 
     let firstmove = ` hidden md:block md:h-0.5 md:w-[4rem] md:bg-black md:absolute md:-bottom-0.5 md:left-[1.5rem] md:duration-100 md:ease-out`, 
     secondMove = `hidden md:block md:h-0.5 md:w-16 md:bg-black md:absolute md:-bottom-0.5 left-[8.9rem] md:duration-100 md:ease-out`, 
-    thirdMove = `hidden md:block md:h-0.5 md:w-24 md:bg-black md:absolute md:-bottom-0.5 md:left-[16.5rem] md:duration-100 md:ease-out`,
-    fouthMove = `hidden md:block md:h-0.5 md:w-[5.1rem] md:bg-black absolute md:-bottom-0.5 md:left-[26.0rem] md:duration-100 md:ease-out `, 
-    fifthMove = `hidden md:block md:h-0.5 md:w-[5.1rem] md:bg-black md:absolute md:-bottom-0.5 md:left-[34.5rem] md:duration-100 md:ease-out`;
+    thirdMove = `hidden md:block md:h-0.5 md:w-10 md:bg-black md:absolute md:-bottom-0.5 md:left-[16.5rem] md:duration-100 md:ease-out`, 
+    fourthMove = `hidden md:block md:h-0.5 md:w-[5.1rem] md:bg-black md:absolute md:-bottom-0.5 md:left-[22.5rem] md:duration-100 md:ease-out`;
 
     const [move,setMove] = useState(firstmove);
 
     return(
         <div className=" w-full md:ml-64 h-full">
 
-            <DashBoardHeader handleArticleTable={handleArticleTable} handleOverView={handleOverView} handleJobsTable={handleJobsTable} handleInternshipsTable={handleInternshipsTable} handleScholarshipTable={handleScholarshipTable} move={move} />
+            <DashBoardHeader handleArticleTable={handleArticleTable} handleOverView={handleOverView} handleJobsTable={handleJobsTable} handleScholarshipTable={handleScholarshipTable} move={move} />
 
             {/* Overview Data List */}
             
@@ -100,11 +88,6 @@ const RightPanel = ({Delete, Edit}) =>{
                         count={retrievedCountJobs}
                     />
                     <OverviewBox 
-                        logo={<BsMortarboard className=" text-4xl"/>} 
-                        title={retrievedInternshipData.length > 1 ? 'Internships Posted' : 'Internship Posted' } 
-                        count={retrievedCountInternship} 
-                    />
-                    <OverviewBox 
                         logo={<BiTrophy className=" text-4xl"/>} 
                         title={retrievedscholarshipData.length > 1 ? 'Scholarships Posted' : 'Scholarship Posted' } 
                         count={retrievedCountScholarship}
@@ -112,7 +95,6 @@ const RightPanel = ({Delete, Edit}) =>{
                 </div>}
 
             {/* Categories Table List */}
-
             {overView && <div className=" p-3">
                     <div className=" border border-gray-200 rounded-md">
                         <table className=" min-w-full divide-y divide-gray-200">
@@ -197,7 +179,7 @@ const RightPanel = ({Delete, Edit}) =>{
                     />
             </div>} 
 
-            {/* Graduate Job Panel */}
+            {/* Job Panel */}
             {jobsDataView && <div className=" p-3">
                 <div className=" border border-gray-200 rounded-md">
                     <table className=" min-w-full divide-y divide-gray-200">
@@ -235,49 +217,6 @@ const RightPanel = ({Delete, Edit}) =>{
                 </div>
                 <Pagination 
                     totalPosts={retrievedJobsData.length} 
-                    postPerPage={postPerPage} 
-                    setCurrentPage={setCurrentPage}
-                    />
-            </div>} 
-
-            {/* Internship Panel */}
-            {internshipsDataView && <div className=" p-3">
-                <div className=" border border-gray-200 rounded-md">
-                    <table className=" min-w-full divide-y divide-gray-200">
-                        <thead className=" bg-gray-50">
-                            <tr>
-                                <th className="px-2 md:px-4 py-3 text-left text-sm font-medium flex gap-1" >Internship Name <CgArrowDown className="mt-1"/></th>
-                                <th className="px-2 md:px-4 py-3 text-left text-sm font-medium">Date Posted</th>
-                                <th className="px-2 md:px-4 py-3 text-left text-sm font-medium">Location</th>
-                                <th className="px-2 md:px-4 py-3 text-left text-sm font-medium" ></th>
-                            </tr>
-                        </thead>
-                        <tbody className="divide-y divide-gray-200">
-                            {
-                                retrievedInternshipData.length === 0 ? 
-                                <tr className=" flex justify-center p-3"><td>No Data Available</td></tr> 
-                                : 
-                                currentInternshipPost.map(data=>(
-                                    <tr key={data.id} className=" hover:bg-gray-50">
-                                        <td className="px-2 md:px-4 py-4 text-left text-xs font-medium">{data.internshipname}</td>
-                                        <td className="px-2 md:px-4 py-4 text-left text-xs font-medium">{data.datecreated}</td>
-                                        <td className="px-2 md:px-4 py-4 text-left text-xs font-medium">{data.location}</td>
-                                        <td className="flex flex-col md:flex md:flex-row gap-2 py-2 md:py-4 text-left text-md font-medium">
-                                            <div onClick={()=>Edit(data.id, 'internships-edit', "Internship")}  className=" hover:bg-blue-300 cursor-pointer p-1 md:p-2 rounded-md">
-                                                <HiMiniPencil />
-                                            </div>
-                                            <div onClick={()=>Delete(data.id, 'internships-delete', "Internship")} className=" hover:bg-red-300 cursor-pointer p-1 md:p-2 rounded-md">
-                                                <HiMiniTrash/>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                ))
-                            }
-                        </tbody>
-                    </table>
-                </div>
-                <Pagination 
-                    totalPosts={retrievedInternshipData.length} 
                     postPerPage={postPerPage} 
                     setCurrentPage={setCurrentPage}
                     />

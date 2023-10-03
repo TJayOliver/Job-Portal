@@ -38,7 +38,6 @@ const LeftPanel = () =>{
                 <DashboardBox Title='Add Articles' to="/forms/articles"  icon={<BiBookReader className=" mt-1"/>} />
                 <DashboardBox Title='Add Categories' to="/forms/categories" icon={<BiCategory className=" mt-1"/>} />
                 <DashboardBox Title='Add Jobs' to="/forms/jobs" icon={<BsPeople className=" mt-1"/>} />
-                <DashboardBox Title='Add Internships' to="/forms/internships" icon={<BsMortarboard className=" mt-1"/>} />
                 <DashboardBox Title='Add Scholarships' to="/forms/scholarships" icon={<BiTrophy className=" mt-1"/>} />
             </div>
             

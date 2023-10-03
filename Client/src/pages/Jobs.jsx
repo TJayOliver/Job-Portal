@@ -12,7 +12,7 @@ import JobBox from "../components/Jobs/JobBox"
 const Jobs = () =>{
     const [jobs, setJobs] = useState([]);
     const [categories, setCategories] = useState([]);
-    const [loading, setloading] = useState(false);
+    const [loading, setloading] = useState(true);
     
     const catOnetoSeven = categories.slice(0,6), catOthers = categories.slice(6);
 
@@ -26,7 +26,7 @@ const Jobs = () =>{
     }
 
     useEffect(()=>{
-        axios.get('http://localhost:4040/api/graduatesjobs-get')
+        axios.get('http://localhost:4040/api/jobs-get')
         .then((response) => {
             setJobs(response.data)
             setloading(false);
@@ -50,7 +50,7 @@ const Jobs = () =>{
         </div>
 
         
-        <div className=" p-2 gap-6 mt-2">
+        <div className=" bg-gray-200 p-2 gap-6 mt-2">
 
             {/* Categories */}
             <div className=" flex justify-start overflow-x-scroll scrollbar md:overscroll-none md:justify-center gap-4 mb-2">
@@ -75,21 +75,19 @@ const Jobs = () =>{
             </div>
                 
             {loading ? <Loading /> :
-                <div className="justify-center lg:justify-start items-center flex flex-col md:flex md:flex-row p-2 gap-3 flex-wrap ">{
+                <div className="justify-center xl:justify-start items-center flex flex-col md:flex md:flex-row p-2 gap-3 flex-wrap ">{
                     post.map((job, id)=>(
                         
                         <JobBox key={id} 
                         image={job.image}
-                        salary={job.salary}
                         location={job.location}
-                        country={job.country}
                         company={job.company}
                         duration={job.duration}
                         position={job.position}
                         category={job.categoriesname}
-                        description={job.responsibilities[0,25]}
+                        description={job.responsibilities.replace(/^\d+[.,]/, '').trim().slice(0,90)}
                         />
-                    ))}
+                    ))} 
                 </div>
             }
                 
