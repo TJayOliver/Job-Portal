@@ -6,7 +6,7 @@ import axios from "axios";
 import Loading from "../components/Loading/Loading"
 import SocialMedia from "../components/Homepage/SocialMedia/SocialMedia";
 import Footer from "../components/Footer/Footer";
-import { BiSolidCategoryAlt} from "react-icons/bi";
+import { BsCalendar2CheckFill} from "react-icons/bs";
 import {PiHandCoinsBold} from 'react-icons/pi'
 import {RiUserLocationFill} from 'react-icons/ri'
 
@@ -24,107 +24,142 @@ const JobDescription = () =>{
     return(
         <>
         <Header />
-        <section className=" flex  gap-5 py-4">
+        <section className=" flex justify-between p-4">
 
             {/* left panel */}
-            <div className=" hidden md:flex md:basis-[20%] h-[50rem] p-3">
-            {loading ? <Loading /> :
-
-                <div className=" flex flex-col gap-y-8 verflow-y-scroll overflow-x-hidden  ">{
-                    jobs.map((job, id)=>(
-                        <JobBox key={id} 
-                        image={job.image}
-                        location={job.location}
-                        company={job.company}
-                        duration={job.duration}
-                        position={job.position}
-                        category={job.categoriesname}
-                        description={job.responsibilities.replace(/^\d+[.,]/, '').trim().slice(0,90)}
-                        />
-                    ))} 
+            <div className=" basis-[25%] bg-white rounded-lg h-[28rem] sticky top-16 p-2">
+                <h1 className="font-bold p-2">Jobs you might be interested in</h1>
+                
+                <div className="p-1 mb-2 relative">
+                    <h1 className=" font-medium">Node js Backend Developer</h1>
+                    <p>Google Foundations</p>
+                    <div>
+                        <p>Category</p>
+                    </div>
+                    <div className=" flex justify-between mb-1 whitespace-nowrap">
+                        <p>Sunyani</p>
+                        <p>Posted on 5th October,2023</p>
+                    </div>
+                    <div className="bg-red-600 h-8 w-8 rounded-full absolute right-0 top-0"></div>
+                    <hr></hr>
                 </div>
-            }
+
+                <div className="p-1 mb-2 relative">
+                    <h1 className=" font-medium">Node js Backend Developer</h1>
+                    <p>Google Foundations</p>
+                    <div>
+                        <p>Category</p>
+                    </div>
+                    <div className=" flex justify-between mb-1 whitespace-nowrap">
+                        <p>Sunyani</p>
+                        <p>Posted on 5th October,2023</p>
+                    </div>
+                    <div className="bg-red-600 h-8 w-8 rounded-full absolute right-0 top-0"></div>
+                    <hr></hr>
+                </div>
+
+                <div className="p-1 mb-2 relative">
+                    <h1 className=" font-medium">Node js Backend Developer</h1>
+                    <p>Google Foundations</p>
+                    <div>
+                        <p>Category</p>
+                    </div>
+                    <div className=" flex justify-between mb-1 whitespace-nowrap">
+                        <p>Sunyani</p>
+                        <p>Posted on 5th October,2023</p>
+                    </div>
+                    <div className="bg-red-600 h-8 w-8 rounded-full absolute right-0 top-0"></div>
+                    <hr></hr>
+                </div>
+
+                <button className=" border-[1px] border-blue-600 rounded-xl w-full hover:bg-blue-600 hover:text-white  h-10">View All</button>
             </div>
 
             {/* description body */}
-            <div className=" basis-[65%] rounded-lg p-2  ">
-                <div className=" flex gap-2 items-center">
-                    <div className=' rounded-full h-12 w-12 border-[1px] bg-white drop-shadow-sm flex shrink-0'>
-                        <img src={one} className="h-full w-full object-cover rounded-full"/>
-                    </div>
-                    <p className=" font-bold text-3xl">Company Name</p>
-                </div>
+            <div className=" basis-[57%]">
 
-                <p>Posted on 24th October, 2023</p>
+                <div className=" rounded-lg drop-shadow-md bg-white flex flex-col gap-4 h-54 p-4">
 
-                {/* Positions, Title and Salary */}
-                <div className="bg-white p-1 h-24 w-[26rem] mt-1 rounded-md grid grid-cols-2 text-md font-medium items-center">
-                    <div>
-                        <p>General Manager</p>
+                    <h1 className="font-medium text-xl">Java Spring boot Microservices Professional</h1>
+
+                    <div className="flex gap-4 relative">
+                        <div className="flex gap-1">
+                            <BsCalendar2CheckFill className=" mt-1.5" />
+                            <p>Job Type</p>
+                        </div>
+                        <div className="flex gap-1">
+                            <PiHandCoinsBold className="mt-1.5" />
+                            <p>Salary</p>
+                        </div>
+
+                        <div className="bg-red-600 w-20 h-20 rounded-full right-0 absolute -top-1"></div>
                     </div>
-                    <div className="flex gap-1">
-                        <PiHandCoinsBold className="mt-1.5" />
-                        <p>Salary</p>
-                    </div>
+
                     <div className="flex gap-1">
                         <RiUserLocationFill className=" mt-1.5" />
                         <p>Location</p>
                     </div>
-                    <div className="flex gap-1">
-                        <BiSolidCategoryAlt className=" mt-1.5" />
-                        <p>Category</p>
+
+                    <hr></hr>
+
+                    <div className="flex justify-between items-center">
+                        <p>Posted on 24th October, 2023</p>
+                        <button className=" bg-blue-600 h-12 w-44 rounded-xl hover:bg-blue-500 text-white ">Apply</button>
                     </div>
                 </div>
 
                 <div className=" flex flex-col justify-between gap-36 md:gap-14">
-                {/* Description */}
-                <div className=" mt-2 text-justify justify-center mb-4">
-                    <p className=" font-medium">Job Description</p>
-                    <div className=" h-44 p-1 w-full bg-white rounded-md">
-                        <ul>
-                            <li>1. Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque, saepe eaque! Sit corporis molestias blanditiis laudantium, ducimus omnis, eveniet reprehenderit in ipsa inventore dolorem corrupti quos esse illum nostrum laborum.</li>
-                            <li>2. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea, nulla quasi iusto necessitatibus esse expedita similique, voluptatum beatae dolorum nihil fugiat libero quisquam obcaecati repudiandae iste quia. Deserunt, officia minus.</li>
-                            <li>3. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla nesciunt, dicta neque est a minus recusandae et ut vitae repudiandae necessitatibus repellat saepe. Veritatis dolor natus ut tempora facere reiciendis!</li>
-                        </ul>
-                    </div>
-                </div>
 
-                {/* Requirements */}
-                <div className="mt-2 text-justify mb-4">
-                    <p className=" font-medium">Job Requirements</p>
-                    <div className=" h-44 p-1 w-full">
-                        <ul>
-                            <li>1. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perspiciatis possimus ipsam voluptatum minus, in sed tempora eveniet maxime ab cupiditate corrupti magnam consequatur ut labore, adipisci officiis, facilis quidem molestiae.</li>
-                            <li>2. Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis id excepturi possimus nihil hic a ducimus provident tempora adipisci, harum vero maxime modi molestiae natus explicabo consectetur doloribus. Omnis, nam!</li>
-                            <li>3. Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis id excepturi possimus nihil hic a ducimus provident tempora adipisci, harum vero maxime modi molestiae natus explicabo consectetur doloribus. Omnis, nam!</li>
-                        </ul>
-                    </div>
-                </div>
+                    {/* Description */}
+                    <div className=" mt-2 text-justify justify-center mb-4">
 
-                {/* Other Information */}
-                <div className="mt-2 text-justify mb-4">
-                    <p className=" font-medium">Other Information</p>
-                    <div className=" h-24 p-1 w-full text-justify">
-                        <ul>
-                            <li>1. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perspiciatis possimus ipsam voluptatum minus, in sed tempora eveniet maxime ab cupiditate corrupti magnam consequatur ut labore, adipisci officiis, facilis quidem molestiae.</li>
-                        </ul>
+                        <p className=" font-medium">Job Description</p>
+                        <div className=" h-44 p-1 w-full bg-white rounded-md">
+                            <ul>
+                                <li>1. Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque, saepe eaque! Sit corporis molestias blanditiis laudantium, ducimus omnis, eveniet reprehenderit in ipsa inventore dolorem corrupti quos esse illum nostrum laborum.</li>
+                                <li>2. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea, nulla quasi iusto necessitatibus esse expedita similique, voluptatum beatae dolorum nihil fugiat libero quisquam obcaecati repudiandae iste quia. Deserunt, officia minus.</li>
+                                <li>3. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla nesciunt, dicta neque est a minus recusandae et ut vitae repudiandae necessitatibus repellat saepe. Veritatis dolor natus ut tempora facere reiciendis!</li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
 
-                {/* Application */}
-                <div className="text-justify">
-                    <p className=" font-medium">How to apply</p>
-                    <div className=" h-44 p-1 w-full text-justify">
-                        <ul>
-                            <li>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perspiciatis possimus ipsam voluptatum minus, in sed tempora eveniet maxime ab cupiditate corrupti magnam consequatur ut labore, adipisci officiis, facilis quidem molestiae. work@google.com</li>
-                        </ul>
+                    {/* Requirements */}
+                    <div className="mt-2 text-justify mb-4">
+                        <p className=" font-medium">Job Requirements</p>
+                        <div className=" h-44 p-1 w-full">
+                            <ul>
+                                <li>1. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perspiciatis possimus ipsam voluptatum minus, in sed tempora eveniet maxime ab cupiditate corrupti magnam consequatur ut labore, adipisci officiis, facilis quidem molestiae.</li>
+                                <li>2. Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis id excepturi possimus nihil hic a ducimus provident tempora adipisci, harum vero maxime modi molestiae natus explicabo consectetur doloribus. Omnis, nam!</li>
+                                <li>3. Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis id excepturi possimus nihil hic a ducimus provident tempora adipisci, harum vero maxime modi molestiae natus explicabo consectetur doloribus. Omnis, nam!</li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
+
+                    {/* Other Information */}
+                    <div className="mt-2 text-justify mb-4">
+                        <p className=" font-medium">Other Information</p>
+                        <div className=" h-24 p-1 w-full text-justify">
+                            <ul>
+                                <li>1. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perspiciatis possimus ipsam voluptatum minus, in sed tempora eveniet maxime ab cupiditate corrupti magnam consequatur ut labore, adipisci officiis, facilis quidem molestiae.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    {/* Application */}
+                    <div className="text-justify">
+                        <p className=" font-medium">How to apply</p>
+                        <div className=" h-44 p-1 w-full text-justify">
+                            <ul>
+                                <li>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perspiciatis possimus ipsam voluptatum minus, in sed tempora eveniet maxime ab cupiditate corrupti magnam consequatur ut labore, adipisci officiis, facilis quidem molestiae. work@google.com</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
 
             </div>
 
-            <div className=" hidden md:flex h-[25rem] w-44 bg-red-400">
+            {/* Right Panel  */}
+            <div className=" basis-[15%] bg-white">
                 adverts
             </div>
             
