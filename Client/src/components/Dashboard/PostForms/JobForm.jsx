@@ -19,7 +19,7 @@ const JobForm = () =>{
     }, [])
 
     const [gform, setGForm] = useState({
-        image:null,company:"",salary:"",location:"",position:"",duration:"",responsibilities:"",requirements:"",otherinformation:"",apply:"", categoriesname:""
+        image:null,company:"",salary:"",location:"",position:"",duration:"",responsibilities:"",responsibilitiestwo:"",responsibilitiesthree:"",responsibilitiesfour:"",requirements:"",requirementstwo:"",requirementsthree:"",requirementsfour:"",otherinformation:"",apply:"", categoriesname:""
     });
     const [submitted, setSubmitted] = useState(false);
 
@@ -57,7 +57,7 @@ const JobForm = () =>{
 
                 {submitted && <SubmittedBox successMessage='Job Opportunity Submitted' />}
 
-                <FormsDashboardHead title='Graduates Jobs Form' />
+                <FormsDashboardHead title='Jobs Form' />
 
                 <form className=' p-3 flex flex-col gap-4' onSubmit={submit}>
                     
@@ -102,7 +102,7 @@ const JobForm = () =>{
                         name='location'
                         value={gform.location}
                         onChange={formValues}
-                        placeholder='e.g. Accra'
+                        placeholder='e.g. New Weija, Accra'
                     />
 
                     <div className=" flex flex-col gap-1">
@@ -112,10 +112,23 @@ const JobForm = () =>{
                         name='duration' 
                         value={gform.duration}
                         onChange={formValues}
-                        className="bg-transparent border-[1px] border-black p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" required>
+                        className="bg-transparent border-[1px] border-blue-600 p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" required>
                             <option value='' disabled >-- Select Job Contract Type -- </option>
                             <option value='Full Time'>Full Time</option>
                             <option value='Part Time'>Part Time</option>
+                        </select>                 
+                    </div>
+
+                    <div className=" flex flex-col gap-1">
+                        <label htmlFor='country' className=" text-xl">Select Host Country</label>
+                        <select 
+                        id='country' 
+                        name='country' 
+                        value={gform.country}
+                        onChange={formValues}
+                        className="bg-transparent border-[1px] border-blue-600 p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" required>
+                            <option value='' disabled>-- Select Country -- </option>
+                            {countries.map((country, id)=>(<option value={country} key={id}>{country}</option>))}
                         </select>                 
                     </div>
 
@@ -126,11 +139,41 @@ const JobForm = () =>{
                         name='categoriesname' 
                         value={gform.categoriesname}
                         onChange={formValues}
-                        className="bg-transparent border-[1px] border-black p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" required>
+                        className="bg-transparent border-[1px] border-blue-600 p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" required>
                             <option value='' disabled>-- Select Job Category -- </option>
                             {cData.map((cat,id)=>(<option key={id} value={cat.categoriesname}>{cat.categoriesname}</option>))}
                         </select>                 
                     </div>
+                    
+                    <FormTextarea
+                        label='Minimum Qualification'
+                        htmlFor='minimumqualification'
+                        id='minimumqualification'
+                        name='minimumqualification'
+                        value={gform.minimumqualification}
+                        onChange={formValues}
+                        placeholder='e.g. Bachelors Degree in Accounting'
+                    />
+                    
+                    <FormTextarea
+                        label='Experience Level'
+                        htmlFor='experiencelevel'
+                        id='experiencelevel'
+                        name='experiencelevel'
+                        value={gform.experiencelevel}
+                        onChange={formValues}
+                        placeholder='experience level'
+                    />
+                    
+                    <FormTextarea
+                        label='Experience Length'
+                        htmlFor='experiencelength'
+                        id='experiencelength'
+                        name='experiencelength'
+                        value={gform.experiencelength}
+                        onChange={formValues}
+                        placeholder='e.g. Three - Five experience'
+                    />
                     
                     <FormTextarea
                         label='Job Responsibilities'
@@ -173,13 +216,13 @@ const JobForm = () =>{
                     />
 
                     <FormInputs 
-                        label='Upload Job Flyer / Logo' 
+                        label='Upload Job Flyer' 
                         htmlFor='image'
                         type='file'
                         id='image'
                         name='image'
                         onChange={formFiles}
-                        accept='.jpg, .jpeg, .png, .JPG'
+                        accept='image/*'
                     />
 
                     <button className=" text-xl bg-blue-600 p-2 rounded-md text-white hover:bg-blue-500">POST</button>

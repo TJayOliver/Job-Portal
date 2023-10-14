@@ -7,27 +7,39 @@ import Loading from "../components/Loading/Loading"
 import SocialMedia from "../components/Homepage/SocialMedia/SocialMedia";
 import Footer from "../components/Footer/Footer";
 import { BsCalendar2CheckFill} from "react-icons/bs";
-import {PiHandCoinsBold} from 'react-icons/pi'
-import {RiUserLocationFill} from 'react-icons/ri'
+import {PiHandCoinsBold} from 'react-icons/pi';
+import {RiUserLocationFill} from 'react-icons/ri';
+import { useParams } from "react-router-dom";
+import { jobdescription } from "./request";
 
 const JobDescription = () =>{
+    const params = useParams(), id=params.id, position = params.position, company = params.company;
+    const link = `http://localhost:5173/jobs/description/${id}/${position}/${company}`
+
     const [jobs, setJobs] = useState([]);
     const [loading, setloading] = useState(true);
 
     useEffect(()=>{
-        axios.get('http://localhost:4040/api/jobs-get')
-        .then((response) => {
-            setJobs(response.data)
-            setloading(false);
-        }).catch(error => console.error(error.message))
+        jobdescription(setJobs, setloading, id)
     },[])
+
+    const ShareJob = (link) =>{navigator.clipboard?.writeText && navigator.clipboard.writeText(link)}
+    
     return(
         <>
+        <div className=" hidden fixed h-screen w-full z-[100] bg-[rgb(0,0,0,0.3)]">
+            <div className=" w-2/1 bg-white top-2/4 absolute left-2/4 -translate-x-2/4  rounded-md p-2">
+                <p className=" text-center font-medium">Share Job</p>
+                <p className="border-b-2 text-md">{link}</p>
+                <div onClick={()=>ShareJob(link)} className="bg-blue-600 mt-1 p-1 text-white font-medium text-center cursor-pointer w-2/4 m-auto hover:bg-blue-700 rounded-sm">Copy</div>
+            </div>
+        </div>
+
         <Header />
-        <section className=" flex justify-between p-4">
+        <section className=" flex justify-center md:justify-between p-4 relative">
 
             {/* left panel */}
-            <div className=" basis-[25%] bg-white rounded-lg h-[28rem] sticky top-16 p-2">
+            <div className=" hidden  md:block basis-[25%] bg-white rounded-lg h-[28rem] sticky top-16 p-2">
                 <h1 className="font-bold p-2">Jobs you might be interested in</h1>
                 
                 <div className="p-1 mb-2 relative">
@@ -76,95 +88,102 @@ const JobDescription = () =>{
             </div>
 
             {/* description body */}
-            <div className=" basis-[57%]">
+            {jobs.map((list)=>(
+                <div key={list.id} className=" md:basis-[57%]">
 
-                <div className=" rounded-lg drop-shadow-md bg-white flex flex-col gap-4 h-54 p-4">
+                    {/* Heading */}
+                    <div className="  rounded-lg drop-shadow-md bg-white flex flex-col gap-4 h-54 p-4 mb-4">
+                        
+                        <h1 className="font-medium text-xl">{list.position}</h1>
 
-                    <h1 className="font-medium text-xl">Java Spring boot Microservices Professional</h1>
+                        <div className="flex gap-4 relative">
+                            <div className="flex gap-1">
+                                <BsCalendar2CheckFill className=" mt-1.5" />
+                                <p>{list.duration}</p>
+                            </div>
+                            <div className="flex gap-1">
+                                <PiHandCoinsBold className="mt-1.5" />
+                                <p>GHC {list.salary}</p>
+                            </div>
 
-                    <div className="flex gap-4 relative">
+                            <div className="bg-red-600 w-20 h-20 rounded-full right-0 absolute -top-1">
+                                <img src={one} className=' bg-cover object-cover h-full w-full' />
+                            </div>
+                        </div>
+
                         <div className="flex gap-1">
-                            <BsCalendar2CheckFill className=" mt-1.5" />
-                            <p>Job Type</p>
-                        </div>
-                        <div className="flex gap-1">
-                            <PiHandCoinsBold className="mt-1.5" />
-                            <p>Salary</p>
+                            <RiUserLocationFill className=" mt-1.5" />
+                            <p>{list.location}</p>
                         </div>
 
-                        <div className="bg-red-600 w-20 h-20 rounded-full right-0 absolute -top-1"></div>
-                    </div>
+                        <hr></hr>
 
-                    <div className="flex gap-1">
-                        <RiUserLocationFill className=" mt-1.5" />
-                        <p>Location</p>
+                        <div className="flex justify-between items-center">
+                            <p>Posted on {list.datecreated}</p>
+                            <button className=" bg-blue-600 h-10 p-1 rounded-sm hover:bg-blue-500 text-white ">Visit Company Website</button>
+                        </div>
+                        
                     </div>
+                    
+                    {/* Responsibility / Requirements / Other Information / Application */}
+                    <div className=" bg-white rounded-lg p-4 relative">
 
-                    <hr></hr>
+                        <h1 className=" font-medium">Responsibilities</h1>
+                        <hr></hr>
 
-                    <div className="flex justify-between items-center">
-                        <p>Posted on 24th October, 2023</p>
-                        <button className=" bg-blue-600 h-12 w-44 rounded-xl hover:bg-blue-500 text-white ">Apply</button>
+                        {/* Responsibility */}
+                        <div className=" text-justify ">
+                            <ul className="list-disc p-3">
+                                <li>{list.responsibilities}</li>
+                                <li>{list.responsibilitiestwo}</li>
+                                <li>{list.responsibilitiesthree}</li>
+                                <li>{list.responsibilitiesfour}</li>
+                            </ul>
+                            
+                        </div>
+
+                        <h1 className=" font-medium">Requirements</h1>
+                        <hr></hr>
+
+                        {/* Requirements */}
+                        <div className=" text-justify">
+                            <ul className="list-disc p-3">
+                                <li>{list.requirements}</li>
+                                <li>{list.requirementstwo}</li>
+                                <li>{list.requirementsthree}</li>
+                                <li>{list.requirementsfour}</li>
+                            </ul>
+                            
+                        </div>
+
+                        <h1 className=" font-medium">Other Information</h1>
+                        <hr></hr>
+
+                        {/* Other Information */}
+                        <div className=" text-justify mb-4">
+                            <p>{list.otherinformation}</p>
+                        </div>
+
+                        <h1 className=" font-medium">Apply</h1>
+                        <hr></hr>
+
+                        {/* Application */}
+                        <p>Send CV to @ghana.com</p>
+
+                        <div className=" flex justify-center">
+                            <div className=" bg-blue-600 w-2/5 p-2 rounded-sm items-center text-white text-center hover:bg-blue-500">Share Job</div>
+                        </div>
                     </div>
+                
                 </div>
-
-                <div className=" flex flex-col justify-between gap-36 md:gap-14">
-
-                    {/* Description */}
-                    <div className=" mt-2 text-justify justify-center mb-4">
-
-                        <p className=" font-medium">Job Description</p>
-                        <div className=" h-44 p-1 w-full bg-white rounded-md">
-                            <ul>
-                                <li>1. Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque, saepe eaque! Sit corporis molestias blanditiis laudantium, ducimus omnis, eveniet reprehenderit in ipsa inventore dolorem corrupti quos esse illum nostrum laborum.</li>
-                                <li>2. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea, nulla quasi iusto necessitatibus esse expedita similique, voluptatum beatae dolorum nihil fugiat libero quisquam obcaecati repudiandae iste quia. Deserunt, officia minus.</li>
-                                <li>3. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla nesciunt, dicta neque est a minus recusandae et ut vitae repudiandae necessitatibus repellat saepe. Veritatis dolor natus ut tempora facere reiciendis!</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    {/* Requirements */}
-                    <div className="mt-2 text-justify mb-4">
-                        <p className=" font-medium">Job Requirements</p>
-                        <div className=" h-44 p-1 w-full">
-                            <ul>
-                                <li>1. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perspiciatis possimus ipsam voluptatum minus, in sed tempora eveniet maxime ab cupiditate corrupti magnam consequatur ut labore, adipisci officiis, facilis quidem molestiae.</li>
-                                <li>2. Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis id excepturi possimus nihil hic a ducimus provident tempora adipisci, harum vero maxime modi molestiae natus explicabo consectetur doloribus. Omnis, nam!</li>
-                                <li>3. Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis id excepturi possimus nihil hic a ducimus provident tempora adipisci, harum vero maxime modi molestiae natus explicabo consectetur doloribus. Omnis, nam!</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    {/* Other Information */}
-                    <div className="mt-2 text-justify mb-4">
-                        <p className=" font-medium">Other Information</p>
-                        <div className=" h-24 p-1 w-full text-justify">
-                            <ul>
-                                <li>1. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perspiciatis possimus ipsam voluptatum minus, in sed tempora eveniet maxime ab cupiditate corrupti magnam consequatur ut labore, adipisci officiis, facilis quidem molestiae.</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    {/* Application */}
-                    <div className="text-justify">
-                        <p className=" font-medium">How to apply</p>
-                        <div className=" h-44 p-1 w-full text-justify">
-                            <ul>
-                                <li>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perspiciatis possimus ipsam voluptatum minus, in sed tempora eveniet maxime ab cupiditate corrupti magnam consequatur ut labore, adipisci officiis, facilis quidem molestiae. work@google.com</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+            ))}
 
             {/* Right Panel  */}
-            <div className=" basis-[15%] bg-white">
-                adverts
+            <div className="hidden md:block basis-[15%] bg-white sticky top-16 rounded-lg h-[35rem] p-2">
+                <p>Google Adverts</p>
             </div>
             
         </section>
-
         <SocialMedia />
         <Footer/>
         </>

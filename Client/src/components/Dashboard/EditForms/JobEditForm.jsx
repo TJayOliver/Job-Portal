@@ -14,7 +14,7 @@ const JobEditForm = () =>{
     const [cData, setCData] = useState([]);
 
     const [gform, setGForm] = useState({
-        image:null,company:"",salary:"",location:"",duration:"",country:"", position:"",minimumqualification:"",experiencelevel:"",experiencelength:"",responsibilities:"",requirements:"",otherinformation:"",apply:"", categoriesname:""
+        image:null,company:"",salary:"",location:"",position:"",duration:"",responsibilities:"",responsibilitiestwo:"",responsibilitiesthree:"",responsibilitiesfour:"",requirements:"",requirementstwo:"",requirementsthree:"",requirementsfour:"",otherinformation:"",apply:"", categoriesname:""
     });
     const [submitted, setSubmitted] = useState(false);
 
@@ -47,7 +47,7 @@ const JobEditForm = () =>{
         axios.get(`http://localhost:4040/api/graduatesjobs-edit/${ID}`)
         .then(response =>{
             const retrievedData = response.data[0];
-            setGForm({ image:retrievedData.image,company:retrievedData.company,salary:retrievedData.salary,location:retrievedData.location,duration:retrievedData.duration,country:retrievedData.country,minimumqualification:retrievedData.minimumqualification,experiencelevel:retrievedData.experiencelevel,experiencelength:retrievedData,responsibilities:retrievedData.response,requirements:retrievedData.requirements,otherinformation:retrievedData.otherinformation,apply:retrievedData.apply, categoriesname:retrievedData.categoriesname})
+            setGForm({ image:retrievedData.image, salary:retrievedData.salary, location:retrievedData.location, position:retrievedData.position, duration:retrievedData.duration, responsibilities:retrievedData.responsibilities, responsibilitiestwo:retrievedData.responsibilitiestwo,responsibilitiesthree:retrievedData.responsibilitiesthree,requirements:retrievedData.requirements,requirementstwo:retrievedData.responsibilitiestwo, requirementsthree:retrievedData.requirementsthree, requirementsfour:retrievedData.requirementsfour, otherinformation:retrievedData.otherinformation, apply:retrievedData.apply, categoriesname:retrievedData.categoriesname})
         }).catch(error => console.error(error.message))
     },[])
 

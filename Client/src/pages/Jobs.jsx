@@ -19,12 +19,6 @@ const Jobs = () =>{
     const [postPerPage, setPostPerPage] = useState(10);
     const [currentPage, setCurrentPage] = useState(1);
 
-    const [reveal, setReveal] = useState(true);
-
-    const handleReveal = () =>{
-        setReveal(prev => !prev)
-    }
-
     useEffect(()=>{
         axios.get('http://localhost:4040/api/jobs-get')
         .then((response) => {
@@ -40,6 +34,10 @@ const Jobs = () =>{
  
     const lastPageIndex = currentPage * postPerPage, firstPageIndex = lastPageIndex - postPerPage;
     const post = jobs.slice(firstPageIndex, lastPageIndex);
+
+    const viewDetails = () =>{
+        axios.get('http://localhost:4040/api/jobs-description/i')
+    }
     
     return(
         <>
@@ -71,7 +69,7 @@ const Jobs = () =>{
             <div className="flex justify-start p-2 gap-4">
 
                 <div className=" h-8 p-2 flex items-center bg-gray-100 rounded-lg font-medium">All</div>
-                <div  onClick={handleReveal} className=" h-8 p-2 flex items-center bg-gray-100 rounded-lg font-medium">Search</div>
+                <div className=" h-8 p-2 flex items-center bg-gray-100 rounded-lg font-medium">Search</div>
             </div>
                 
             {loading ? <Loading /> :
@@ -86,6 +84,7 @@ const Jobs = () =>{
                         position={job.position}
                         category={job.categoriesname}
                         description={job.responsibilities.replace(/^\d+[.,]/, '').trim().slice(0,90)}
+                        to={`/jobs/description/${job.id}/${job.position}/${job.company}`}
                         />
                     ))} 
                 </div>

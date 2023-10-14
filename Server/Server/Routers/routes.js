@@ -3,7 +3,7 @@ import { options } from '../../configurations/allowedsites.js';
 import { articleUpload, scholarshipUpload, jobsUpload } from '../../configurations/multer.js';
 import { ScholarshipCount,ScholarshipGet,ScholarshipPost, ScholarshipDelete, ScholarshipEdit, ScholarshipsUpdate  } from '../Controllers/scholarshipctrl.js';
 import { ArticleCount, ArticleDelete, ArticleEdit, ArticleGet, ArticlePost, ArticleUpdate } from '../Controllers/articlesctrl.js';
-import { JobCount, JobGet, JobPost, JobDelete, JobsUpdate, JobsEdit } from '../Controllers/jobctrl.js';
+import { JobCount, JobDescription, JobGet, JobPost, JobDelete, JobsUpdate, JobsEdit } from '../Controllers/jobctrl.js';
 import { CategoryDelete, CategoryGet, CategoryPost, CategoryEdit, CategoryUpdate } from '../Controllers/categoryctrl.js';
 
 export const routes = express.Router();
@@ -22,6 +22,7 @@ routes.get('/api/categories-edit/:id', CategoryEdit);
 routes.put('/api/categories-update/:id', CategoryUpdate);
 
 routes.get('/api/jobs-get', JobGet);
+routes.get('/api/jobs-description/:id', JobDescription);
 routes.post('/api/jobs-post', jobsUpload.single('image'),JobPost);
 routes.get('/api/jobs-count', JobCount);
 routes.delete('/api/jobs-delete/:id', JobDelete);

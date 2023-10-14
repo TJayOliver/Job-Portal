@@ -13,7 +13,3 @@ html, body{@apply bg-gray-200 h-screen overflow-x-hidden select-none scroll-smoo
 
 .scrollbar::-webkit-scrollbar{@apply hidden}
 
-
-
-
-

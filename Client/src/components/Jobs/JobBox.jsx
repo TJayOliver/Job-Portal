@@ -2,8 +2,10 @@ import {BsCalendar2CheckFill} from 'react-icons/bs'
 import one from '../../assets/eight.jpg'
 import {CgShare} from 'react-icons/cg';
 import { BiCategory } from "react-icons/bi";
+import { Link } from 'react-router-dom';
 
-const JobBox = ({image,description, location, company, duration, position, category}) =>{
+const JobBox = ({image,description, location, company, duration, position, category, to}) =>{
+    
     return(
        <div className=' bg-white drop-shadow-md h-[21rem] w-[15rem] rounded-md'>
             <div className=' flex flex-col p-2 gap-3 shrink-0 grow-0 justify-between'>
@@ -53,7 +55,9 @@ const JobBox = ({image,description, location, company, duration, position, categ
                 <div className=' flex justify-start gap-3'>
                     <div role='button' className='rounded-lg bg-[#453a3a] hover:bg-[#2b2424] hover:duration-150 hover:ease-out  text-white font-bold h-12 flex items-center justify-center w-2/4 px-2'>Apply Now</div>
 
-                    <div role='button' className='rounded-lg border-[1px] border-black  hover:duration-150 hover:ease-out flex items-center justify-center px-2 w-2/4'>View Details</div>
+                    <div role='button' className='rounded-lg border-[1px] border-black  hover:duration-150 hover:ease-out flex items-center justify-center px-2 w-2/4'>
+                        <Link to={to}>View Details</Link>
+                    </div>
                 </div>
             </div>
        </div>

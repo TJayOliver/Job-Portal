@@ -11,6 +11,25 @@ export const JobGet = async(req,res) =>{
     }
 }
 
+export const JobCategory = async(req, res) =>{
+    try{
+
+    }catch(error){
+        console.error(error.message)
+    }
+}
+
+export const JobDescription = async(req, res) =>{
+    const query =  `SELECT *, DATE_FORMAT(datecreated, '%d/%M/%Y') AS datecreated FROM jobs WHERE id=?`
+    const parameter = [req.params.id]
+    try{
+        const [data] = await database.query(query, parameter)
+        res.send(data)
+    }catch(error){
+        console.error(error.message)
+    }
+}
+
 export const JobCount = async(req, res) =>{
     const query = `SELECT COUNT (id) FROM jobs`
     try{
@@ -27,13 +46,13 @@ export const JobCount = async(req, res) =>{
 }
 
 export const JobPost = async(req,res) =>{
-    const {company,salary,location,position,duration,responsibilities,requirements,otherinformation,apply,categoriesname} = req.body;
+    const {company,salary,location,position,duration,responsibilities,responsibilitiestwo,responsibilitiesthree,responsibilitiesfour,requirements,requirementstwo,requirementsthree,requirementsfour,otherinformation,apply,categoriesname} = req.body;
     const image = req.file.path
 
     const query = `INSERT INTO jobs
-    (id,image,company,salary,location,position,duration,responsibilities,requirements,otherinformation,apply,categoriesname)
-    VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-    const parameters = [uuid(),image,company,salary,location,position,duration,responsibilities,requirements,otherinformation,apply,categoriesname]
+    (id,image,company,salary,location,position,duration,responsibilities,responsibilitiestwo,responsibilitiesthree,responsibilitiesfour,requirements,requirementstwo,requirementsthree,requirementsfour,otherinformation,apply,categoriesname)
+    VALUES(?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?, ?, ?, ?, ?, ?)`;
+    const parameters = [uuid(),image,company,salary,location,position,duration,responsibilities,responsibilitiestwo,responsibilitiesthree,responsibilitiesfour,requirements,requirementstwo,requirementsthree,requirementsfour,otherinformation,apply,categoriesname]
     try{
         const [data] = database.query(query, parameters);
     }catch(error){
@@ -53,7 +72,7 @@ export const JobDelete = async(req,res) =>{
     }
 }
 
-// loads the jobs post page
+
 export const JobsEdit = async(req, res) =>{
     const query =  `SELECT * FROM jobs WHERE id=?`
     const parameter = [req.params.id]
@@ -67,12 +86,12 @@ export const JobsEdit = async(req, res) =>{
 
 // posts the newly updated  jobs 
 export const JobsUpdate = async(req,res) =>{
-    const {company,salary,location,position,duration,responsibilities,requirements,otherinformation,apply,category} = req.body;
+    const {company,salary,location,position,duration,responsibilities,responsibilitiestwo,responsibilitiesthree,responsibilitiesfour,requirements,requirementstwo,requirementsthree,requirementsfour,otherinformation,apply,category} = req.body;
     const image = req.file.path;
 
-    const query = "UPDATE jobs SET image=? company=?,salary=?,location=?,position=?,duration=?,responsibilities=?,requirements=?,otherinformation=?,apply=?,category=? WHERE id=?"
+    const query = "UPDATE jobs SET image=? company=?,salary=?,location=?,position=?,duration=?,responsibilities=?,responsibilitiestwo=?,responsibilitiesthree=?,responsibilitiesfour=?,requirements=?,requirementstwo=?,requirementsthree=?,requirementsfour=?,otherinformation=?,apply=?,category=? WHERE id=?"
     
-    const parameter = [image, company,salary,location,position,duration,responsibilities,requirements,otherinformation,apply,category, req.params.id];
+    const parameter = [image, company,salary,location,position,duration,responsibilities,responsibilitiestwo,responsibilitiesthree,responsibilitiesfour,requirements,requirementstwo,requirementsthree,requirementsfour,otherinformation,apply,category, req.params.id];
     try {
         const [data] = await database.query(query, parameter);
         return res.json('Successfully Updated')
@@ -80,3 +99,4 @@ export const JobsUpdate = async(req,res) =>{
         console.error(error.message)
     }
 }
+
