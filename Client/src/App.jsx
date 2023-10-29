@@ -28,6 +28,7 @@ const router = createBrowserRouter(
       <Route path='/jobs' >
         <Route path='/jobs' element={<Jobs />} />
         <Route path='/jobs/description/:id/:position/:company' element={<JobDescription />}  />
+        <Route path='/jobs/category/:categoriesname' element={<JobDescription />}  />
       </Route>
       
       <Route path='/scholarships' element={<Scholarship />} />

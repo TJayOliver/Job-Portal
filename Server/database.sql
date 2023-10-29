@@ -13,6 +13,7 @@ CREATE TABLE `scholarships`(
     `image` VARCHAR(50) NOT NULL,
     `scholarshipname` VARCHAR(80) NOT NULL,
     `deadline` DATE NOT NULL,
+    `featured` ENUM('true', 'false') NOT NULL,
     `scholarshiptype` ENUM('Fully Funded', 'Partial') NOT NULL,
     `agent` ENUM('Agent', 'No Agent') NOT NULL,
     `programs` ENUM('All Levels','Bachelors Degree', 'Masters Degree', 'Doctorate Degree', 'Post Graduate Diploma') NOT NULL,
@@ -46,6 +47,7 @@ CREATE TABLE `jobs`(
     `id` VARCHAR(80) NOT NULL,
     `image` VARCHAR(50) NULL,
     `salary` INT NOT NULL,
+    `featured` ENUM('true', 'false') NOT NULL,
     `company` VARCHAR(50) NOT NULL,
     `website` VARCHAR(50) NOT NULL,
     `duration` ENUM('Full Time', 'Part Time') NOT NULL,
@@ -79,3 +81,8 @@ CREATE TABLE `categories`(
     PRIMARY KEY(`id`)
 );
 
+CREATE TABLE `subscribe`(
+    `id` VARCHAR(80) NOT NULL,
+    `email` VARCHAR(50) NOT NULL,
+    PRIMARY KEY(`id`)
+);

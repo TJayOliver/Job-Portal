@@ -1,10 +1,11 @@
 import express from 'express';
 import { options } from '../../configurations/allowedsites.js';
 import { articleUpload, scholarshipUpload, jobsUpload } from '../../configurations/multer.js';
-import { ScholarshipCount,ScholarshipGet,ScholarshipPost, ScholarshipDelete, ScholarshipEdit, ScholarshipsUpdate  } from '../Controllers/scholarshipctrl.js';
+import { ScholarshipCount,ScholarshipGet,ScholarshipPost, ScholarshipDelete, ScholarshipEdit, ScholarshipsUpdate, ScholarshipFeatured  } from '../Controllers/scholarshipctrl.js';
 import { ArticleCount, ArticleDelete, ArticleEdit, ArticleGet, ArticlePost, ArticleUpdate } from '../Controllers/articlesctrl.js';
-import { JobCount, JobDescription, JobGet, JobPost, JobDelete, JobsUpdate, JobsEdit } from '../Controllers/jobctrl.js';
+import { JobCount, JobCategory,JobDescription, JobGet, JobPost, JobDelete, JobsUpdate, JobsEdit, JobFeatured } from '../Controllers/jobctrl.js';
 import { CategoryDelete, CategoryGet, CategoryPost, CategoryEdit, CategoryUpdate } from '../Controllers/categoryctrl.js';
+import { SubscribeGet, SubscribePost } from '../Controllers/subscribe.js';
 
 export const routes = express.Router();
 
@@ -22,19 +23,22 @@ routes.get('/api/categories-edit/:id', CategoryEdit);
 routes.put('/api/categories-update/:id', CategoryUpdate);
 
 routes.get('/api/jobs-get', JobGet);
+routes.get('/api/jobs-featured', JobFeatured);
 routes.get('/api/jobs-description/:id', JobDescription);
 routes.post('/api/jobs-post', jobsUpload.single('image'),JobPost);
 routes.get('/api/jobs-count', JobCount);
+routes.get('/api/jobs-category/:id', JobCategory);
 routes.delete('/api/jobs-delete/:id', JobDelete);
 routes.get('/api/jobs-edit/:id', JobsEdit);
 routes.put('/api/jobs-update/:id', jobsUpload.single('image'), JobsUpdate);
 
 routes.get('/api/scholarships-get', ScholarshipGet);
+routes.get('/api/scholarships-featured', ScholarshipFeatured);
 routes.post('/api/scholarships-post', scholarshipUpload.single('image'),ScholarshipPost);
 routes.get('/api/scholarships-count', ScholarshipCount);
 routes.delete('/api/scholarships-delete/:id', ScholarshipDelete);
 routes.get('/api/scholarships-edit/:id', ScholarshipEdit);
 routes.put('/api/scholarships-update/:id',scholarshipUpload.single('image'), ScholarshipsUpdate);
 
-
-
+routes.get('/api/subscribe-get', SubscribeGet);
+routes.post('/api/subscribe-post', SubscribePost);

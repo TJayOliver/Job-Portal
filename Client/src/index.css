@@ -4,7 +4,7 @@
 
 *{@apply m-0 p-0 box-border}
 
-html, body{@apply bg-gray-200 h-screen overflow-x-hidden select-none scroll-smooth}
+html, body{@apply bg-white text-[#004242] h-screen overflow-x-hidden select-none scroll-smooth}
 
 @font-face {
     font-family: "AliandoRocky";
@@ -12,4 +12,3 @@ html, body{@apply bg-gray-200 h-screen overflow-x-hidden select-none scroll-smoo
 }
 
 .scrollbar::-webkit-scrollbar{@apply hidden}
-

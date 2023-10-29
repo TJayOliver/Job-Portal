@@ -4,13 +4,12 @@ import {CgShare} from 'react-icons/cg';
 import { BiCategory } from "react-icons/bi";
 import { Link } from 'react-router-dom';
 
-const JobBox = ({image,description, location, company, duration, position, category, to}) =>{
+const JobBox = ({image,description, location, company, duration, position, category, salary, to}) =>{
     
     return(
-       <div className=' bg-white drop-shadow-md h-[21rem] w-[15rem] rounded-md'>
+       <div className=' bg-white drop-shadow-md h-[20rem] w-[14rem] rounded-md shrink-0'>
             <div className=' flex flex-col p-2 gap-3 shrink-0 grow-0 justify-between'>
 
-                
                 <div className=' flex justify-between h-[4.5rem]'>
                     <div className=' flex gap-3'>
                         {/* Company Logo and Location */}
@@ -52,10 +51,13 @@ const JobBox = ({image,description, location, company, duration, position, categ
                 </div>
                 
                 {/* Apply and View Buttons */}
-                <div className=' flex justify-start gap-3'>
-                    <div role='button' className='rounded-lg bg-[#453a3a] hover:bg-[#2b2424] hover:duration-150 hover:ease-out  text-white font-bold h-12 flex items-center justify-center w-2/4 px-2'>Apply Now</div>
+                <div className=' flex justify-between gap-3'>
+                    <div className='flex items-center gap-1'>
+                        <p className='font-bold text-2xl '>&#8373;</p>
+                        <p className='text-2xl'>{salary}</p>
+                    </div>
 
-                    <div role='button' className='rounded-lg border-[1px] border-black  hover:duration-150 hover:ease-out flex items-center justify-center px-2 w-2/4'>
+                    <div role='button' className='rounded-lg bg-red-500 hover:bg-red-600 hover:duration-150 hover:ease-out  text-white font-bold h-10 flex items-center justify-center w-32 px-2'>
                         <Link to={to}>View Details</Link>
                     </div>
                 </div>

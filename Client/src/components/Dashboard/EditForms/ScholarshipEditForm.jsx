@@ -14,7 +14,7 @@ const ScholarshipEditForm = () =>{
     const id = useParams(), ID = id.id;
 
     const [sForm, setSForm] = useState({
-        image : null, scholarshipname:"", deadline:"", scholarshiptype:"",
+        image : null, scholarshipname:"", deadline:"", scholarshiptype:"",featured:"",
         agent : "", programs:"", applicant:"",hostuniversity:"",
         offeredby:"", aboutscholarship:"", scholarshipbenefits:"", eligibilitycriteria:"",
         documentsrequired:"", country:"", apply:"", duration:""
@@ -53,7 +53,7 @@ const ScholarshipEditForm = () =>{
         axios.get(`http://localhost:4040/api/scholarships-edit/${ID}`)
         .then(response =>{
             const retrievedData = response.data[0]
-            setSForm({image : retrievedData.image, scholarshipname:retrievedData.scholarshipname, deadline:retrievedData.deadline, scholarshiptype:retrievedData.scholarshiptype,
+            setSForm({image : retrievedData.image, scholarshipname:retrievedData.scholarshipname, deadline:retrievedData.deadline, scholarshiptype:retrievedData.scholarshiptype,featured:retrievedData.featured,
             agent : retrievedData.agent, programs:retrievedData.programs, applicant:retrievedData.applicant,hostuniversity:retrievedData.hostuniversity,
             offeredby:retrievedData.offeredby, aboutscholarship:retrievedData.aboutscholarship, scholarshipbenefits:retrievedData.scholarshipbenefits, eligibilitycriteria:retrievedData.eligibilitycriteria,
             documentsrequired:retrievedData.documentsrequired, country:retrievedData.country, apply:retrievedData.apply, duration:retrievedData.duration})
@@ -255,6 +255,20 @@ const ScholarshipEditForm = () =>{
                         onChange={FormValues}
                         placeholder='e.g apply through..'
                     />
+
+                    <div className=" flex flex-col gap-1">
+                        <label htmlFor='featured' className=" text-xl">Featured</label>
+                        <select 
+                        id='featured' 
+                        name='featured' 
+                        value={sForm.featured}
+                        onChange={FormValues}
+                        className="bg-transparent border-[1px] border-blue-600 p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" required>
+                            <option value='' disabled>-- Select Featured -- </option>
+                            <option value='true' >Yes</option>
+                            <option value='false' >No</option>
+                        </select>                 
+                    </div>
 
                     <FormInputs 
                         label='Upload Scholarship Flyer' 

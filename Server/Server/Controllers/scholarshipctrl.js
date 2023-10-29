@@ -15,6 +15,18 @@ export const ScholarshipGet = async(req,res) =>{
     }
 };
 
+export const ScholarshipFeatured = async(req,res) =>{
+    const query = `SELECT * FROM scholarships WHERE featured=? LIMIT 8`;
+    const parameter = ['true']
+    try{
+        const [data] = await database.query(query, parameter);
+        res.json(data);
+    }catch(error){
+        console.error(error.message);
+    }
+}
+
+
 export const ScholarshipCount = async(req, res) =>{
     const query = `SELECT COUNT (id) FROM scholarships`
     try{
@@ -31,13 +43,13 @@ export const ScholarshipCount = async(req, res) =>{
 }
 
 export const ScholarshipPost = async(req,res)=>{
-    const {scholarshipname, deadline, scholarshiptype, agent, programs, applicant,hostuniversity, offeredby, aboutscholarship,scholarshipbenefits, eligibilitycriteria, documentsrequired, country, apply, duration} = req.body;
+    const {scholarshipname, deadline, scholarshiptype, featured, agent, programs, applicant,hostuniversity, offeredby, aboutscholarship,scholarshipbenefits, eligibilitycriteria, documentsrequired, country, apply, duration} = req.body;
     const image = req.file.filename;
 
     const query = `INSERT INTO scholarships  
-    (id, image, scholarshipname, deadline, scholarshiptype, agent, programs, applicant,hostuniversity, offeredby, aboutscholarship,scholarshipbenefits, eligibilitycriteria, documentsrequired, country, apply, duration) 
-    VALUES (?,?, ?, ?, ?, ?, ?, ?,?, ?, ?,?, ?, ?, ?, ?, ?)`;
-    const parameter = [uuid(), image,scholarshipname, deadline, scholarshiptype, agent, programs, applicant,hostuniversity, offeredby, aboutscholarship,scholarshipbenefits, eligibilitycriteria, documentsrequired, country, apply, duration]
+    (id, image, scholarshipname, deadline, scholarshiptype,featured, agent, programs, applicant,hostuniversity, offeredby, aboutscholarship,scholarshipbenefits, eligibilitycriteria, documentsrequired, country, apply, duration) 
+    VALUES (?,?, ?, ?, ?, ?, ?, ?,?, ?, ?,?, ?, ?, ?, ?, ?, ?)`;
+    const parameter = [uuid(), image,scholarshipname, deadline, scholarshiptype, featured, agent, programs, applicant,hostuniversity, offeredby, aboutscholarship,scholarshipbenefits, eligibilitycriteria, documentsrequired, country, apply, duration]
 
     try{
         const [data] = await database.query(query, parameter)
@@ -72,13 +84,13 @@ export const ScholarshipEdit = async(req, res) =>{
 
 // posts the newly updated scholarships
 export const ScholarshipsUpdate = async(req,res) =>{
-    const {scholarshipname, deadline, scholarshiptype, agent, programs, applicant,hostuniversity, offeredby, aboutscholarship,scholarshipbenefits, eligibilitycriteria, documentsrequired, country, apply, duration} = req.body;
+    const {scholarshipname, deadline, scholarshiptype,featured, agent, programs, applicant,hostuniversity, offeredby, aboutscholarship,scholarshipbenefits, eligibilitycriteria, documentsrequired, country, apply, duration} = req.body;
 
     const image = req.file.path;
     
-    const query = "UPDATE image, scholarships SET scholarshipname=?, deadline=?, scholarshiptype=?, agent=?, programs=?, applicant=?,hostuniversity=?, offeredby=?, aboutscholarship=?,scholarshipbenefits=?, eligibilitycriteria=?, documentsrequired=?, country=?, apply=?, duration=? WHERE id=?"
+    const query = "UPDATE image, scholarships SET scholarshipname=?, deadline=?, scholarshiptype=?,featured=?, agent=?, programs=?, applicant=?,hostuniversity=?, offeredby=?, aboutscholarship=?,scholarshipbenefits=?, eligibilitycriteria=?, documentsrequired=?, country=?, apply=?, duration=? WHERE id=?"
 
-    const parameter = [image, scholarshipname, deadline, scholarshiptype, agent, programs, applicant,hostuniversity, offeredby, aboutscholarship,scholarshipbenefits, eligibilitycriteria, documentsrequired, country, apply, duration, req.params.id];
+    const parameter = [image, scholarshipname, deadline, scholarshiptype,featured, agent, programs, applicant,hostuniversity, offeredby, aboutscholarship,scholarshipbenefits, eligibilitycriteria, documentsrequired, country, apply, duration, req.params.id];
     try {
         const [data] = await database.query(query, parameter);
         return res.json('Successfully Updated')

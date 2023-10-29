@@ -1,40 +1,74 @@
-import {AiOutlineCopyright } from "react-icons/ai"
+import { useState } from "react";
+import axios from "axios";
 
 const Footer = () =>{
+    const [subscribe, setSubscribe] = useState({email:""})
+
+    const SubscribeValues = (e) =>{
+        const {name, value} = e.target;
+        setSubscribe(prev=>({...prev, [name] : value}))
+    }
+    const Submit = (e) =>{
+        e.preventDefault();
+        console.log(subscribe)
+        axios.post('http://localhost:4040/api/subscribe-post', subscribe)
+        .then(response)
+        .catch(error => console.error(error.message))
+        window.location.reload()
+    }
     const date = new Date()
     const Year = date.getFullYear();
     return(
-        <div className=" px-4 py-14 text-white
-        bg-gradient-to-tr from-[#1B263C] to-[#203869]
-        ">
-            <div className=" flex flex-col justify-center md:flex md:flex-row md:justify-around mb-4 gap-4 justify">
-
-                <div>
-                    <h1 className=" text-[#09AE79] font-bold">Employers</h1>
-                    <p>Post a Job</p>
-                    <p>Advertisement</p>
-                </div>
-
-                <div>
-                    <h1 className=" text-[#09AE79] font-bold">Resources</h1>
-                    <p>About BrandsMii</p>
-                    <p>Privacy Center</p>
-                    <p>Terms of Use</p>
-                </div>
-            </div>
-
-            <div className=" py-3 flex-col md:flex md:flex-row justify-around">
+        <div className="  h-48 md:h-96 flex flex-col justify-center text-md">
+            
+            <div className=" flex md:flex md:flex-row justify-center text-justify gap-4 md:gap-14 m-auto">
+                <p className=" font-AliandoRocky text-5xl ">Future<br></br>Forte</p>
                 
-                <div className=" flex gap-6 ">
-                    <h1>Send Us a Mail : BrandsMiiCo@gmail.com</h1>
+                {/* Terms */}
+                <div className=" flex flex-col">
+                    <p className=" font-medium text-xl">Terms</p>
+                    <p>Privacy</p>
+                    <p>Policy</p>
+                    <p>Terms</p>
                 </div>
 
-                <div className=" flex gap-1">
-                    <AiOutlineCopyright className=" mt-1"/> 
-                    BrandsMii {Year} 
+                {/* About */}
+                <div className=" flex flex-col">
+                    <p className=" font-medium text-xl">About</p>
+                    <p>Home</p>
+                    <p>Features</p>
+                    <p>About</p>
+                </div>
+
+                {/* Contact */}
+                <div className="hidden  flex-col">
+                    <p className=" font-medium text-xl">Contact</p>
+                    <p>0203695063</p>
+                    <p>tjayoliver99@gmail.com</p>
+                </div>
+
+                {/* Subscribe */}
+                <div className=" flex flex-col">
+                    <p className=" font-medium text-xl">Subscribe</p>
+                    <form onSubmit={Submit} className="relative flex flex-wrap justify-center items-center">
+                        <button type='submit' className=" h-7 rounded-sm w-7 bg-red-500 absolute right-1 outline-none align-center flex justify-center items-center hover:bg-teal-900">
+                            <p className="p-2 text-sm text-white font-medium">GO</p>
+                        </button>
+                        <input 
+                            type='email' 
+                            inputMode="email" 
+                            placeholder="Enter your e-mail " 
+                            name="email" 
+                            value={subscribe.email} 
+                            onChange={SubscribeValues} 
+                            className="p-2 rounded-sm w-full border-2 border-[#004242] outline-[#004242]"
+                        />
+                    </form>
                 </div>
             </div>
+            <p className="flex justify-center p-2">&copy;FutureForte {Year}</p>
         </div>
+        
     )
 }
 

@@ -41,9 +41,9 @@ const LeftPanel = () =>{
                 <DashboardBox Title='Add Scholarships' to="/forms/scholarships" icon={<BiTrophy className=" mt-1"/>} />
             </div>
             
-            {/* Messages and Administrator Picture */}
+            {/* Subscriptions and Administrator Picture */}
             <div className=" hidden md:flex md:flex-col gap-2 h">
-                <DashboardBox Title='Messages' icon={<CiMail className=" mt-1"/>} />
+                <DashboardBox Title='Subscriptions' icon={<CiMail className=" mt-1"/>} />
                 <DashboardBox Title='Settings' icon={<CiGlobe className=" mt-1"/>} />
 
                 <div className=" border border-gray-200 rounded-md flex justify-between items-center px-2 py-1">

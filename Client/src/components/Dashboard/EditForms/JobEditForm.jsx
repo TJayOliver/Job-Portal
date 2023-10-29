@@ -14,7 +14,7 @@ const JobEditForm = () =>{
     const [cData, setCData] = useState([]);
 
     const [gform, setGForm] = useState({
-        image:null,company:"",salary:"",location:"",position:"",duration:"",responsibilities:"",responsibilitiestwo:"",responsibilitiesthree:"",responsibilitiesfour:"",requirements:"",requirementstwo:"",requirementsthree:"",requirementsfour:"",otherinformation:"",apply:"", categoriesname:""
+        image:null,company:"",salary:"",location:"",website:"",featured:"",position:"",duration:"",responsibilities:"",responsibilitiestwo:"",responsibilitiesthree:"",responsibilitiesfour:"",requirements:"",requirementstwo:"",requirementsthree:"",requirementsfour:"",otherinformation:"",apply:"", categoriesname:""
     });
     const [submitted, setSubmitted] = useState(false);
 
@@ -47,7 +47,7 @@ const JobEditForm = () =>{
         axios.get(`http://localhost:4040/api/graduatesjobs-edit/${ID}`)
         .then(response =>{
             const retrievedData = response.data[0];
-            setGForm({ image:retrievedData.image, salary:retrievedData.salary, location:retrievedData.location, position:retrievedData.position, duration:retrievedData.duration, responsibilities:retrievedData.responsibilities, responsibilitiestwo:retrievedData.responsibilitiestwo,responsibilitiesthree:retrievedData.responsibilitiesthree,requirements:retrievedData.requirements,requirementstwo:retrievedData.responsibilitiestwo, requirementsthree:retrievedData.requirementsthree, requirementsfour:retrievedData.requirementsfour, otherinformation:retrievedData.otherinformation, apply:retrievedData.apply, categoriesname:retrievedData.categoriesname})
+            setGForm({ image:retrievedData.image,featured:retrievedData.featured, website:retrievedData.website, salary:retrievedData.salary, location:retrievedData.location, position:retrievedData.position, duration:retrievedData.duration, responsibilities:retrievedData.responsibilities, responsibilitiestwo:retrievedData.responsibilitiestwo,responsibilitiesthree:retrievedData.responsibilitiesthree,requirements:retrievedData.requirements,requirementstwo:retrievedData.responsibilitiestwo, requirementsthree:retrievedData.requirementsthree, requirementsfour:retrievedData.requirementsfour, otherinformation:retrievedData.otherinformation, apply:retrievedData.apply, categoriesname:retrievedData.categoriesname})
         }).catch(error => console.error(error.message))
     },[])
 
@@ -108,6 +108,17 @@ const JobEditForm = () =>{
                         placeholder='e.g. New Weija, Accra'
                     />
 
+                    <FormInputs 
+                        label='Company Website' 
+                        htmlFor='website'
+                        type='text'
+                        id='website'
+                        name='website'
+                        value={gform.website}
+                        onChange={formValues}
+                        placeholder='e.g. www.cocacola.com'
+                    />
+
                     <div className=" flex flex-col gap-1">
                         <label htmlFor='duration' className=" text-xl">Contract Type</label>
                         <select 
@@ -132,6 +143,20 @@ const JobEditForm = () =>{
                         className="bg-transparent border-[1px] border-blue-600 p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" required>
                             <option value='' disabled>-- Select Country -- </option>
                             {countries.map((country, id)=>(<option value={country} key={id}>{country}</option>))}
+                        </select>                 
+                    </div>
+
+                    <div className=" flex flex-col gap-1">
+                        <label htmlFor='featured' className=" text-xl">Featured</label>
+                        <select 
+                        id='featured' 
+                        name='featured' 
+                        value={gform.featured}
+                        onChange={formValues}
+                        className="bg-transparent border-[1px] border-blue-600 p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" required>
+                            <option value='' disabled>-- Select Featured -- </option>
+                            <option value='true' >Yes</option>
+                            <option value='false' >No</option>
                         </select>                 
                     </div>
 

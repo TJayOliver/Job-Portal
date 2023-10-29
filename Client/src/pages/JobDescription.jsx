@@ -13,18 +13,20 @@ import { useParams } from "react-router-dom";
 import { jobdescription } from "./request";
 
 const JobDescription = () =>{
-    const params = useParams(), id=params.id, position = params.position, company = params.company;
-    const link = `http://localhost:5173/jobs/description/${id}/${position}/${company}`
-
+    const params = useParams(), id = params.id, position = params.position, company = params.company;
+    
     const [jobs, setJobs] = useState([]);
     const [loading, setloading] = useState(true);
-
+    
     useEffect(()=>{
         jobdescription(setJobs, setloading, id)
     },[])
 
-    const ShareJob = (link) =>{navigator.clipboard?.writeText && navigator.clipboard.writeText(link)}
+    const [c] = useState()
     
+    const link = `http://localhost:5173/jobs/description/${id}/${position}/${company}`
+    const ShareJob = (link) =>{navigator.clipboard?.writeText && navigator.clipboard.writeText(link)}
+  
     return(
         <>
         <div className=" hidden fixed h-screen w-full z-[100] bg-[rgb(0,0,0,0.3)]">
@@ -36,6 +38,7 @@ const JobDescription = () =>{
         </div>
 
         <Header />
+
         <section className=" flex justify-center md:justify-between p-4 relative">
 
             {/* left panel */}
@@ -56,39 +59,12 @@ const JobDescription = () =>{
                     <hr></hr>
                 </div>
 
-                <div className="p-1 mb-2 relative">
-                    <h1 className=" font-medium">Node js Backend Developer</h1>
-                    <p>Google Foundations</p>
-                    <div>
-                        <p>Category</p>
-                    </div>
-                    <div className=" flex justify-between mb-1 whitespace-nowrap">
-                        <p>Sunyani</p>
-                        <p>Posted on 5th October,2023</p>
-                    </div>
-                    <div className="bg-red-600 h-8 w-8 rounded-full absolute right-0 top-0"></div>
-                    <hr></hr>
-                </div>
-
-                <div className="p-1 mb-2 relative">
-                    <h1 className=" font-medium">Node js Backend Developer</h1>
-                    <p>Google Foundations</p>
-                    <div>
-                        <p>Category</p>
-                    </div>
-                    <div className=" flex justify-between mb-1 whitespace-nowrap">
-                        <p>Sunyani</p>
-                        <p>Posted on 5th October,2023</p>
-                    </div>
-                    <div className="bg-red-600 h-8 w-8 rounded-full absolute right-0 top-0"></div>
-                    <hr></hr>
-                </div>
-
                 <button className=" border-[1px] border-blue-600 rounded-xl w-full hover:bg-blue-600 hover:text-white  h-10">View All</button>
             </div>
 
             {/* description body */}
-            {jobs.map((list)=>(
+            {loading ? <Loading/> :
+                jobs.map((list)=>( 
                 <div key={list.id} className=" md:basis-[57%]">
 
                     {/* Heading */}
@@ -184,6 +160,16 @@ const JobDescription = () =>{
             </div>
             
         </section>
+
+        <section>
+            {/* Other Jobs */}
+            <div className="p-2">
+                <div className=" h-44 bg-teal-600 w-64 rounded-xl">
+
+                </div>
+            </div>
+        </section>
+
         <SocialMedia />
         <Footer/>
         </>

@@ -9,7 +9,7 @@ import FormsDashboardHead from "../DashboardHeaders/FormsDashboardHead";
 
 const ScholarshipForm = () =>{
     const [sForm, setSForm] = useState({
-        image : null, scholarshipname:"", deadline:"", scholarshiptype:"",
+        image : null, scholarshipname:"", deadline:"", scholarshiptype:"",featured:"",
         agent : "", programs:"", applicant:"",hostuniversity:"",
         offeredby:"", aboutscholarship:"", scholarshipbenefits:"", eligibilitycriteria:"",
         documentsrequired:"", country:"", apply:"", duration:""
@@ -238,6 +238,20 @@ const ScholarshipForm = () =>{
                         onChange={FormValues}
                         placeholder='e.g apply through..'
                     />
+
+                    <div className=" flex flex-col gap-1">
+                        <label htmlFor='featured' className=" text-xl">Featured</label>
+                        <select 
+                        id='featured' 
+                        name='featured' 
+                        value={sForm.featured}
+                        onChange={FormValues}
+                        className="bg-transparent border-[1px] border-blue-600 p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" required>
+                            <option value='' disabled>-- Select Featured -- </option>
+                            <option value='true' >Yes</option>
+                            <option value='false' >No</option>
+                        </select>                 
+                    </div>
 
                     <FormInputs 
                         label='Upload Scholarship Flyer' 
