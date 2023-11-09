@@ -2,14 +2,68 @@ import { database } from "../Database/database.js";
 import {v4 as uuid} from 'uuid';
 
 export const ArticleGet = async(req, res) =>{
-    const query = `SELECT *,DATE_FORMAT(datecreated, '%d/%M/%Y') AS datecreated FROM articles ORDER BY datecreated DESC`;
+    const query = `SELECT *,DATE_FORMAT(datecreated, '%d/%m/%y') AS datecreated FROM articles ORDER BY datecreated DESC`;
     try{
         const [data] = await database.query(query);
-        res.send(data);
+        res.json(data);
     }catch(error){
         console.error(error)
     }
 };
+
+export const ArticlesOnDescriptionPage = async(req, res) =>{
+    const query = `SELECT *,DATE_FORMAT(datecreated, '%d/%m/%y') AS datecreated FROM articles ORDER BY datecreated DESC LIMIT 10`;
+    try{
+        const [data] = await database.query(query);
+        res.json(data);
+    }catch(error){
+        console.error(error)
+    }
+};
+
+export const ArticlesDescription = async(req, res) =>{
+    const query =  `SELECT *, DATE_FORMAT(datecreated, '%d/%M/%Y') AS datecreated FROM articles WHERE id=?`
+    const parameter = [req.params.id]
+    try{
+        const [data] = await database.query(query, parameter)
+        res.json(data)
+    }catch(error){
+        console.error(error.message)
+    }
+}
+
+export const ArticlesMainFeatured = async(req,res) =>{
+    const query = `SELECT *, DATE_FORMAT(datecreated, '%d/%m/%y') AS datecreated FROM articles WHERE mainfeatured=? ORDER BY datecreated LIMIT 1`;
+    const parameter = ['true']
+    try{
+        const [data] = await database.query(query, parameter);
+        res.json(data);
+    }catch(error){
+        console.error(error.message);
+    }
+}
+
+export const ArticlesFeatured = async(req,res) =>{
+    const query = `SELECT *, DATE_FORMAT(datecreated, '%d/%m/%y') AS datecreated FROM articles WHERE featured=? LIMIT 4`;
+    const parameter = ['true']
+    try{
+        const [data] = await database.query(query, parameter);
+        res.json(data);
+    }catch(error){
+        console.error(error.message);
+    }
+}
+
+export const ArticlesMustRead = async(req,res) =>{
+    const query = `SELECT *, DATE_FORMAT(datecreated, '%d/%m/%y') AS datecreated FROM articles WHERE mustread=? LIMIT 4`;
+    const parameter = ['true']
+    try{
+        const [data] = await database.query(query, parameter);
+        res.json(data);
+    }catch(error){
+        console.error(error.message);
+    }
+}
 
 export const ArticleCount = async(req, res) =>{
     const query = `SELECT COUNT (id) FROM articles`
@@ -27,13 +81,13 @@ export const ArticleCount = async(req, res) =>{
 }
 
 export const ArticlePost = async(req, res) =>{
-    const {title,briefinfo,post} = req.body;
+    const {title,briefinfo,post,featured,mustread, mainfeatured} = req.body;
     const image = req.file.path;
 
     const query = `INSERT INTO articles
-    (id,image,title,briefinfo,post)
-    VALUES(?,?,?,?,?)`;
-    const parameter = [uuid(),image, title, briefinfo, post];
+    (id,image,title,briefinfo,post,featured,mustread,mainfeatured)
+    VALUES(?,?,?,?,?,?,?,?)`;
+    const parameter = [uuid(),image, title, briefinfo, post,featured,mustread,mainfeatured];
     try{
         const [data] = await database.query(query, parameter);
     }catch(error){
@@ -67,11 +121,11 @@ export const ArticleEdit = async(req, res) =>{
 
 // posts the newly updated article 
 export const ArticleUpdate = async(req,res) =>{
-    const {title, briefinfo, post} = req.body;
+    const {title, briefinfo, post,featured,mustread, mainfeatured} = req.body;
     const image = req.file.path;
 
-    const query = "UPDATE articles SET image=?, title=?, briefinfo=?, post=? WHERE id=?"
-    const parameter = [image, title, briefinfo, post, req.params.id];
+    const query = "UPDATE articles SET image=?, title=?, briefinfo=?, post=?, featured=?, mustread=?, mainfeatured=? WHERE id=?"
+    const parameter = [image, title, briefinfo, post, featured, mustread, mainfeatured, req.params.id];
     try {
         const [data] = await database.query(query, parameter);
         return res.json('Successfully Updated')
@@ -79,4 +133,5 @@ export const ArticleUpdate = async(req,res) =>{
         console.error(error.message)
     }
 }
+
 

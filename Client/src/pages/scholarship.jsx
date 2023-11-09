@@ -21,26 +21,7 @@ const Scholarship = ()=>{
         <>
             <Header />
             
-            <div className=" h-screen flex p-4 gap-3 bg-gray-100">
-  
-                <div className=" md:max-w-5xl lg:max-w-7xl xl:max-w-none m-auto ">
-                    <div className=" flex flex-wrap justify-center md:flex md:flex-wrap gap-3">
-                        { loading ? <div>loading ....</div> :
-                        scholarshipData.map( (list) =>(
-                            <SchoBox key={list.id}
-                            image={list.image}
-                            scholarshipname={list.scholarshipname}
-                            scholarshiptype={list.scholarshiptype}
-                            duration={list.duration}
-                            agent={list.agent}
-                            programs={list.programs}
-                            applicant={list.applicant}
-                            deadline={list.deadline}
-                        /> ))
-                        }
-                    </div>
-                </div>
-            </div> 
+             
             <SocialMedia />
             <Footer />
         </>

@@ -11,7 +11,7 @@ import { useEffect } from "react";
 const ArticleEditForm = () =>{
     const id = useParams(), ID = id.id;
 
-    const [aform, setAform] = useState({image:null,title:"",briefinfo:"",post: ""})
+    const [aform, setAform] = useState({image:null,title:"",mainfeatured:"",briefinfo:"",featured:"",mustread:"",post: ""})
     const [submitted, setSubmitted] = useState(false);
 
     const formValues = (e) =>{
@@ -46,7 +46,7 @@ const ArticleEditForm = () =>{
         axios.get(`http://localhost:4040/api/articles-edit/${ID}`)
         .then(response => {
             const retrievedData = response.data[0];
-            setAform({image:retrievedData.image, title:retrievedData.title, briefinfo:retrievedData.briefinfo, post:retrievedData.post})
+            setAform({image:retrievedData.image, title:retrievedData.title,mainfeatured:retrievedData.mainfeatured,featured:retrievedData.featured, briefinfo:retrievedData.briefinfo,mustread:retrievedData.mustread, post:retrievedData.post})
         }).catch(error => console.error(error.message))
     },[])
 
@@ -75,6 +75,20 @@ const ArticleEditForm = () =>{
                         placeholder='e.g. How to write a Personal Statement'
                     />
 
+                    <div className=" flex flex-col gap-1">
+                        <label htmlFor='mainfeatured' className=" text-xl">Must Featured</label>
+                        <select 
+                        id='mainfeatured' 
+                        name='mainfeatured' 
+                        value={aform.mainfeatured}
+                        onChange={formValues}
+                        className="bg-transparent border-[1px] p-2 w-full border-black outline-teal-600 focus-within:bg-white rounded-md" required>
+                            <option value='' disabled>-- Main Featured -- </option>
+                            <option value='true' >Yes</option>
+                            <option value='false' >No</option>
+                        </select>                 
+                    </div>
+
                     <FormTextarea 
                         label='Article Brief Info' 
                         htmlFor='briefinfo'
@@ -94,6 +108,34 @@ const ArticleEditForm = () =>{
                         onChange={formValues}
                         placeholder='Type Article Here'
                     />
+
+                    <div className=" flex flex-col gap-1">
+                        <label htmlFor='featured' className=" text-xl">Featured</label>
+                        <select 
+                        id='featured' 
+                        name='featured' 
+                        value={aform.featured}
+                        onChange={formValues}
+                        className="bg-transparent border-[1px] p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" required>
+                            <option value='' disabled>-- Select Featured -- </option>
+                            <option value='true' >Yes</option>
+                            <option value='false' >No</option>
+                        </select>                 
+                    </div>
+
+                    <div className=" flex flex-col gap-1">
+                        <label htmlFor='mustread' className=" text-xl">Must Read</label>
+                        <select 
+                        id='mustread' 
+                        name='mustread' 
+                        value={aform.mustread}
+                        onChange={formValues}
+                        className="bg-transparent border-[1px] p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" required>
+                            <option value='' disabled>-- Select Must Read -- </option>
+                            <option value='true' >Yes</option>
+                            <option value='false' >No</option>
+                        </select>                 
+                    </div>
 
                     <FormInputs 
                         label='Upload Article Flyer' 

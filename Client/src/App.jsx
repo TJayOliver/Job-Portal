@@ -7,6 +7,8 @@ import Articles from './pages/articles.jsx'
 import Administrator from './pages/administrator/administrator.jsx';
 import Dash from './pages/Dash.jsx';
 import ArticleForm from './components/Dashboard/PostForms/ArticleForm.jsx';
+import ArticleDescription from './pages/articleDescription.jsx';
+
 import CategoriesForm from './components/Dashboard/PostForms/CategoriesForm.jsx';
 import JobForm from './components/Dashboard/PostForms/JobForm.jsx';
 
@@ -22,7 +24,12 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
       <Route path='/' element={<Home />} />
-      <Route path='/articles' element={<Articles />} />
+
+      <Route path='/articles'> 
+        <Route path='/articles' element={<Articles />} />
+        <Route path='/articles/:title/:id' element={<ArticleDescription />} />
+      </Route>
+
       <Route path='/administrator' element={<Administrator />} />
 
       <Route path='/jobs' >

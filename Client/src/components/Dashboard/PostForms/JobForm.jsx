@@ -114,7 +114,19 @@ const JobForm = () =>{
                         value={gform.website}
                         onChange={formValues}
                         placeholder='e.g. www.cocacola.com'
-                    />
+                    /><div className=" flex flex-col gap-1">
+                        <label htmlFor='featured' className=" text-xl">Featured</label>
+                        <select 
+                        id='featured' 
+                        name='featured' 
+                        value={gform.featured}
+                        onChange={formValues}
+                        className="bg-transparent border-[1px] border-blue-600 p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" required>
+                            <option value='' disabled>-- Select Featured -- </option>
+                            <option value='true' >Yes</option>
+                            <option value='false' >No</option>
+                        </select>                 
+                    </div>
 
                     <div className=" flex flex-col gap-1">
                         <label htmlFor='duration' className=" text-xl">Contract Type</label>
@@ -143,19 +155,7 @@ const JobForm = () =>{
                         </select>                 
                     </div>
 
-                    <div className=" flex flex-col gap-1">
-                        <label htmlFor='featured' className=" text-xl">Featured</label>
-                        <select 
-                        id='featured' 
-                        name='featured' 
-                        value={gform.featured}
-                        onChange={formValues}
-                        className="bg-transparent border-[1px] border-blue-600 p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" required>
-                            <option value='' disabled>-- Select Featured -- </option>
-                            <option value='true' >Yes</option>
-                            <option value='false' >No</option>
-                        </select>                 
-                    </div>
+                    
 
                     <div className=" flex flex-col gap-1">
                         <label htmlFor='categoriesname' className=" text-xl">Select Job Category</label>

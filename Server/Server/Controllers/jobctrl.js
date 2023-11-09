@@ -11,6 +11,16 @@ export const JobGet = async(req,res) =>{
     }
 }
 
+export const JobOnDescriptionPage = async(req,res) =>{
+    const query = `SELECT * FROM jobs LIMIT 3`;
+    try{
+        const [data] = await database.query(query);
+        res.json(data);
+    }catch(error){
+        console.error(error.message);
+    }
+}
+
 export const JobFeatured = async(req,res) =>{
     const query = `SELECT * FROM jobs WHERE featured=? LIMIT 8`;
     const parameter = ['true']
@@ -113,3 +123,14 @@ export const JobsUpdate = async(req,res) =>{
     }
 }
 
+export const JobSearch = async(req, res) =>{
+    const {position, location} = req.body;
+    try{
+        const query = `SELECT * FROM jobs WHERE position LIKE? OR location LIKE?`
+        const parameters = [`%${position}%`, `%${location}%`]
+        const [data] = await database.query(query, parameters);
+        res.json(data)
+    }catch(error){
+        console.error(error.message)
+    }
+}

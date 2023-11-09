@@ -9,7 +9,7 @@ import FormsDashboardHead from "../DashboardHeaders/FormsDashboardHead";
 
 const ArticleForm = () =>{
 
-    const [aform, setAform] = useState({image:null,title:"",briefinfo:"",post: ""})
+    const [aform, setAform] = useState({image:null,title:"",briefinfo:"",mainfeatured:"",featured:"",mustread:"",post: ""})
     const [submitted, setSubmitted] = useState(false);
 
     const formValues = (e) =>{
@@ -65,6 +65,20 @@ const ArticleForm = () =>{
                         placeholder='e.g. How to write a Personal Statement'
                     />
 
+                    <div className=" flex flex-col gap-1">
+                        <label htmlFor='mainfeatured' className=" text-xl">Main Featured</label>
+                        <select 
+                        id='mainfeatured' 
+                        name='mainfeatured' 
+                        value={aform.mainfeatured}
+                        onChange={formValues}
+                        className="bg-transparent border-[1px] p-2 w-full border-black outline-teal-600 focus-within:bg-white rounded-md" required>
+                            <option value='' disabled>-- Main Featured -- </option>
+                            <option value='true' >Yes</option>
+                            <option value='false' >No</option>
+                        </select>                 
+                    </div>
+
                     <FormTextarea 
                         label='Article Brief Info' 
                         htmlFor='briefinfo'
@@ -84,6 +98,34 @@ const ArticleForm = () =>{
                         onChange={formValues}
                         placeholder='Type Article Here'
                     />
+
+                    <div className=" flex flex-col gap-1">
+                        <label htmlFor='featured' className=" text-xl">Featured</label>
+                        <select 
+                        id='featured' 
+                        name='featured' 
+                        value={aform.featured}
+                        onChange={formValues}
+                        className="bg-transparent border-[1px] p-2 w-full border-black outline-teal-600 focus-within:bg-white rounded-md" required>
+                            <option value='' disabled>-- Select Featured -- </option>
+                            <option value='true' >Yes</option>
+                            <option value='false' >No</option>
+                        </select>                 
+                    </div>
+
+                    <div className=" flex flex-col gap-1">
+                        <label htmlFor='mustread' className=" text-xl">Must Read</label>
+                        <select 
+                        id='mustread' 
+                        name='mustread' 
+                        value={aform.mustread}
+                        onChange={formValues}
+                        className="bg-transparent border-[1px] p-2 w-full border-black outline-teal-600 focus-within:bg-white rounded-md" required>
+                            <option value='' disabled>-- Select Must Read -- </option>
+                            <option value='true' >Yes</option>
+                            <option value='false' >No</option>
+                        </select>                 
+                    </div>
 
                     <FormInputs 
                         label='Upload Article Flyer' 

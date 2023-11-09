@@ -1,32 +1,51 @@
 import Header from "../components/Header/Header";
 import one from '../assets/One.jpg';
 import JobBox from "../components/Jobs/JobBox"
+import JobDescriptionBox from "../components/Jobs/JobDescriptionBox"
 import { useState, useEffect } from "react"
 import axios from "axios";
 import Loading from "../components/Loading/Loading"
 import SocialMedia from "../components/Homepage/SocialMedia/SocialMedia";
 import Footer from "../components/Footer/Footer";
-import { BsCalendar2CheckFill} from "react-icons/bs";
-import {PiHandCoinsBold} from 'react-icons/pi';
-import {RiUserLocationFill} from 'react-icons/ri';
-import { useParams } from "react-router-dom";
-import { jobdescription } from "./request";
+import {ImFilesEmpty} from 'react-icons/im';
+import { Link, useParams } from "react-router-dom";
+import { displayJobsOnDescriptionPage, jobdescription } from "./request";
 
 const JobDescription = () =>{
     const params = useParams(), id = params.id, position = params.position, company = params.company;
     
     const [jobs, setJobs] = useState([]);
+    const [alljobs,setAllJobs] = useState([])
     const [loading, setloading] = useState(true);
     
     useEffect(()=>{
-        jobdescription(setJobs, setloading, id)
+        jobdescription(setJobs, setloading, id),
+        displayJobsOnDescriptionPage(setAllJobs, setloading)
     },[])
-
-    const [c] = useState()
-    
+   
     const link = `http://localhost:5173/jobs/description/${id}/${position}/${company}`
     const ShareJob = (link) =>{navigator.clipboard?.writeText && navigator.clipboard.writeText(link)}
-  
+
+    const [bestMatch, setBestMatch] = useState(true)
+    const [feat, setFeat] = useState(false)
+    const [mostRecent, setMostRecent] = useState(false)
+
+    const handleBestMatches = () =>{
+        setBestMatch(true)
+        setFeat(false)
+        setMostRecent(false)
+    }
+    const handleFeatured = () =>{
+        setFeat(true)
+        setBestMatch(false)
+        setMostRecent(false)
+    }
+    const handleRecent = () =>{
+        setMostRecent(true)
+        setBestMatch(false)
+        setFeat(false)
+    }
+    
     return(
         <>
         <div className=" hidden fixed h-screen w-full z-[100] bg-[rgb(0,0,0,0.3)]">
@@ -39,136 +58,150 @@ const JobDescription = () =>{
 
         <Header />
 
-        <section className=" flex justify-center md:justify-between p-4 relative">
+        {/* banner */}
+        <div className="flex justify-center">
+            <div className="h-56 bg-[#004242] w-full"></div>
+        </div>
 
-            {/* left panel */}
-            <div className=" hidden  md:block basis-[25%] bg-white rounded-lg h-[28rem] sticky top-16 p-2">
-                <h1 className="font-bold p-2">Jobs you might be interested in</h1>
-                
-                <div className="p-1 mb-2 relative">
-                    <h1 className=" font-medium">Node js Backend Developer</h1>
-                    <p>Google Foundations</p>
-                    <div>
-                        <p>Category</p>
-                    </div>
-                    <div className=" flex justify-between mb-1 whitespace-nowrap">
-                        <p>Sunyani</p>
-                        <p>Posted on 5th October,2023</p>
-                    </div>
-                    <div className="bg-red-600 h-8 w-8 rounded-full absolute right-0 top-0"></div>
-                    <hr></hr>
-                </div>
+        {loading ?
+            <Loading/>
+            :jobs.map((job)=>(
+                <div key={job.id} className=" flex flex-col-reverse md:flex md:flex-row p-2 justify-center gap-4">
+                    
+                    {/* similar jobs */}
+                    <div className=" flex flex-col gap-4 justify-center">
 
-                <button className=" border-[1px] border-blue-600 rounded-xl w-full hover:bg-blue-600 hover:text-white  h-10">View All</button>
-            </div>
-
-            {/* description body */}
-            {loading ? <Loading/> :
-                jobs.map((list)=>( 
-                <div key={list.id} className=" md:basis-[57%]">
-
-                    {/* Heading */}
-                    <div className="  rounded-lg drop-shadow-md bg-white flex flex-col gap-4 h-54 p-4 mb-4">
-                        
-                        <h1 className="font-medium text-xl">{list.position}</h1>
-
-                        <div className="flex gap-4 relative">
-                            <div className="flex gap-1">
-                                <BsCalendar2CheckFill className=" mt-1.5" />
-                                <p>{list.duration}</p>
-                            </div>
-                            <div className="flex gap-1">
-                                <PiHandCoinsBold className="mt-1.5" />
-                                <p>GHC {list.salary}</p>
-                            </div>
-
-                            <div className="bg-red-600 w-20 h-20 rounded-full right-0 absolute -top-1">
-                                <img src={one} className=' bg-cover object-cover h-full w-full' />
-                            </div>
+                        <div className=" h-14 rounded-lg drop-shadow-md items-center justify-between p-2 bg-white w-full md:w-[22rem] flex relative">
+                            <p onClick={handleBestMatches} className={bestMatch ?"p-2 bg-[#004242] text-white rounded-md duration-100 ease-out" : 'bg-none'}>Best Matches</p>
+                            <p onClick={handleFeatured} className={feat ? "p-2 bg-[#004242] text-white rounded-md duration-100 ease-out" : 'bg-none'}>Featured</p>
+                            <p onClick={handleRecent} className={mostRecent ? "p-2 bg-[#004242] text-white rounded-md duration-100 ease-out" : 'bg-none'}>Most Recent</p>
                         </div>
 
-                        <div className="flex gap-1">
-                            <RiUserLocationFill className=" mt-1.5" />
-                            <p>{list.location}</p>
-                        </div>
-
-                        <hr></hr>
-
-                        <div className="flex justify-between items-center">
-                            <p>Posted on {list.datecreated}</p>
-                            <button className=" bg-blue-600 h-10 p-1 rounded-sm hover:bg-blue-500 text-white ">Visit Company Website</button>
-                        </div>
-                        
+                        {alljobs.map((list,id)=>(
+                        <JobDescriptionBox key={id} 
+                        image={list.image}
+                        location={list.location}
+                        company={list.company}
+                        duration={list.duration}
+                        position={list.position}
+                        category={list.categoriesname}
+                        salary={list.salary}
+                        description={list.responsibilities.replace(/^\d+[.,]/, '').trim().slice(0,60)}
+                        to={`/jobs/description/${list.id}/${list.position}/${list.company}`}
+                        />))}
                     </div>
                     
-                    {/* Responsibility / Requirements / Other Information / Application */}
-                    <div className=" bg-white rounded-lg p-4 relative">
+                    {/* description */}
+                    <div className=" w-full md:w-[50rem] ] flex justify-center flex-col py-2 px-5 bg-gray-50 rounded-lg">
+                
+                        {/* heading */}
+                        <div className="md:py-2">
+                            {/* logo and large screen apply*/}
+                            <div className=" flex justify-between items-center p-2">
 
-                        <h1 className=" font-medium">Responsibilities</h1>
-                        <hr></hr>
+                                <div className="flex gap-2">
+                                    {/* company logo */}
+                                    <div className=" h-14 w-14 bg-gray-50 rounded-lg">
+                                        <img src={one} className='h-full w-full object-cover rounded-lg' />
+                                    </div>
 
-                        {/* Responsibility */}
-                        <div className=" text-justify ">
-                            <ul className="list-disc p-3">
-                                <li>{list.responsibilities}</li>
-                                <li>{list.responsibilitiestwo}</li>
-                                <li>{list.responsibilitiesthree}</li>
-                                <li>{list.responsibilitiesfour}</li>
-                            </ul>
+                                    {/* position,duration, salary and category */}
+                                    <div className=" flex flex-col gap-1 shrink-0">
+                                        <p className=" font-bold text-xl md:text-3xl">{job.position}</p>
+                                        <div className=" flex gap-3 text-sm md:text-md">
+                                            <p className="bg-gray-200 px-1 rounded-md">{job.duration}</p>
+                                            <p className="bg-gray-200 px-1 rounded-md">GHC{job.salary}</p>
+                                            <p className="bg-gray-200 px-1 rounded-md">{job.categoriesname}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div role='button' className='bg-[#004242] h-8 w-20 md:flex items-center justify-center rounded-md p-1 text-white hidden '>
+                                    <Link to={job.website}>Apply</Link>
+                                </div>
+
+                            </div>
+
+                            {/* company overview */}
+                            <div>
+                                <p className="font-bold ">{job.company}</p>
+                                
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas, voluptatum sequi numquam eum adipisci laborum velit voluptas facere quam deserunt? At omnis iusto odit ab beatae deleniti quas impedit illo.</p>
+                            </div>
+                        </div>
+
+                        {/* descriptions */}
+                        <div className="flex flex-col gap-3">
                             
-                        </div>
-
-                        <h1 className=" font-medium">Requirements</h1>
-                        <hr></hr>
-
-                        {/* Requirements */}
-                        <div className=" text-justify">
-                            <ul className="list-disc p-3">
-                                <li>{list.requirements}</li>
-                                <li>{list.requirementstwo}</li>
-                                <li>{list.requirementsthree}</li>
-                                <li>{list.requirementsfour}</li>
-                            </ul>
+                            <div id="responsibilities">
+                                <p className="font-medium">Responsibility</p>
+                                {job.responsibilities.length > 0 ? 
+                                    <ul className="list-disc p-1">
+                                        <li>{job.responsibilities}</li>
+                                    </ul> : null
+                                }
+                                {job.responsibilitiestwo.length > 0 ? 
+                                    <ul className="list-disc p-1">
+                                        <li>{job.responsibilitiestwo}</li>
+                                    </ul> : null}
+                                {job.responsibilitiesthree.length > 0 ? 
+                                    <ul className="list-disc p-1">
+                                        <li>{job.responsibilitiesthree}</li>
+                                    </ul> : null
+                                }
+                                {job.responsibilitiesfour.length > 0 ? 
+                                <ul className="list-disc p-1">
+                                    <li>{job.responsibilitiesthree}</li>
+                                </ul> : null}
+                            </div>
                             
+                            <div id="requirements">
+                                <p className="font-medium">Requirements</p>
+                                {job.requirements.length > 0 ? 
+                                    <ul className="list-disc p-1">
+                                        <li>{job.requirements}</li>
+                                    </ul> : null
+                                }
+                                {job.requirementstwo.length > 0 ? 
+                                    <ul className="list-disc p-1">
+                                        <li>{job.requirementstwo}</li>
+                                    </ul> : null}
+                                {job.requirementsthree.length > 0 ? 
+                                    <ul className="list-disc p-1">
+                                        <li>{job.requirementsthree}</li>
+                                    </ul> : null
+                                }
+                                {job.requirementsfour.length > 0 ? 
+                                <ul className="list-disc p-1">
+                                    <li>{job.requirementsthree}</li>
+                                </ul> : null}
+                            </div>
+                            
+                            <div id="otherinformation">
+                                <p className="font-medium">Other Information</p>
+                                <p>{job.otherinformation}</p>
+                            </div>
+                            
+                            <div id="application">
+                                <p className="font-medium">How to apply</p>
+                                <p>Visit {job.website} for Further Information</p>
+                            </div>
                         </div>
+                        
+                        {/* share  */}
+                        <div className="px-1 py-2">
+                            <div className="h-10 w-56 bg-white rounded-lg p-2 flex items-center gap-3">
+                                    <p className="whitespace-nowrap overflow-hidden text-sm">{link.slice(0,35)}</p>
 
-                        <h1 className=" font-medium">Other Information</h1>
-                        <hr></hr>
+                                    <ImFilesEmpty role='button' onClick={()=>ShareJob(link)} className="text-xl"/>
 
-                        {/* Other Information */}
-                        <div className=" text-justify mb-4">
-                            <p>{list.otherinformation}</p>
-                        </div>
-
-                        <h1 className=" font-medium">Apply</h1>
-                        <hr></hr>
-
-                        {/* Application */}
-                        <p>Send CV to @ghana.com</p>
-
-                        <div className=" flex justify-center">
-                            <div className=" bg-blue-600 w-2/5 p-2 rounded-sm items-center text-white text-center hover:bg-blue-500">Share Job</div>
+                            </div>
                         </div>
                     </div>
-                
                 </div>
-            ))}
+            ))
+        }
 
-            {/* Right Panel  */}
-            <div className="hidden md:block basis-[15%] bg-white sticky top-16 rounded-lg h-[35rem] p-2">
-                <p>Google Adverts</p>
-            </div>
-            
-        </section>
-
-        <section>
-            {/* Other Jobs */}
-            <div className="p-2">
-                <div className=" h-44 bg-teal-600 w-64 rounded-xl">
-
-                </div>
-            </div>
-        </section>
 
         <SocialMedia />
         <Footer/>

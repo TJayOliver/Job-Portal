@@ -9,6 +9,14 @@ export const allJobs = (setJobs, setloading) =>{
     }).catch(error => console.error(error.message))
 }
 
+export const displayJobsOnDescriptionPage = (setJobs, setloading) =>{
+    axios.get('http://localhost:4040/api/jobs-description-page-get')
+    .then((response) => {
+        setJobs(response.data)
+        setloading(false);
+    }).catch(error => console.error(error.message))
+}
+
 // retrieve featured jobs and display it on the homepage
 export const featuredJobs = (setFeatured, setloading) =>{
     axios.get('http://localhost:4040/api/jobs-featured')
@@ -54,3 +62,50 @@ export const featuredScholarships = (setFeatured, setloading) =>{
 }
 
 
+export const allArticles = (setArticles, setloading) =>{
+    axios.get('http://localhost:4040/api/articles-get')
+    .then((response) => {
+        setArticles(response.data)
+        setloading(false);
+    }).catch(error => console.error(error.message))
+}
+
+export const articlesDescription = (setArticles, setloading, id) =>{
+    axios.get(`http://localhost:4040/api/articles-description/${id}`)
+    .then((response) => {
+        setArticles(response.data)
+        setloading(false);
+    }).catch(error => console.error(error.message))
+}
+
+export const MainFeaturedArticles = (setMainFeatured, setloading) =>{
+    axios.get('http://localhost:4040/api/articles-mainfeatured')
+    .then((response) => {
+        setMainFeatured(response.data)
+        setloading(false);
+    }).catch(error => console.error(error.message))
+}
+
+export const featuredArticles = (setFeatured, setloading) =>{
+    axios.get('http://localhost:4040/api/articles-featured')
+    .then((response) => {
+        setFeatured(response.data)
+        setloading(false);
+    }).catch(error => console.error(error.message))
+}
+
+export const mustReadArticles = (setMustRead, setloading) =>{
+    axios.get('http://localhost:4040/api/articles-mustread')
+    .then((response) => {
+        setMustRead(response.data)
+        setloading(false);
+    }).catch(error => console.error(error.message))
+}
+
+export const displayArticlesOnDescriptionPage = (setArticlesonDescriptionPage, setloading) =>{
+    axios.get('http://localhost:4040/api/articles-description-page-get')
+    .then((response) => {
+        setArticlesonDescriptionPage(response.data)
+        setloading(false);
+    }).catch(error => console.error(error.message))
+}

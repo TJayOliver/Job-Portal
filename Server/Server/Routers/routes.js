@@ -2,14 +2,19 @@ import express from 'express';
 import { options } from '../../configurations/allowedsites.js';
 import { articleUpload, scholarshipUpload, jobsUpload } from '../../configurations/multer.js';
 import { ScholarshipCount,ScholarshipGet,ScholarshipPost, ScholarshipDelete, ScholarshipEdit, ScholarshipsUpdate, ScholarshipFeatured  } from '../Controllers/scholarshipctrl.js';
-import { ArticleCount, ArticleDelete, ArticleEdit, ArticleGet, ArticlePost, ArticleUpdate } from '../Controllers/articlesctrl.js';
-import { JobCount, JobCategory,JobDescription, JobGet, JobPost, JobDelete, JobsUpdate, JobsEdit, JobFeatured } from '../Controllers/jobctrl.js';
+import { ArticleCount, ArticleDelete, ArticleEdit, ArticleGet, ArticlePost, ArticlesDescription, ArticlesFeatured, ArticlesMainFeatured, ArticlesMustRead, ArticlesOnDescriptionPage, ArticleUpdate } from '../Controllers/articlesctrl.js';
+import { JobCount, JobCategory,JobDescription, JobGet, JobPost, JobDelete, JobsUpdate, JobsEdit, JobFeatured, JobSearch, JobOnDescriptionPage } from '../Controllers/jobctrl.js';
 import { CategoryDelete, CategoryGet, CategoryPost, CategoryEdit, CategoryUpdate } from '../Controllers/categoryctrl.js';
 import { SubscribeGet, SubscribePost } from '../Controllers/subscribe.js';
 
 export const routes = express.Router();
 
 routes.get('/api/articles-get', ArticleGet);
+routes.get('/api/articles-description/:id', ArticlesDescription);
+routes.get('/api/articles-description-page-get', ArticlesOnDescriptionPage);
+routes.get('/api/articles-mainfeatured', ArticlesMainFeatured);
+routes.get('/api/articles-featured', ArticlesFeatured);
+routes.get('/api/articles-mustread', ArticlesMustRead);
 routes.post('/api/articles-post', articleUpload.single('image'),ArticlePost);
 routes.get('/api/articles-count', ArticleCount);
 routes.delete('/api/articles-delete/:id', ArticleDelete);
@@ -24,12 +29,14 @@ routes.put('/api/categories-update/:id', CategoryUpdate);
 
 routes.get('/api/jobs-get', JobGet);
 routes.get('/api/jobs-featured', JobFeatured);
+routes.get('/api/jobs-description-page-get', JobOnDescriptionPage);
 routes.get('/api/jobs-description/:id', JobDescription);
 routes.post('/api/jobs-post', jobsUpload.single('image'),JobPost);
 routes.get('/api/jobs-count', JobCount);
 routes.get('/api/jobs-category/:id', JobCategory);
 routes.delete('/api/jobs-delete/:id', JobDelete);
 routes.get('/api/jobs-edit/:id', JobsEdit);
+routes.post('/api/jobs-search', JobSearch);
 routes.put('/api/jobs-update/:id', jobsUpload.single('image'), JobsUpdate);
 
 routes.get('/api/scholarships-get', ScholarshipGet);
@@ -42,3 +49,4 @@ routes.put('/api/scholarships-update/:id',scholarshipUpload.single('image'), Sch
 
 routes.get('/api/subscribe-get', SubscribeGet);
 routes.post('/api/subscribe-post', SubscribePost);
+

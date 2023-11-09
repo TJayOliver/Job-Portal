@@ -25,7 +25,7 @@ const JobBox = ({image,description, location, company, duration, position, categ
                     </div>
 
                     {/* Share icon */}
-                    <div className=' float-left bg-gray-200 h-8 w-8 rounded-full flex items-center justify-center text-xl cursor-pointer shrink-0'>
+                    <div className=' float-left bg-gray-50 h-8 w-8 rounded-full flex items-center justify-center text-xl cursor-pointer shrink-0'>
                         <CgShare />
                     </div>
                 </div>
@@ -39,12 +39,12 @@ const JobBox = ({image,description, location, company, duration, position, categ
 
                 {/* category and duration */}
                 <div className=' flex flex-col justify-between gap-1 flex-wrap text-sm font-medium'>
-                    <div className=' flex gap-1 bg-gray-200 rounded-md px-2 py-1'>
+                    <div className=' flex gap-1 bg-gray-50 rounded-md px-2 py-1'>
                         <BiCategory className=' mt-1' />
                         <p>{category}</p>
                     </div>
 
-                    <div className=' flex gap-1 bg-gray-200 rounded-md w-24 px-2 py-1'>
+                    <div className=' flex gap-1 bg-gray-50 rounded-md w-24 px-2 py-1'>
                         <BsCalendar2CheckFill className='mt-1' />
                         <p>{duration}</p>
                     </div>
@@ -57,7 +57,7 @@ const JobBox = ({image,description, location, company, duration, position, categ
                         <p className='text-2xl'>{salary}</p>
                     </div>
 
-                    <div role='button' className='rounded-lg bg-red-500 hover:bg-red-600 hover:duration-150 hover:ease-out  text-white font-bold h-10 flex items-center justify-center w-32 px-2'>
+                    <div role='button' className='rounded-lg bg-[#004242] hover:bg-[#095252] hover:duration-150 hover:ease-out  text-white font-bold h-10 flex items-center justify-center w-32 px-2'>
                         <Link to={to}>View Details</Link>
                     </div>
                 </div>

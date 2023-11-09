@@ -37,9 +37,12 @@ CREATE TABLE `articles`(
     `image` VARCHAR(50) NOT NULL,
     `title` VARCHAR(80) NOT NULL,
     `briefinfo` VARCHAR(80) NOT NULL,
-    `author` VARCHAR(80) NOT NULL,
+    `author` VARCHAR(50) NOT NULL,
     `post` VARCHAR(800) NOT NULL,
-    `datecreated` DATE DEFAULT CURRENT_DATE NOT NULL,
+    `featured` ENUM('true', 'false') NOT NULL,
+    `mainfeatured` ENUM ('true', 'false') NOT NULL,
+    `mustread` ENUM('true', 'false') NOT NULL,
+    `datecreated` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     PRIMARY KEY(`id`)
 );
 

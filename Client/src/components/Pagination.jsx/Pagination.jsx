@@ -5,7 +5,7 @@ const Pagination = ({totalPost, postPerPage, setCurrentPage, currentPage}) =>{
     for(let i = 1; i <= page; i++){
         pageNumbers.push(i);
     }
-    const className = `bg-blue-400 p-3 hover:bg-gray-300 hover:duration-100 hover:ease-out cursor-pointer rounded-md `
+    const className = `bg-gray-200 p-3 hover:bg-gray-300 hover:duration-100 hover:ease-out cursor-pointer rounded-md `
     return(
         <div className=" flex justify-center items-center mt-2">
             <ul className=" flex gap-4">
