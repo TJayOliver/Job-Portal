@@ -12,3 +12,4 @@ html, body{@apply bg-white text-[#004242] h-screen overflow-x-hidden select-none
 }
 
 .scrollbar::-webkit-scrollbar{@apply hidden}
+

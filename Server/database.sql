@@ -19,6 +19,7 @@ CREATE TABLE `scholarships`(
     `programs` ENUM('All Levels','Bachelors Degree', 'Masters Degree', 'Doctorate Degree', 'Post Graduate Diploma') NOT NULL,
     `applicant` VARCHAR(80) NOT NULL,
     `hostuniversity` VARCHAR(80) NOT NULL,
+    `scholarshipcategory` ENUM('Government', 'Private', 'Organizational', 'International', 'Research'),
     `offeredby` VARCHAR(80) NOT NULL,
     `aboutscholarship` VARCHAR(200) NOT NULL,
     `scholarshipbenefits` VARCHAR(200) NOT NULL,
@@ -42,6 +43,7 @@ CREATE TABLE `articles`(
     `featured` ENUM('true', 'false') NOT NULL,
     `mainfeatured` ENUM ('true', 'false') NOT NULL,
     `mustread` ENUM('true', 'false') NOT NULL,
+    `articlecategory` ENUM('Job', 'Scholarship', 'Other'),
     `datecreated` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     PRIMARY KEY(`id`)
 );

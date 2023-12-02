@@ -19,6 +19,7 @@ import JobEditForm from './components/Dashboard/EditForms/JobEditForm.jsx';
 
 import ScholarshipEditForm from './components/Dashboard/EditForms/ScholarshipEditForm.jsx';
 import JobDescription from './pages/jobdescription.jsx';
+import ScholarshipDescription from './pages/scholarshipDescription.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -38,7 +39,11 @@ const router = createBrowserRouter(
         <Route path='/jobs/category/:categoriesname' element={<JobDescription />}  />
       </Route>
       
-      <Route path='/scholarships' element={<Scholarship />} />
+      <Route path='/scholarships'>
+        <Route path='/scholarships' element={<Scholarship />} />
+        <Route path='/scholarships/description' element={<ScholarshipDescription />} />
+      </Route>
+
       <Route path='/dashboard' element={<Dash />} />
 
       <Route path='/forms/articles' element={<ArticleForm />} />

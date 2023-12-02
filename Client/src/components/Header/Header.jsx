@@ -3,18 +3,6 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 
 const Header=()=>{
-    const [scrollPosition, setScroll] = useState(0);
-    const handleScroll = () =>{
-        const position = window.scrollY;
-        setScroll(position)
-    }
-   
-    useEffect(()=>{
-        window.addEventListener('scroll', handleScroll);
-        return () =>{
-            window.removeEventListener('scroll', handleScroll)
-        }
-    },[])
 
     const [mobileAnimation, setMobileAnimation] = useState(false);
     const animateMobile = () =>{
@@ -31,7 +19,7 @@ const Header=()=>{
     }
     
     return(
-        <header style={{backgroundColor : scrollPosition > 0 ? 0.5 : 1}} className=' bg-white sticky top-0 z-50 p-2'>
+        <header className=' bg-white sticky top-0 z-50 p-2 border-b-gray-50 border-b-2'>
             <nav className=' flex justify-between md:justify-around items-center p-2 relative'>
 
                 <ul className=' flex gap-4 items-center font-medium '>

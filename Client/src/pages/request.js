@@ -52,6 +52,8 @@ export const jobscategory = (category) =>{
     }).catch(error => console.error(error.message))
 };
 
+
+
 // retrieve featured scholarships and display it on the homepage
 export const featuredScholarships = (setFeatured, setloading) =>{
     axios.get('http://localhost:4040/api/scholarships-featured')
@@ -61,7 +63,24 @@ export const featuredScholarships = (setFeatured, setloading) =>{
     }).catch(error => console.error(error.message))
 }
 
+export const allScholarships = (setScholarship, setloading) =>{
+    axios.get('http://localhost:4040/api/scholarships-get')
+    .then((response) => {
+        setScholarship(response.data)
+        setloading(false);
+    }).catch(error => console.error(error.message))
+}
 
+// retrieve scholarships articles and display it on scholarships page
+export const articleScholarship = (setArticleScholarship, setloading) =>{
+    axios.get('http://localhost:4040/api/articles-scholarship')
+    .then((response) => {
+        setArticleScholarship(response.data)
+        setloading(false);
+    }).catch(error => console.error(error.message))
+}
+
+// retrieve all articles
 export const allArticles = (setArticles, setloading) =>{
     axios.get('http://localhost:4040/api/articles-get')
     .then((response) => {
@@ -70,6 +89,7 @@ export const allArticles = (setArticles, setloading) =>{
     }).catch(error => console.error(error.message))
 }
 
+// articles description page
 export const articlesDescription = (setArticles, setloading, id) =>{
     axios.get(`http://localhost:4040/api/articles-description/${id}`)
     .then((response) => {
@@ -78,6 +98,7 @@ export const articlesDescription = (setArticles, setloading, id) =>{
     }).catch(error => console.error(error.message))
 }
 
+// retrieve main featured articles
 export const MainFeaturedArticles = (setMainFeatured, setloading) =>{
     axios.get('http://localhost:4040/api/articles-mainfeatured')
     .then((response) => {

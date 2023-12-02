@@ -1,9 +1,7 @@
 import Header from "../components/Header/Header";
-import one from '../assets/One.jpg';
-import JobBox from "../components/Jobs/JobBox"
+import one from '../assets/five.jpg';
 import JobDescriptionBox from "../components/Jobs/JobDescriptionBox"
 import { useState, useEffect } from "react"
-import axios from "axios";
 import Loading from "../components/Loading/Loading"
 import SocialMedia from "../components/Homepage/SocialMedia/SocialMedia";
 import Footer from "../components/Footer/Footer";

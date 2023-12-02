@@ -54,6 +54,17 @@ export const ArticlesFeatured = async(req,res) =>{
     }
 }
 
+export const ArticlesScholarship = async(req,res) =>{
+    const query = `SELECT *, DATE_FORMAT(datecreated, '%d/%m/%y') AS datecreated FROM articles WHERE articlecategory=? LIMIT 4`;
+    const parameter = ['Scholarship']
+    try{
+        const [data] = await database.query(query, parameter);
+        res.json(data);
+    }catch(error){
+        console.error(error.message);
+    }
+}
+
 export const ArticlesMustRead = async(req,res) =>{
     const query = `SELECT *, DATE_FORMAT(datecreated, '%d/%m/%y') AS datecreated FROM articles WHERE mustread=? LIMIT 4`;
     const parameter = ['true']

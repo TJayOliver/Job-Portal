@@ -8,7 +8,7 @@ export const ScholarshipGet = async(req,res) =>{
     FROM scholarships`
     try{
         const [data] = await database.query(query)
-        res.send(data)
+        res.json(data)
     } 
     catch(error){
         console.error(error.message)
@@ -16,7 +16,7 @@ export const ScholarshipGet = async(req,res) =>{
 };
 
 export const ScholarshipFeatured = async(req,res) =>{
-    const query = `SELECT * FROM scholarships WHERE featured=? LIMIT 8`;
+    const query = `SELECT *, DATE_FORMAT(datecreated, '%d/%m/%Y') AS datecreated FROM scholarships WHERE featured=? LIMIT 8`;
     const parameter = ['true']
     try{
         const [data] = await database.query(query, parameter);
@@ -26,6 +26,17 @@ export const ScholarshipFeatured = async(req,res) =>{
     }
 }
 
+export const ScholarshipSearch = async(req, res) =>{
+    const {country} = req.body;
+    try{
+        const query = `SELECT * FROM scholarships WHERE country LIKE?`
+        const parameters = [`%${country}%`]
+        const [data] = await database.query(query, parameters);
+        res.json(data)
+    }catch(error){
+        console.error(error.message)
+    }
+}
 
 export const ScholarshipCount = async(req, res) =>{
     const query = `SELECT COUNT (id) FROM scholarships`

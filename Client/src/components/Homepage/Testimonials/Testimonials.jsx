@@ -1,9 +1,9 @@
 import { useState } from "react";
 import {ImQuotesLeft, ImQuotesRight} from "react-icons/im"
 import {AiFillStar} from 'react-icons/ai';
-import One from '../../../assets/One.jpg';
-import Two from '../../../assets/Two.jpg';
-import Three from '../../../assets/Three.jpg';
+import One from '../../../assets/Four.jpg';
+import Two from '../../../assets/Five.jpg';
+import Three from '../../../assets/Four.jpg';
 import Four from '../../../assets/Four.jpg';
 import Five from '../../../assets/Five.jpg';
 
