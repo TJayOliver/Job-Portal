@@ -17,8 +17,13 @@ const ArticlePost = () =>{
     const [loading, setLoading] = useState([]);
 
     useEffect(()=>{
-        articlesDescription(setArticles, setLoading, id)
-        displayArticlesOnDescriptionPage(setArticlesOnDescriptionPage, setLoading)
+        const controller = new AbortController();
+        const signal = controller.signal
+
+        articlesDescription(setArticles, setLoading, id, signal)
+        displayArticlesOnDescriptionPage(setArticlesOnDescriptionPage, setLoading, signal)
+
+        return ()=>{controller.abort()}
     },[])
     return(
         <>

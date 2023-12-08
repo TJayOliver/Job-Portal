@@ -19,8 +19,13 @@ const Jobs = () =>{
     const [currentPage, setCurrentPage] = useState(1);
 
     useEffect(()=>{
-        allJobs(setJobs, setloading);
-        allCategories(setCategories);
+        const controller = new AbortController();
+        const signal = controller.signal;
+
+        allJobs(setJobs, setloading, signal);
+        allCategories(setCategories,signal);
+
+        return ()=>{controller.abort()}
     },[])
  
     const lastPageIndex = currentPage * postPerPage, 

@@ -1,7 +1,7 @@
 import express from 'express';
 import { options } from '../../configurations/allowedsites.js';
 import { articleUpload, scholarshipUpload, jobsUpload } from '../../configurations/multer.js';
-import { ScholarshipCount,ScholarshipGet,ScholarshipPost, ScholarshipDelete, ScholarshipEdit, ScholarshipsUpdate, ScholarshipFeatured, ScholarshipSearch  } from '../Controllers/scholarshipctrl.js';
+import { ScholarshipCount,ScholarshipGet,ScholarshipPost, ScholarshipDelete, ScholarshipEdit, ScholarshipsUpdate, ScholarshipFeatured, ScholarshipSearch, ScholarshipDescription, GovernmentScholarships, InternationalScholarships, OrganizationalScholarships, ResearchScholarships, PrivateScholarships  } from '../Controllers/scholarshipctrl.js';
 import { ArticleCount, ArticleDelete, ArticleEdit, ArticleGet, ArticlePost, ArticlesDescription, ArticlesFeatured, ArticlesMainFeatured, ArticlesMustRead, ArticlesOnDescriptionPage, ArticlesScholarship, ArticleUpdate } from '../Controllers/articlesctrl.js';
 import { JobCount, JobCategory,JobDescription, JobGet, JobPost, JobDelete, JobsUpdate, JobsEdit, JobFeatured, JobSearch, JobOnDescriptionPage } from '../Controllers/jobctrl.js';
 import { CategoryDelete, CategoryGet, CategoryPost, CategoryEdit, CategoryUpdate } from '../Controllers/categoryctrl.js';
@@ -42,12 +42,18 @@ routes.put('/api/jobs-update/:id', jobsUpload.single('image'), JobsUpdate);
 
 routes.get('/api/scholarships-get', ScholarshipGet);
 routes.get('/api/scholarships-featured', ScholarshipFeatured);
+routes.get('/api/scholarships-description/:id', ScholarshipDescription);
 routes.post('/api/scholarships-post', scholarshipUpload.single('image'),ScholarshipPost);
 routes.post('/api/scholarships-search', ScholarshipSearch);
 routes.get('/api/scholarships-count', ScholarshipCount);
 routes.delete('/api/scholarships-delete/:id', ScholarshipDelete);
 routes.get('/api/scholarships-edit/:id', ScholarshipEdit);
 routes.put('/api/scholarships-update/:id',scholarshipUpload.single('image'), ScholarshipsUpdate);
+routes.get('/api/scholarships/government', GovernmentScholarships);
+routes.get('/api/scholarships/private', PrivateScholarships);
+routes.get('/api/scholarships/international', InternationalScholarships);
+routes.get('/api/scholarships/organizational', OrganizationalScholarships);
+routes.get('/api/scholarships/research', ResearchScholarships);
 
 routes.get('/api/subscribe-get', SubscribeGet);
 routes.post('/api/subscribe-post', SubscribePost);

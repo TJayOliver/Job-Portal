@@ -81,6 +81,17 @@ export const ScholarshipDelete = async(req,res) =>{
     }
 }
 
+export const ScholarshipDescription = async(req, res) =>{
+    const query =  `SELECT *, DATE_FORMAT(datecreated, '%d/%M/%Y') AS datecreated FROM scholarships WHERE id=?`
+    const parameter = [req.params.id]
+    try{
+        const [data] = await database.query(query, parameter)
+        res.send(data)
+    }catch(error){
+        console.error(error.message)
+    }
+}
+
 // loads the scholarships post page
 export const ScholarshipEdit = async(req, res) =>{
     const query =  `SELECT * FROM scholarships WHERE id=?`
@@ -106,6 +117,61 @@ export const ScholarshipsUpdate = async(req,res) =>{
         const [data] = await database.query(query, parameter);
         return res.json('Successfully Updated')
     } catch (error) {
+        console.error(error.message)
+    }
+}
+
+export const GovernmentScholarships = async(req,res) =>{
+    try{
+        const query = `SELECT *,DATE_FORMAT(datecreated, '%d/%m/%Y') AS datecreated FROM scholarships WHERE scholarshipcategory=?`;
+        const parameter = ['government']
+        const [data] = await database.query(query, parameter);
+        res.send(data)
+    }catch(error){
+        console.error(error.message)
+    }
+}
+
+export const InternationalScholarships = async(req,res) =>{
+    try{
+        const query = `SELECT *,DATE_FORMAT(datecreated, '%d/%m/%Y') AS datecreated FROM scholarships WHERE scholarshipcategory=?`;
+        const parameter = ['International']
+        const [data] = await database.query(query, parameter);
+        res.send(data)
+    }catch(error){
+        console.error(error.message)
+    }
+}
+
+export const PrivateScholarships = async(req,res) =>{
+    try{
+        const query = `SELECT *,DATE_FORMAT(datecreated, '%d/%m/%Y') AS datecreated FROM scholarships WHERE scholarshipcategory=?`;
+        const parameter = ['Private']
+        const [data] = await database.query(query, parameter);
+        res.send(data)
+    }catch(error){
+        console.error(error.message)
+    }
+}
+
+export const OrganizationalScholarships = async(req,res) =>{
+    try{
+        const query = `SELECT *,DATE_FORMAT(datecreated, '%d/%m/%Y') AS datecreated FROM scholarships WHERE scholarshipcategory=?`;
+        const parameter = ['Organizational']
+        const [data] = await database.query(query, parameter);
+        res.send(data)
+    }catch(error){
+        console.error(error.message)
+    }
+}
+
+export const ResearchScholarships = async(req,res) =>{
+    try{
+        const query = `SELECT *,DATE_FORMAT(datecreated, '%d/%m/%Y') AS datecreated FROM scholarships WHERE scholarshipcategory=?`;
+        const parameter = ['Research']
+        const [data] = await database.query(query, parameter);
+        res.send(data)
+    }catch(error){
         console.error(error.message)
     }
 }

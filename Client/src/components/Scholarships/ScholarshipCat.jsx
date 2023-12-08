@@ -1,7 +1,7 @@
-const ScholarshipCategoryBox = ({pic, category,text}) =>{
+const ScholarshipCategoryBox = ({image, category,text}) =>{
     return(
-        <div className="rounded-2xl group hover:bg-gray-50 h-[22rem] w-[23%] shrink-0  p-4 flex flex-col justify-around duration-150 ease-out hover:drop-shadow-md relative">
-            <img src={pic} className='rounded-xl h-48 w-82 object-cover'/>
+        <div className="rounded-2xl group hover:bg-gray-50 h-[17rem] md:h-[22rem] md:w-[23%] shrink-0 p-4 flex flex-col justify-around duration-150 ease-out hover:drop-shadow-md relative">
+            <img src={image} className='rounded-xl h-[8.5rem] md:h-48 md:w-82 object-cover'/>
             <div className=" flex flex-col items-center text-center">
                 <p className="font-medium text-2xl">{category}</p>
                 <p>{text}</p>

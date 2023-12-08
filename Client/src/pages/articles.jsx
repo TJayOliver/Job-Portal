@@ -22,10 +22,15 @@ const Articles = ()=>{
     const [currentPage, setCurrentPage] = useState(1);
 
     useEffect(()=>{
-        allArticles(setArticles, setLoading)
-        featuredArticles(setFeatured, setLoading)
-        MainFeaturedArticles(setMainFeatured, setLoading);
-        mustReadArticles(setMustRead, setLoading)
+        const controller = new AbortController();
+        const signal = controller.signal;
+
+        allArticles(setArticles, setLoading, signal)
+        featuredArticles(setFeatured, setLoading, signal)
+        MainFeaturedArticles(setMainFeatured, setLoading, signal);
+        mustReadArticles(setMustRead, setLoading, signal)
+
+        return ()=>{controller.abort()}
     },[])
 
     const lastPageIndex = currentPage * postPerPage,

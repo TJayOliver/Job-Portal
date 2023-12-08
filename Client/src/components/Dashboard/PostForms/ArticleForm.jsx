@@ -1,20 +1,24 @@
 import axios from "axios";
 import FormInputs from "../formInputs";
 import FormTextarea from "../formTextarea";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import SubmittedBox from "../submittedBox";
 import LeftPanel from "../Panels/LeftPanel";
 import FormsDashboardHead from "../DashboardHeaders/FormsDashboardHead";
-
+import FroalaEditor from 'react-froala-wysiwyg';
+import 'froala-editor/css/froala_style.min.css';
+import 'froala-editor/css/froala_editor.pkgd.min.css';
+import 'froala-editor/js/plugins/char_counter.min.js';
 
 const ArticleForm = () =>{
+    const postRef = useRef(null);
 
-    const [aform, setAform] = useState({image:null,title:"",briefinfo:"",mainfeatured:"",featured:"",mustread:"",post: ""})
+    const [aform, setAform] = useState({image:null,title:"",briefinfo:"",mainfeatured:false,featured:false,mustread:false, post:''})
     const [submitted, setSubmitted] = useState(false);
 
     const formValues = (e) =>{
-        const {name, value} = e.target;
-        setAform(prev=>({...prev, [name] : value}))
+        const {name, value, type, checked} = e.target;
+        setAform(prev=>({...prev, [name] : type === 'checkbox' ? checked : value}))
     }
 
     const formFiles = (e) =>{
@@ -23,6 +27,8 @@ const ArticleForm = () =>{
 
     const submit = (e) =>{
         e.preventDefault();
+
+        setAform(prev =>({...prev, post : text}))
 
         const newformData = new FormData();
         for(const key in aform){
@@ -37,23 +43,21 @@ const ArticleForm = () =>{
         setTimeout(() => {
             window.location.reload();
         }, 2000);  
-    
     }
 
     return(
         <main>
-
             {/* Left Panel */}
             <LeftPanel />
-
+            
             <section className=" md:ml-64 relative">
 
                 {submitted && <SubmittedBox successMessage={'Article Successfully Added'} /> }
 
                 <FormsDashboardHead title='Article Form' />
                 
-                <form className=' w-full p-3 flex flex-col gap-4 ' onSubmit={submit}>   
-                   
+                <form className=' w-full p-3 flex flex-col gap-4 ' onSubmit={submit}>  
+                    
                     <FormInputs 
                         label='Article Title' 
                         htmlFor='title'
@@ -65,20 +69,6 @@ const ArticleForm = () =>{
                         placeholder='e.g. How to write a Personal Statement'
                     />
 
-                    <div className=" flex flex-col gap-1">
-                        <label htmlFor='mainfeatured' className=" text-xl">Main Featured</label>
-                        <select 
-                        id='mainfeatured' 
-                        name='mainfeatured' 
-                        value={aform.mainfeatured}
-                        onChange={formValues}
-                        className="bg-transparent border-[1px] p-2 w-full border-black outline-teal-600 focus-within:bg-white rounded-md" required>
-                            <option value='' disabled>-- Main Featured -- </option>
-                            <option value='true' >Yes</option>
-                            <option value='false' >No</option>
-                        </select>                 
-                    </div>
-
                     <FormTextarea 
                         label='Article Brief Info' 
                         htmlFor='briefinfo'
@@ -89,42 +79,53 @@ const ArticleForm = () =>{
                         placeholder='e.g. Brief Info about the Article'
                     />
 
-                    <FormTextarea
-                        label='Article Text'
-                        htmlFor='post'
-                        id='post'
-                        name='post'
-                        value={aform.post}
-                        onChange={formValues}
-                        placeholder='Type Article Here'
-                    />
-
-                    <div className=" flex flex-col gap-1">
-                        <label htmlFor='featured' className=" text-xl">Featured</label>
-                        <select 
-                        id='featured' 
-                        name='featured' 
-                        value={aform.featured}
-                        onChange={formValues}
-                        className="bg-transparent border-[1px] p-2 w-full border-black outline-teal-600 focus-within:bg-white rounded-md" required>
-                            <option value='' disabled>-- Select Featured -- </option>
-                            <option value='true' >Yes</option>
-                            <option value='false' >No</option>
-                        </select>                 
+                    <div>
+                        <p>Article Post</p>
+                        <FroalaEditor 
+                            config={{placeholderText:'Write your article here'}} 
+                            tag='textarea' 
+                            model={aform.post} 
+                            onModelChange={(e)=>{
+                                setAform(prev=>({...prev, post:e}))
+                            }}
+                            ref= {postRef}                         
+                        />
                     </div>
 
-                    <div className=" flex flex-col gap-1">
-                        <label htmlFor='mustread' className=" text-xl">Must Read</label>
-                        <select 
-                        id='mustread' 
-                        name='mustread' 
-                        value={aform.mustread}
-                        onChange={formValues}
-                        className="bg-transparent border-[1px] p-2 w-full border-black outline-teal-600 focus-within:bg-white rounded-md" required>
-                            <option value='' disabled>-- Select Must Read -- </option>
-                            <option value='true' >Yes</option>
-                            <option value='false' >No</option>
-                        </select>                 
+                    {/* checkbox */}
+                    <div className=" flex gap-4 items-center">
+                        {/* main featured */}
+                        <div className="flex items-center gap-1">
+                            <label htmlFor='mainfeatured' className=" text-lg">Main Featured</label>
+                            <input 
+                                type='checkbox'
+                                id='mainfeatured'
+                                name='mainfeatured'
+                                onChange={formValues}
+                            />
+                        </div>
+
+                        {/* featured */}
+                        <div className="flex items-center gap-1">
+                            <label htmlFor='featured' className=" text-lg">Featured</label>
+                            <input 
+                                type='checkbox'
+                                id='featured'
+                                name='featured'
+                                onChange={formValues}
+                            />
+                        </div>
+
+                        {/* must read */}
+                        <div className="flex items-center gap-1">
+                            <label htmlFor='mustread' className=" text-lg">Must Read</label>
+                            <input 
+                                type='checkbox'
+                                id='mustread'
+                                name='mustread'
+                                onChange={formValues}
+                            />      
+                        </div>
                     </div>
 
                     <FormInputs 

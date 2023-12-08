@@ -17,8 +17,13 @@ const JobDescription = () =>{
     const [loading, setloading] = useState(true);
     
     useEffect(()=>{
-        jobdescription(setJobs, setloading, id),
-        displayJobsOnDescriptionPage(setAllJobs, setloading)
+        const controller = new AbortController();
+        const signal = controller.signal;
+
+        jobdescription(setJobs, setloading, id, signal),
+        displayJobsOnDescriptionPage(setAllJobs, setloading, signal)
+
+        return ()=>{controller.abort()}
     },[])
    
     const link = `http://localhost:5173/jobs/description/${id}/${position}/${company}`

@@ -6,14 +6,24 @@ import Loading from "../components/Loading/Loading";
 import one from '../assets/five.jpg';
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { scholarshipsdescription } from "./request";
 
 const ScholarshipDescription = () =>{
-    const params = useParams(), id = params.id, position = params.position, company = params.company;
+    const params = useParams(), id = params.id, scholarshipname = params.scholarshipname;
     
     const [scholarship, setScholarship] = useState([]);
     const [loading, setloading] = useState(true);
 
-    const link = `http://localhost:5173/jobs/description/${id}/${position}/${company}`
+    useEffect(()=>{
+        const controller = new AbortController();
+        const signal = controller.signal;
+        scholarshipsdescription(setScholarship, setloading, id, signal)
+
+        return()=>{controller.abort()}
+    },[])
+
+    const link = `http://localhost:5173/scholarships/description/${id}/${scholarshipname}`
     const ShareJob = (link) =>{navigator.clipboard?.writeText && navigator.clipboard.writeText(link)}
 
 
@@ -48,45 +58,56 @@ const ScholarshipDescription = () =>{
             </div>
 
             <main className="flex justify-center gap-10 p-2">
-                <section className="flex justify-between rounded-md bg-slate-300 p-2">
-                    <div id="heading" className="">
-                        <p className="text-3xl font-bold">Missile Test Architect</p>
-                        <small>Posted Today by MBDA</small>
+                {loading ? <Loading/> :
+                    scholarship.map((list, id) =>(
+                        <section key={id} className="flex justify-between rounded-md bg-slate-300 p-2 w-[50rem]">
+                            <div id="heading" className="">
+                                <p className="text-3xl font-bold">{list.scholarshipname}</p>
+                                <small>{list.datecreated}</small>
 
-                        <div id="summary" className="p-2 flex flex-wrap justify-start bg-blue-50 mt-1">
-                            
-                            <div>
-                                <p>scholarship type</p>
-                                <p>scholarship type</p>
+                                <div id="summary-list" className="p-2 flex flex-wrap justify-start bg-blue-50 mt-1 gap-8">
+                                    <div>
+                                        <p>{list.country}</p>
+                                        <p>{list.programs}</p>
+                                    </div>
+                                    
+                                    <div>
+                                        <p>scholarship type</p>
+                                        <p>scholarship type</p>
+                                    </div>
+                                </div>
+
+                                <div id="description">
+                                    
+                                </div>
+
                             </div>
-                            
-                            <div>
-                                <p>scholarship type</p>
-                                <p>scholarship type</p>
+
+                            <div className="flex flex-col">
+                                <button className="bg-red-600">Apply Now
+                                </button>
+                                <small>Apply on employer's website</small>
+                                <button className="bg-red-600">
+                                    Share Job
+                                </button>
                             </div>
-                        </div>
-
-                        <div id="description">
-
-                        </div>
-
-                    </div>
-
-                    <div className="flex flex-col">
-                        <button className="bg-red-600">Apply Now
-                        </button>
-                        <small>Apply on employer's website</small>
-                        <button className="bg-red-600">
-                            Share Job
-                        </button>
-                    </div>
-                </section>
-
+                        </section>
+                    ))
+                }
                 <article>
-                    <div className="bg-red-600 h-24 w-64">h</div>
+                    <div id="similar-jobs p-1 border-2 border-gray-50">
+                        <p>Similar Jobs</p>
+                        <hr></hr>
+                        <div>
+                            <p>hello</p>
+                        </div>
+                        <hr></hr>
+                        <div>
+                            <p>hello</p>
+                        </div>
+                    </div>
                 </article>
             </main>
-
             <SocialMedia/>
             <Footer/>
         </>

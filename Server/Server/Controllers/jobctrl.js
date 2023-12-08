@@ -11,6 +11,7 @@ export const JobGet = async(req,res) =>{
     }
 }
 
+// displays jobs on jobs descriptions page
 export const JobOnDescriptionPage = async(req,res) =>{
     const query = `SELECT * FROM jobs LIMIT 3`;
     try{
