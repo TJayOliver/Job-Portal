@@ -1,19 +1,16 @@
 import axios from "axios";
 import FormInputs from "../formInputs";
-import FormTextarea from "../formTextarea";
 import { useState, useRef } from "react";
 import SubmittedBox from "../submittedBox";
 import LeftPanel from "../Panels/LeftPanel";
 import FormsDashboardHead from "../DashboardHeaders/FormsDashboardHead";
-import FroalaEditor from 'react-froala-wysiwyg';
-import 'froala-editor/css/froala_style.min.css';
-import 'froala-editor/css/froala_editor.pkgd.min.css';
-import 'froala-editor/js/plugins/char_counter.min.js';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const ArticleForm = () =>{
-    const postRef = useRef(null);
+    const [content, setContent] = useState('');
+    const [aform, setAform] = useState({image:null,title:"",post:"",mainfeatured:false,featured:false,mustread:false})
 
-    const [aform, setAform] = useState({image:null,title:"",briefinfo:"",mainfeatured:false,featured:false,mustread:false, post:''})
     const [submitted, setSubmitted] = useState(false);
 
     const formValues = (e) =>{
@@ -22,27 +19,26 @@ const ArticleForm = () =>{
     }
 
     const formFiles = (e) =>{
-        setAform({...aform, image : e.target.files[0]})
+        setAform({...aform, image : e.target.files[0], post:content})
     }
 
-    const submit = (e) =>{
+    const submit = async(e) =>{
         e.preventDefault();
-
-        setAform(prev =>({...prev, post : text}))
 
         const newformData = new FormData();
         for(const key in aform){
             newformData.append(key, aform[key])
         }
-        
+    
         axios.post('http://localhost:4040/api/articles-post',newformData, {headers :{'Content-Type': 'multipart/form-data'}})
-        .then(response =>console.log(response))
-        .catch(error =>console.log(error))
-        
+        .then(response => console.log(response))
+        .catch(error => console.error(error.message))
+
         setSubmitted(true);
         setTimeout(() => {
             window.location.reload();
         }, 2000);  
+          
     }
 
     return(
@@ -59,7 +55,7 @@ const ArticleForm = () =>{
                 <form className=' w-full p-3 flex flex-col gap-4 ' onSubmit={submit}>  
                     
                     <FormInputs 
-                        label='Article Title' 
+                        label='Title' 
                         htmlFor='title'
                         type='text'
                         id='title'
@@ -69,26 +65,13 @@ const ArticleForm = () =>{
                         placeholder='e.g. How to write a Personal Statement'
                     />
 
-                    <FormTextarea 
-                        label='Article Brief Info' 
-                        htmlFor='briefinfo'
-                        id='briefinfo'
-                        name='briefinfo'
-                        value={aform.briefinfo}
-                        onChange={formValues}
-                        placeholder='e.g. Brief Info about the Article'
-                    />
-
                     <div>
-                        <p>Article Post</p>
-                        <FroalaEditor 
-                            config={{placeholderText:'Write your article here'}} 
-                            tag='textarea' 
-                            model={aform.post} 
-                            onModelChange={(e)=>{
-                                setAform(prev=>({...prev, post:e}))
-                            }}
-                            ref= {postRef}                         
+                        <p className="text-xl">Content</p>
+                        <ReactQuill
+                            className="text-xl border-black border-[1px] rounded-lg"
+                            theme="snow"
+                            value={content} 
+                            onChange={setContent}
                         />
                     </div>
 

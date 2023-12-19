@@ -1,26 +1,27 @@
 import axios from "axios";
 import FormInputs from "../formInputs";
-import FormTextarea from "../formTextarea";
 import SubmittedBox from "../submittedBox";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import LeftPanel from "../Panels/LeftPanel";
 import FormsDashboardHead from "../DashboardHeaders/FormsDashboardHead";
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const ArticleEditForm = () =>{
     const id = useParams(), ID = id.id;
 
-    const [aform, setAform] = useState({image:null,title:"",mainfeatured:"",briefinfo:"",featured:"",mustread:"",post: ""})
+    const [content, setContent] = useState('');
+    const [aform, setAform] = useState({image:null,title:"",post:'',mainfeatured:false,featured:false,mustread:false})
     const [submitted, setSubmitted] = useState(false);
 
     const formValues = (e) =>{
-        const {name, value} = e.target;
-        setAform(prev=>({...prev, [name] : value}))
+        const {name, value, type, checked} = e.target;
+        setAform(prev=>({...prev, [name] : type === 'checkbox' ? checked : value}))
     }
 
     const formFiles = (e) =>{
-        setAform({...aform, image : e.target.files[0]})
+        setAform({...aform, image : e.target.files[0], post:content})
     }
 
     const submit = (e) =>{
@@ -46,7 +47,7 @@ const ArticleEditForm = () =>{
         axios.get(`http://localhost:4040/api/articles-edit/${ID}`)
         .then(response => {
             const retrievedData = response.data[0];
-            setAform({image:retrievedData.image, title:retrievedData.title,mainfeatured:retrievedData.mainfeatured,featured:retrievedData.featured, briefinfo:retrievedData.briefinfo,mustread:retrievedData.mustread, post:retrievedData.post})
+            setAform({image:retrievedData.image, title:retrievedData.title,mainfeatured:retrievedData.mainfeatured,featured:retrievedData.featured, mustread:retrievedData.mustread, post:retrievedData.post})
         }).catch(error => console.error(error.message))
     },[])
 
@@ -64,8 +65,8 @@ const ArticleEditForm = () =>{
                 
                 <form className=' w-full p-3 flex flex-col gap-4 ' onSubmit={submit}>   
                    
-                    <FormInputs 
-                        label='Article Title' 
+                <FormInputs 
+                        label='Title' 
                         htmlFor='title'
                         type='text'
                         id='title'
@@ -75,70 +76,54 @@ const ArticleEditForm = () =>{
                         placeholder='e.g. How to write a Personal Statement'
                     />
 
-                    <div className=" flex flex-col gap-1">
-                        <label htmlFor='mainfeatured' className=" text-xl">Must Featured</label>
-                        <select 
-                        id='mainfeatured' 
-                        name='mainfeatured' 
-                        value={aform.mainfeatured}
-                        onChange={formValues}
-                        className="bg-transparent border-[1px] p-2 w-full border-black outline-teal-600 focus-within:bg-white rounded-md" required>
-                            <option value='' disabled>-- Main Featured -- </option>
-                            <option value='true' >Yes</option>
-                            <option value='false' >No</option>
-                        </select>                 
+                    <div>
+                        <p className="text-xl">Content</p>
+                        <ReactQuill
+                            className="text-xl border-black border-[1px] rounded-lg"
+                            theme="snow"
+                            value={aform.post} 
+                            onChange={formValues}
+                        />
                     </div>
 
-                    <FormTextarea 
-                        label='Article Brief Info' 
-                        htmlFor='briefinfo'
-                        id='briefinfo'
-                        name='briefinfo'
-                        value={aform.briefinfo}
-                        onChange={formValues}
-                        placeholder='e.g. Brief Info about the Article'
-                    />
+                    {/* checkbox */}
+                    <div className=" flex gap-4 items-center">
+                        {/* main featured */}
+                        <div className="flex items-center gap-1">
+                            <label htmlFor='mainfeatured' className=" text-lg">Main Featured</label>
+                            <input 
+                                type='checkbox'
+                                id='mainfeatured'
+                                name='mainfeatured'
+                                onChange={formValues}
+                            />
+                        </div>
 
-                    <FormTextarea
-                        label='Article Text'
-                        htmlFor='post'
-                        id='post'
-                        name='post'
-                        value={aform.post}
-                        onChange={formValues}
-                        placeholder='Type Article Here'
-                    />
+                        {/* featured */}
+                        <div className="flex items-center gap-1">
+                            <label htmlFor='featured' className=" text-lg">Featured</label>
+                            <input 
+                                type='checkbox'
+                                id='featured'
+                                name='featured'
+                                onChange={formValues}
+                            />
+                        </div>
 
-                    <div className=" flex flex-col gap-1">
-                        <label htmlFor='featured' className=" text-xl">Featured</label>
-                        <select 
-                        id='featured' 
-                        name='featured' 
-                        value={aform.featured}
-                        onChange={formValues}
-                        className="bg-transparent border-[1px] p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" required>
-                            <option value='' disabled>-- Select Featured -- </option>
-                            <option value='true' >Yes</option>
-                            <option value='false' >No</option>
-                        </select>                 
-                    </div>
-
-                    <div className=" flex flex-col gap-1">
-                        <label htmlFor='mustread' className=" text-xl">Must Read</label>
-                        <select 
-                        id='mustread' 
-                        name='mustread' 
-                        value={aform.mustread}
-                        onChange={formValues}
-                        className="bg-transparent border-[1px] p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" required>
-                            <option value='' disabled>-- Select Must Read -- </option>
-                            <option value='true' >Yes</option>
-                            <option value='false' >No</option>
-                        </select>                 
+                        {/* must read */}
+                        <div className="flex items-center gap-1">
+                            <label htmlFor='mustread' className=" text-lg">Must Read</label>
+                            <input 
+                                type='checkbox'
+                                id='mustread'
+                                name='mustread'
+                                onChange={formValues}
+                            />      
+                        </div>
                     </div>
 
                     <FormInputs 
-                        label='Upload Article Flyer' 
+                        label='Upload Flyer' 
                         htmlFor='image'
                         type='file'
                         id='image'

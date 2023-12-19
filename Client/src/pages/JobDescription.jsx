@@ -7,22 +7,24 @@ import SocialMedia from "../components/Homepage/SocialMedia/SocialMedia";
 import Footer from "../components/Footer/Footer";
 import {ImFilesEmpty} from 'react-icons/im';
 import { Link, useParams } from "react-router-dom";
-import { displayJobsOnDescriptionPage, jobdescription } from "./request";
+import { fetch, jobdescription } from "./request";
 
 const JobDescription = () =>{
     const params = useParams(), id = params.id, position = params.position, company = params.company;
     
     const [jobs, setJobs] = useState([]);
-    const [alljobs,setAllJobs] = useState([])
+
+    const [FeaturedJobs,setFeaturedJobs] = useState([]);
+    const [BestMatchesJobs,setBestMatchesJobs] = useState([]);
+    const [mostRecentJobs,setMostRecentJobs] = useState([]);
     const [loading, setloading] = useState(true);
     
     useEffect(()=>{
         const controller = new AbortController();
         const signal = controller.signal;
+        jobdescription(setJobs, setloading, id, signal)
 
-        jobdescription(setJobs, setloading, id, signal),
-        displayJobsOnDescriptionPage(setAllJobs, setloading, signal)
-
+        fetch('http://localhost:4040/api/jobs-featured', setFeaturedJobs, setloading, signal);
         return ()=>{controller.abort()}
     },[])
    
@@ -48,7 +50,7 @@ const JobDescription = () =>{
         setBestMatch(false)
         setFeat(false)
     }
-    
+
     return(
         <>
         <div className=" hidden fixed h-screen w-full z-[100] bg-[rgb(0,0,0,0.3)]">
@@ -63,7 +65,7 @@ const JobDescription = () =>{
 
         {/* banner */}
         <div className="flex justify-center">
-            <div className="h-56 bg-[#004242] w-full"></div>
+            <div className="h-56 bg-teal-500 w-full"></div>
         </div>
 
         {loading ?
@@ -72,15 +74,57 @@ const JobDescription = () =>{
                 <div key={job.id} className=" flex flex-col-reverse md:flex md:flex-row p-2 justify-center gap-4">
                     
                     {/* similar jobs */}
-                    <div className=" flex flex-col gap-4 justify-center">
+                    <div className=" hidden md:flex flex-col gap-4 justify-center h-24">
 
                         <div className=" h-14 rounded-lg drop-shadow-md items-center justify-between p-2 bg-white w-full md:w-[22rem] flex relative">
                             <p onClick={handleBestMatches} className={bestMatch ?"p-2 bg-[#004242] text-white rounded-md duration-100 ease-out" : 'bg-none'}>Best Matches</p>
                             <p onClick={handleFeatured} className={feat ? "p-2 bg-[#004242] text-white rounded-md duration-100 ease-out" : 'bg-none'}>Featured</p>
                             <p onClick={handleRecent} className={mostRecent ? "p-2 bg-[#004242] text-white rounded-md duration-100 ease-out" : 'bg-none'}>Most Recent</p>
                         </div>
+                        <div className="h-6">
+                            {loading ? <Loading/> : bestMatch ? FeaturedJobs.map((list,id)=>(
+                                <JobDescriptionBox key={id} 
+                                image={list.image}
+                                location={list.location}
+                                company={list.company}
+                                duration={list.duration}
+                                position={list.position}
+                                category={list.categoriesname}
+                                salary={list.salary}
+                                description={list.responsibilities.replace(/^\d+[.,]/, '').trim().slice(0,60)}
+                                to={`/jobs/description/${list.id}/${list.position}/${list.company}`}/>)) 
+                            : null}
 
-                        {alljobs.map((list,id)=>(
+                            {loading ? <Loading/> : feat ? FeaturedJobs.map((list,id)=>(
+                                <JobDescriptionBox key={id} 
+                                image={list.image}
+                                location={list.location}
+                                company={list.company}
+                                duration={list.duration}
+                                position={list.position}
+                                category={list.categoriesname}
+                                salary={list.salary}
+                                description={list.responsibilities.replace(/^\d+[.,]/, '').trim().slice(0,60)}
+                                to={`/jobs/description/${list.id}/${list.position}/${list.company}`}/>)) 
+                            : null}
+
+                            {loading ? <Loading/> : mostRecent ? FeaturedJobs.map((list,id)=>(
+                                <JobDescriptionBox key={id} 
+                                image={list.image}
+                                location={list.location}
+                                company={list.company}
+                                duration={list.duration}
+                                position={list.position}
+                                category={list.categoriesname}
+                                salary={list.salary}
+                                description={list.responsibilities.replace(/^\d+[.,]/, '').trim().slice(0,60)}
+                                to={`/jobs/description/${list.id}/${list.position}/${list.company}`}/>)) 
+                            : null}
+                        </div>
+                    </div>
+
+                    <div className="flex flex-col md:hidden justify-center gap-4 ">
+                        {FeaturedJobs.map((list,id)=>(
                         <JobDescriptionBox key={id} 
                         image={list.image}
                         location={list.location}
@@ -90,9 +134,10 @@ const JobDescription = () =>{
                         category={list.categoriesname}
                         salary={list.salary}
                         description={list.responsibilities.replace(/^\d+[.,]/, '').trim().slice(0,60)}
-                        to={`/jobs/description/${list.id}/${list.position}/${list.company}`}
-                        />))}
+                        to={`/jobs/description/${list.id}/${list.position}/${list.company}`}/>))
+                        }   
                     </div>
+                    
                     
                     {/* description */}
                     <div className=" w-full md:w-[50rem] ] flex justify-center flex-col py-2 px-5 bg-gray-50 rounded-lg">

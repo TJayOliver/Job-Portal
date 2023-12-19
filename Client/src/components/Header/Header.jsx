@@ -20,10 +20,13 @@ const Header=()=>{
     
     return(
         <header className=' bg-white sticky top-0 z-50 p-2 border-b-gray-50 border-b-2'>
-            <nav className=' flex justify-between md:justify-around items-center p-2 relative'>
-
+            <nav className=' flex m-auto max-w-7xl justify-between'>
+                <div className='font-AliandoRocky text-3xl whitespace-nowrap'>
+                    <Link to='/'>FutureForte</Link>
+                </div>
+                
                 <ul className=' flex gap-4 items-center font-medium '>
-                    <li className='font-AliandoRocky text-3xl whitespace-nowrap'><Link to='/'>FutureForte</Link></li>
+                    
                     <li className='hidden md:block'><Link to='/articles'>Articles</Link></li>
                     <li className='hidden md:block'><Link to='/scholarships'>Scholarships</Link></li>
                     <li className='hidden md:block'><Link to='/jobs'>Jobs</Link></li>
@@ -37,12 +40,6 @@ const Header=()=>{
                         <div className={mobileAnimation ? div3 : `h-1 w-8 bg-black rounded-sm duration-75 ease-in`}></div>
                     </div>
                 </div>
-
-                <ul className=' hidden md:flex md:gap-4 md:items-center md:font-medium'>
-                    <li>Upload CV</li>
-                    <li>Post a Job</li>
-                    <li>Sign In</li>
-                </ul>
 
                 <div className={displayMobileMenu ?' md:hidden bg-white shadow-md absolute right-2 top-12 w-44 duration-75 ease-in' : 'hidden'}>
                     <ul className=' text-xl flex flex-col gap-3 ul'>
@@ -66,6 +63,7 @@ const Header=()=>{
                         </li>
                     </ul>
                 </div>
+                
             </nav>
         </header>
     )

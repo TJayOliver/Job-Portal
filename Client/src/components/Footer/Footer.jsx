@@ -22,7 +22,7 @@ const Footer = () =>{
         <div className="  h-48 md:h-96 flex flex-col justify-center text-md">
             
             <div className=" flex md:flex md:flex-row justify-center text-justify gap-4 md:gap-14 m-auto">
-                <p className=" font-AliandoRocky text-5xl ">Future<br></br>Forte</p>
+                <p className=" font-AliandoRocky text-2xl md:text-5xl ">Future<br></br>Forte</p>
                 
                 {/* Terms */}
                 <div className=" flex flex-col">

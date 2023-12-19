@@ -4,7 +4,7 @@ import SocialMedia from "../components/Homepage/SocialMedia/SocialMedia";
 import One from '../assets/six.jpg';
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
-import { articlesDescription, displayArticlesOnDescriptionPage } from "./request";
+import {fetch, articlesDescription } from "./request";
 import { useState } from "react";
 import Loading from "../components/Loading/Loading";
 import ArticleBox from "../components/Articles/ArticleBox";
@@ -14,14 +14,14 @@ const ArticlePost = () =>{
 
     const [articles, setArticles] = useState([]);
     const [ArticlesOnDescriptionPage,setArticlesOnDescriptionPage] = useState([]);
-    const [loading, setLoading] = useState([]);
+    const [loading, setloading] = useState([]);
 
     useEffect(()=>{
         const controller = new AbortController();
         const signal = controller.signal
 
-        articlesDescription(setArticles, setLoading, id, signal)
-        displayArticlesOnDescriptionPage(setArticlesOnDescriptionPage, setLoading, signal)
+        articlesDescription(setArticles, setloading, id, signal)
+        fetch('http://localhost:4040/api/articles-description-page-get', setArticlesOnDescriptionPage, setloading, signal);
 
         return ()=>{controller.abort()}
     },[])

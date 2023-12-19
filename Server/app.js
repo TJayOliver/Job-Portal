@@ -1,7 +1,7 @@
 import express from 'express';
 import helmet from 'helmet';
 import bodyparser from 'body-parser';
-import { routes } from './Server/Routers/routes.js';
+import { routes } from './Api/Routers/routes.js';
 import { options } from './configurations/allowedsites.js';
 import bodyParser from 'body-parser';
 import cors from 'cors';

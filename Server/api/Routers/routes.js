@@ -6,8 +6,11 @@ import { ArticleCount, ArticleDelete, ArticleEdit, ArticleGet, ArticlePost, Arti
 import { JobCount, JobCategory,JobDescription, JobGet, JobPost, JobDelete, JobsUpdate, JobsEdit, JobFeatured, JobSearch, JobOnDescriptionPage } from '../Controllers/jobctrl.js';
 import { CategoryDelete, CategoryGet, CategoryPost, CategoryEdit, CategoryUpdate } from '../Controllers/categoryctrl.js';
 import { SubscribeGet, SubscribePost } from '../Controllers/subscribe.js';
+import { Login } from '../Controllers/administrator.js';
 
 export const routes = express.Router();
+
+routes.post('/api/login', Login)
 
 routes.get('/api/articles-get', ArticleGet);
 routes.get('/api/articles-description/:id', ArticlesDescription);

@@ -1,8 +1,7 @@
 CREATE TABLE `administrator`(
     `id` INT NOT NULL AUTO_INCREMENT,
     `username` VARCHAR(50) NOT NULL,
-    `password` VARCHAR(100) NOT NULL,
-    `admintype` ENUM('SuperAdmin', 'NormalAdmin'),
+    `password` VARCHAR(20) NOT NULL,
     `image` VARCHAR(50) NOT NULL,
     `datecreated` DATE DEFAULT CURRENT_DATE NOT NULL,
     PRIMARY KEY(`id`)
@@ -37,7 +36,6 @@ CREATE TABLE `articles`(
     `id` VARCHAR(80) NOT NULL,
     `image` VARCHAR(50) NOT NULL,
     `title` VARCHAR(80) NOT NULL,
-    `briefinfo` VARCHAR(80) NOT NULL,
     `author` VARCHAR(50) NOT NULL,
     `post` VARCHAR(800) NOT NULL,
     `featured` ENUM('true', 'false') NOT NULL,

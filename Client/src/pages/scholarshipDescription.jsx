@@ -30,50 +30,23 @@ const ScholarshipDescription = () =>{
     return(
         <>
             <Header />
-            <div className="h-36 p-2 flex items-center relative bg-teal-400">
-                <p className=" text-2xl font-bold text-white">Every Bright Student Deserves a Scholarship!</p>
-                <div className="">
-                    <div className="absolute -right-2">
-                        <div className=" h-12 bg-white w-20 -rotate-12"></div>
-                    </div>
-                    <div className="absolute right-20 -top-2">
-                        <div className=" h-12 bg-blue-100 w-24 -rotate-45"></div>
-                    </div>
-                    <div className="absolute -right-1 top-32 -rotate-12">
-                        <div className=" h-10 bg-black w-44 "></div>
-                    </div>
-                    <div className="absolute right-32 rotate-45">
-                        <div className=" h-10 bg-black w-64 "></div>
-                    </div>
-                    <div className="absolute right-96 top-0 -rotate-45">
-                        <div className=" h-10 bg-black w-40 "></div>
-                    </div>
-                    <div className="absolute right-64 bottom-0 rotate-45">
-                        <div className=" h-10 bg-blue-200 w-36 "></div>
-                    </div>
-                    <div className="absolute right-[26rem] -bottom-2 -rotate-45">
-                        <div className=" h-10 bg-white w-20 "></div>
-                    </div>
+            <div className="h-24 bg-blue-400">
+                <div className="max-w-7xl">
+                    <p>Scholarship Description</p>
                 </div>
+                
             </div>
 
-            <main className="flex justify-center gap-10 p-2">
+            <main className="flex justify-center gap-10 p-2 bg-gray-50">
                 {loading ? <Loading/> :
                     scholarship.map((list, id) =>(
-                        <section key={id} className="flex justify-between rounded-md bg-slate-300 p-2 w-[50rem]">
+                        <section key={id} className="flex justify-between rounded-md bg-white p-4 w-2/4 h-screen">
                             <div id="heading" className="">
-                                <p className="text-3xl font-bold">{list.scholarshipname}</p>
-                                <small>{list.datecreated}</small>
-
-                                <div id="summary-list" className="p-2 flex flex-wrap justify-start bg-blue-50 mt-1 gap-8">
+                                <div className="flex items-center gap-2">
+                                    <div className="h-10 w-10 bg-blue-500 rounded-md"></div>
                                     <div>
-                                        <p>{list.country}</p>
-                                        <p>{list.programs}</p>
-                                    </div>
-                                    
-                                    <div>
-                                        <p>scholarship type</p>
-                                        <p>scholarship type</p>
+                                        <p className="text-2xl font-bold">{list.scholarshipname}</p>
+                                        <small>{list.datecreated}</small>
                                     </div>
                                 </div>
 
@@ -83,13 +56,17 @@ const ScholarshipDescription = () =>{
 
                             </div>
 
-                            <div className="flex flex-col">
-                                <button className="bg-red-600">Apply Now
-                                </button>
-                                <small>Apply on employer's website</small>
-                                <button className="bg-red-600">
+                            <br></br>
+
+                            <div className="h-2 bg-black"></div>
+
+                            <div id="apply and share" className="flex gap-2">
+                                <div className="bg-blue-500 rounded-md h-8 p-2 text-white justify-center flex items-center">Apply Now
+                                </div>
+                        
+                                <div className=" border-[1px] border-gray-100 rounded-md h-8 p-2 text-blue-500 flex items-center">
                                     Share Job
-                                </button>
+                                </div>
                             </div>
                         </section>
                     ))
@@ -108,6 +85,7 @@ const ScholarshipDescription = () =>{
                     </div>
                 </article>
             </main>
+
             <SocialMedia/>
             <Footer/>
         </>

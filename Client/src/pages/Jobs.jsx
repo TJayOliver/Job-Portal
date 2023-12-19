@@ -6,7 +6,7 @@ import Loading from "../components/Loading/Loading"
 import Pagination from "../components/Pagination.jsx/Pagination"
 import one from '../assets/five.jpg'
 import JobBox from "../components/Jobs/JobBox"
-import { allCategories, allJobs } from "./request";
+import { fetch, allCategories } from "./request";
 import {BiSearch, BiMapPin} from 'react-icons/bi'
 import axios from "axios"
 
@@ -22,7 +22,7 @@ const Jobs = () =>{
         const controller = new AbortController();
         const signal = controller.signal;
 
-        allJobs(setJobs, setloading, signal);
+        fetch('http://localhost:4040/api/jobs-get', setJobs, setloading, signal);
         allCategories(setCategories,signal);
 
         return ()=>{controller.abort()}

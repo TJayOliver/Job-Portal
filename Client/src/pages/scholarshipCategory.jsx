@@ -9,7 +9,7 @@ import Footer from "../components/Footer/Footer"
 import ScholarshipCategoryBox from "../components/Scholarships/ScholarshipCat"
 import {BsArrowLeftSquare, BsArrowRightSquare} from 'react-icons/bs'
 import { BiSearch } from "react-icons/bi"
-import { allScholarships, articleScholarship, governmentScholarships, organizationalScholarships, privateScholarships, researchScholarships, internationalScholarships } from "./request"
+import {fetch} from "./request"
 import Loading from '../components/Loading/Loading';
 import ArticleBox from '../components/Articles/ArticleBox';
 import ScholarshipBox from "../components/Scholarships/ScholarshipBox"
@@ -18,14 +18,14 @@ import Pagination from "../components/Pagination.jsx/Pagination"
 const Scholarship = ()=>{
     const params = useParams(), category = params.category;
 
-    const [scholarships, setScholarship] = useState([])
-    const [scholarshipsarticle, setArticleScholarship] = useState([])
+    const [scholarships, setScholarship] = useState([]),
+    [scholarshipsarticle, setArticleScholarship] = useState([]);
 
-    const [governmentScholarship, setGovernmentScholarships] = useState([])
-    const [organizationalScholarship, setOrganizationalScholarships] = useState([])
-    const [privateScholarship, setPrivateScholarships] = useState([])
-    const [researchScholarship, setResearchScholarships] = useState([])
-    const [internationalScholarship, setInternationalScholarships] = useState([])
+    const [governmentScholarship, setGovernmentScholarships] = useState([]),
+    [organizationalScholarship, setOrganizationalScholarships] = useState([]),
+    [privateScholarship, setPrivateScholarships] = useState([]),
+    [researchScholarship, setResearchScholarships] = useState([]),
+    [internationalScholarship, setInternationalScholarships] = useState([]);
 
     const [loading, setloading] = useState(true);
     const [postPerPage, setPostPerPage] = useState(20);
@@ -35,14 +35,13 @@ const Scholarship = ()=>{
         const controller = new AbortController();
         const signal = controller.signal;
 
-        governmentScholarships(setGovernmentScholarships, setloading, signal)
-        organizationalScholarships(setOrganizationalScholarships, setloading, signal)
-        privateScholarships(setPrivateScholarships, setloading, signal)
-        researchScholarships(setResearchScholarships, setloading, signal)
-        internationalScholarships(setInternationalScholarships, setloading, signal)
-
-        allScholarships(setScholarship, setloading)
-        articleScholarship(setArticleScholarship, setloading)
+        fetch('http://localhost:4040/api/scholarships-get', setScholarship, setloading, signal);
+        fetch('http://localhost:4040/api/scholarships/government', setGovernmentScholarships, setloading, signal);
+        fetch('http://localhost:4040/api/scholarships/organizational', setOrganizationalScholarships, setloading, signal);
+        fetch('http://localhost:4040/api/scholarships/private', setPrivateScholarships, setloading, signal);
+        fetch('http://localhost:4040/api/scholarships/research', setResearchScholarships, setloading, signal);
+        fetch('http://localhost:4040/api/scholarships/international', setInternationalScholarships, setloading, signal);
+        fetch('http://localhost:4040/api/articles-scholarship', setArticleScholarship, setloading, signal);
 
         return()=>{controller.abort()}
     },[])    
@@ -79,12 +78,13 @@ const Scholarship = ()=>{
 
     const lastPageIndex = currentPage * postPerPage,
     firstPageIndex = lastPageIndex - postPerPage ;
-    const allScholars = scholarships.slice(firstPageIndex, lastPageIndex);
-    const gov = governmentScholarship.slice(firstPageIndex, lastPageIndex);
-    const org = organizationalScholarship.slice(firstPageIndex, lastPageIndex);
-    const priv = privateScholarship.slice(firstPageIndex, lastPageIndex);
-    const res = researchScholarship.slice(firstPageIndex, lastPageIndex);
-    const int = internationalScholarship.slice(firstPageIndex, lastPageIndex);
+
+    const allScholars = scholarships.slice(firstPageIndex, lastPageIndex),
+    gov = governmentScholarship.slice(firstPageIndex, lastPageIndex),
+    org = organizationalScholarship.slice(firstPageIndex, lastPageIndex),
+    priv = privateScholarship.slice(firstPageIndex, lastPageIndex),
+    res = researchScholarship.slice(firstPageIndex, lastPageIndex),
+    int = internationalScholarship.slice(firstPageIndex, lastPageIndex);
 
     const searchRes = searchResults.slice(firstPageIndex, lastPageIndex)
 
@@ -104,7 +104,7 @@ const Scholarship = ()=>{
 
                 {/* Scholarships */}
                 <section className="flex flex-col justify-center py-3 p-2">
-                    <div className="p-4">
+                    <div className="">
                         <p className="font-bold text-4xl mb-2">Explore</p>
                     </div>
 
@@ -448,7 +448,7 @@ const Scholarship = ()=>{
                 </section>
 
                 {/* Quick Scholarship Tip */}
-                <section className="flex flex-col justify-center py-3 p-2">
+                <section className="flex flex-col justify-center py-2 p-2">
                     <div className="p-4">
                         <p className="font-bold text-2xl md:text-4xl mb-2">Quick Scholarship Tip </p>
                     </div>

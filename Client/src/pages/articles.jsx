@@ -5,7 +5,7 @@ import ArticleBox from "../components/Articles/ArticleBox"
 import { useEffect, useState } from "react"
 import One from '../assets/five.jpg'
 import ArticleSmallFeaturedBox from "../components/Articles/ArticleSmallFeaturedBox"
-import { allArticles, featuredArticles, MainFeaturedArticles, mustReadArticles } from "./request"
+import { fetch} from "./request"
 import Loading from "../components/Loading/Loading"
 import Pagination from "../components/Pagination.jsx/Pagination"
 import MustReadArticles from "../components/Articles/MustReadArticles"
@@ -13,7 +13,7 @@ import MainFeaturedBox from "../components/Articles/MainFeaturedBox"
 
 const Articles = ()=>{
     const [articles, setArticles] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [loading, setloading] = useState(true);
     const [featured, setFeatured] = useState([]);
     const [mainfeatured, setMainFeatured] = useState([]);
     const [mustRead, setMustRead] = useState([]);
@@ -25,10 +25,10 @@ const Articles = ()=>{
         const controller = new AbortController();
         const signal = controller.signal;
 
-        allArticles(setArticles, setLoading, signal)
-        featuredArticles(setFeatured, setLoading, signal)
-        MainFeaturedArticles(setMainFeatured, setLoading, signal);
-        mustReadArticles(setMustRead, setLoading, signal)
+        fetch('http://localhost:4040/api/articles-get', setArticles, setloading, signal);
+        fetch('http://localhost:4040/api/articles-featured', setFeatured, setloading, signal);
+        fetch('http://localhost:4040/api/articles-mainfeatured', setMainFeatured, setloading, signal);
+        fetch('http://localhost:4040/api/articles-mustread', setMustRead, setloading, signal);
 
         return ()=>{controller.abort()}
     },[])
@@ -49,8 +49,7 @@ const Articles = ()=>{
                         image={One}
                         author={post.author || 'T-Jay Oliver'} 
                         date={post.datecreated}
-                        title={post.title}
-                        brief={post.briefinfo.replace(/^\d+[.,]/, '').trim().slice(0,40)}  
+                        title={post.title}  
                         to={`/articles/${post.title}/${post.id}`}
                     />
                 ))}
@@ -104,7 +103,7 @@ const Articles = ()=>{
                             <ArticleBox key={id}
                                 image={One}
                                 author={post.author || 'T-Jay Oliver'}
-                                brief={post.briefinfo.replace(/^\d+[.,]/, '').trim().slice(0,90)}
+                                
                                 date={post.datecreated}
                                 title={post.title}
                                 to={`/articles/${post.title}/${post.id}`}

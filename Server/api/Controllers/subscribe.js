@@ -16,7 +16,7 @@ export const SubscribePost = async(req,res) =>{
     const Email = email.trim();
     const id = uuid();
     if(Email.length === 0){
-        return res.json({message:'Cannot be empty'})
+        return res.status(404).json({message:'Cannot be empty'})
     }
     try{
         const existQuery = 'SELECT * FROM subscribe WHERE email=?'
@@ -27,7 +27,7 @@ export const SubscribePost = async(req,res) =>{
             const query='INSERT INTO subscribe(id,email) VALUES(?,?)'
             const parameter = [id, Email];
             const [data] = await database.query(query, parameter);
-            res.json({message:'Thank You'})
+            res.status(200).json({message:'Thank You'})
         }
     }catch(error){
         console.error(error.message)

@@ -4,7 +4,7 @@ import Eight from '../../../assets/Eight.jpg'
 
 const Offer = () =>{
     return(
-    <div className='bg-white h-[28rem] p-2 flex flex-col gap-3'>
+    <div className='bg-white md:h-[28rem] p-2 flex flex-col gap-3'>
         <div className=' flex flex-col '>
             <p className=' text-3xl font-bold justify-center flex'>What We Offer</p>
         </div>

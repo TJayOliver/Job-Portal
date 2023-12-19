@@ -23,13 +23,21 @@ export const JobOnDescriptionPage = async(req,res) =>{
 }
 
 export const JobFeatured = async(req,res) =>{
-    const query = `SELECT * FROM jobs WHERE featured=? LIMIT 8`;
+    const query = `SELECT * FROM jobs WHERE featured=? LIMIT 4`;
     const parameter = ['true']
     try{
         const [data] = await database.query(query, parameter);
         res.json(data);
     }catch(error){
         console.error(error.message);
+    }
+}
+
+export const RecentJobs = async(req,res) =>{
+    try{
+        const query = `SELECT * FROM jobs WHERE datecreated=?`
+    }catch(error){
+        return res.status(500)
     }
 }
 

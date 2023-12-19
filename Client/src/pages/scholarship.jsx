@@ -8,7 +8,7 @@ import Footer from "../components/Footer/Footer"
 import ScholarshipCategoryBox from "../components/Scholarships/ScholarshipCat"
 import {BsArrowLeftSquare, BsArrowRightSquare} from 'react-icons/bs'
 import { BiSearch } from "react-icons/bi"
-import { allScholarships, articleScholarship } from "./request"
+import { fetch } from "./request"
 import Loading from '../components/Loading/Loading';
 import ArticleBox from '../components/Articles/ArticleBox';
 import ScholarshipBox from "../components/Scholarships/ScholarshipBox"
@@ -21,12 +21,19 @@ const Scholarship = ()=>{
     const [postPerPage, setPostPerPage] = useState(20);
     const [currentPage, setCurrentPage] = useState(1);
 
+    const [selectedOptions, setSelectedOptions] = useState([]);
+
+    const handleSelectedOptions = (e) =>{
+        const {value,checked} = e.target;
+        setSelectedOptions({...selectedOptions, value})
+    }
+    console.log(selectedOptions)
     useEffect(()=>{
         const controller = new AbortController();
         const signal = controller.signal;
 
-        allScholarships(setScholarship, setloading, signal)
-        articleScholarship(setArticleScholarship, setloading, signal)
+        fetch('http://localhost:4040/api/scholarships-get', setScholarship, setloading, signal);
+        fetch('http://localhost:4040/api/articles-scholarship', setArticleScholarship, setloading, signal);
 
         return ()=>{controller.abort()}
     },[])    
@@ -55,7 +62,6 @@ const Scholarship = ()=>{
         e.preventDefault();
         axios.post('http://localhost:4040/api/scholarships-search', searchInput)
         .then(response =>{
-            console.log(searchInput)
             setSResultsVerifier(true)
             setSearchResults(response.data)
         } )
@@ -108,7 +114,7 @@ const Scholarship = ()=>{
                 </div>
 
                 {/* Scholarship Categories */}
-                <div className=" flex flex-col justify-center py-8">
+                <div className=" flex flex-col justify-center py-1">
                     <div className="p-4">
                         <p className="font-bold text-4xl mb-2">Scholarship Categories</p>
 
@@ -126,26 +132,31 @@ const Scholarship = ()=>{
                             category='Government'
                             text='Government Scholarships'
                             image={one}
+                            to={'/scholarships/government'}
                         />
                         <ScholarshipCategoryBox 
                             category='Organizational'
                             text='Organizational Scholarships'
                             image={one}
+                            to={'/scholarships/organizational'}
                         />
                         <ScholarshipCategoryBox 
                             category='International'
                             text='International Scholarships'
                             image={one}
+                            to={'/scholarships/international'}
                         />
                         <ScholarshipCategoryBox 
                             category='Private'
                             text='Private Scholarships'
                             image={one}
+                            to={'/scholarships/private'}
                         />
                         <ScholarshipCategoryBox 
                             category='Research'
                             text='Research Scholarships'
                             image={one}
+                            to={'/scholarships/research'}
                         />
                         
                     </div>
@@ -169,21 +180,13 @@ const Scholarship = ()=>{
 
                             <div className="p-2">
                                 <p className="font-medium">Degree Level</p>
-                                <div id="all-levels" className="flex gap-2">
-                                    <input 
-                                        type='checkbox' 
-                                        name="all"
-                                        
-                                        id="all" 
-                                        className=" accent-[#004242]"
-                                    />
-                                    <label htmlFor="all">All</label>
-                                </div>
+                                
                                 <div id="bachelors" className="flex gap-2">
                                     <input 
                                         type='checkbox' 
                                         name="bachelorsdegree"
-                                        
+                                        value="bachelorsdegree"
+                                        onChange={handleSelectedOptions}
                                         id="bachelorsdegree" 
                                         className=" accent-[#004242]"
                                     />
@@ -193,7 +196,8 @@ const Scholarship = ()=>{
                                     <input 
                                         type='checkbox' 
                                         name="masters"
-                                        
+                                        value="masters"                                       
+                                        onChange={handleSelectedOptions}
                                         id="masters" 
                                         className=" accent-[#004242]"
                                     />
@@ -203,7 +207,8 @@ const Scholarship = ()=>{
                                     <input 
                                         type='checkbox' 
                                         name="doctorate"
-                                        
+                                        value="doctorate"
+                                        onChange={handleSelectedOptions}
                                         id="doctorate" 
                                         className=" accent-[#004242]"
                                     />
@@ -213,7 +218,8 @@ const Scholarship = ()=>{
                                     <input 
                                         type='checkbox' 
                                         name="pgd"
-                                        
+                                        value="pgd"
+                                        onChange={handleSelectedOptions}
                                         id="pgd" 
                                         className=" accent-[#004242]"
                                     />
@@ -229,7 +235,8 @@ const Scholarship = ()=>{
                                     <input 
                                         type='checkbox' 
                                         name="fullyfunded"
-                                        
+                                        value="fullyfunded"
+                                        onChange={handleSelectedOptions}
                                         id="fullyfunded" 
                                         className=" accent-[#004242]"
                                     />
@@ -239,7 +246,8 @@ const Scholarship = ()=>{
                                     <input 
                                         type='checkbox' 
                                         name="partial"
-                                        
+                                        value='partial'
+                                        onChange={handleSelectedOptions}
                                         id="partial" 
                                         className=" accent-[#004242]"
                                     />
@@ -253,7 +261,8 @@ const Scholarship = ()=>{
                                     <input 
                                         type='checkbox' 
                                         name="government"
-                                        
+                                        value="government"
+                                        onChange={handleSelectedOptions}
                                         id="government" 
                                         className=" accent-[#004242]"
                                     />
@@ -263,7 +272,8 @@ const Scholarship = ()=>{
                                     <input 
                                         type='checkbox' 
                                         name="private"
-                                        
+                                        value="private"
+                                        onChange={handleSelectedOptions}
                                         id="private" 
                                         className=" accent-[#004242]"
                                     />
@@ -273,7 +283,8 @@ const Scholarship = ()=>{
                                     <input 
                                         type='checkbox' 
                                         name="organizational"
-                                        
+                                        value="organizational"
+                                        onChange={handleSelectedOptions}
                                         id="organizational" 
                                         className=" accent-[#004242]"
                                     />
@@ -283,7 +294,8 @@ const Scholarship = ()=>{
                                     <input 
                                         type='checkbox' 
                                         name="research"
-                                        
+                                        value="research"
+                                        onChange={handleSelectedOptions}
                                         id="research" 
                                         className=" accent-[#004242]"
                                     />
@@ -381,7 +393,6 @@ const Scholarship = ()=>{
                                 image={image}
                                 author={post.author}
                                 title={post.title}
-                                brief={post.briefinfo.replace(/^\d+[.,]/, '').trim().slice(0,90)}
                                 to={`/articles/${post.title}/${post.id}`}
                             /> 
                         ))

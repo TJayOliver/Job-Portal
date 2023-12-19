@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { featuredJobs, featuredScholarships } from '../../../pages/request';
+import {fetch} from '../../../pages/request';
 import FeaturedBox from '../../Jobs/FeaturedBox';
 import Loading from '../../Loading/Loading';
 import {HiArrowRight, HiArrowLeft} from 'react-icons/hi'
@@ -11,26 +11,27 @@ const FeaturedJobs = () =>{
     const [scholarshipFeatured, setScholarshipFeatured] = useState([])
     const [loading, setloading] = useState(true);
 
-    const leftArrow = () =>{
-        setSlide(prev => !prev)
-    }
+    const leftArrow = () =>{setSlide(prev => !prev)}
+    const rightArrow = () =>{setSlide(prev => !prev)}
 
-    const rightArrow = () =>{
-        setSlide(prev => !prev)
-    }
     useEffect(() =>{
-        featuredJobs(setJobsFeatured, setloading)
-        featuredScholarships(setScholarshipFeatured, setloading)
+        const controller = new AbortController();
+        const signal = controller.signal;
+
+        fetch('http://localhost:4040/api/scholarships-featured', setScholarshipFeatured, setloading, signal);
+        fetch('http://localhost:4040/api/jobs-featured', setJobsFeatured, setloading, signal);
+
+        return ()=>{controller.abort()}
     }, [])
 
     return(
-        <div className=' flex justify-center gap-4 p-2'>
+        <section className=' flex justify-center gap-4 p-2'>
 
             {/* Latest Jobs and scholarships */}
             <div className='bg-gray-50 h-[27rem] w-[58rem] rounded-2xl p-2 relative overflow-hidden'>
                 {/* Heading */}
                 <div className='flex justify-between'>
-                    <p className=' font-bold text-xl text-black '>{Slide ?"Latest Scholarship Opportunity" : "Latest Job Opportunity"}</p>
+                    <p className=' font-bold text-xl text-black '>{Slide ?"Latest Scholarships" : "Latest Jobs"}</p>
                    
                     {/* buttons */}
                     <div className='flex items-center gap-2'>
@@ -45,7 +46,7 @@ const FeaturedJobs = () =>{
 
                 {/* Job opportunity */}
                 <div className={Slide ? 'opacity-0 translate-x-[26rem] duration-300 ease-out grid grid-cols-2 md:grid-cols-4 gap-y-24 gap-14 absolute': 'grid grid-cols-2 md:grid-cols-4 gap-y-24 gap-14 p-2 absolute duration-300 ease-in'}>
-                    {loading ? <Loading className='flex justify-center'/> : featuredjobs.map((job, id)=>(
+                    {loading ? <Loading className=' flex justify-center'/> : featuredjobs.map((job, id)=>(
                         <FeaturedBox key={id} 
                         image={job.image}
                         location={job.location}
@@ -75,7 +76,7 @@ const FeaturedJobs = () =>{
                 ))}
                 </div>
             </div>
-        </div>
+        </section>
     )
 }
 
