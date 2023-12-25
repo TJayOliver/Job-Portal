@@ -6,7 +6,7 @@ export const fetch = async(link, SetState, setLoading, signal)=>{
         SetState(response.data);
         setLoading(false);
     } catch (error) {
-        console.error(error.message)
+        //console.error(error.message)
     }
 }
 

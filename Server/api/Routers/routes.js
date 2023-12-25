@@ -1,7 +1,7 @@
 import express from 'express';
 import { options } from '../../configurations/allowedsites.js';
 import { articleUpload, scholarshipUpload, jobsUpload } from '../../configurations/multer.js';
-import { ScholarshipCount,ScholarshipGet,ScholarshipPost, ScholarshipDelete, ScholarshipEdit, ScholarshipsUpdate, ScholarshipFeatured, ScholarshipSearch, ScholarshipDescription, GovernmentScholarships, InternationalScholarships, OrganizationalScholarships, ResearchScholarships, PrivateScholarships  } from '../Controllers/scholarshipctrl.js';
+import { ScholarshipCount,ScholarshipGet,ScholarshipPost, ScholarshipDelete, ScholarshipEdit, ScholarshipsUpdate, ScholarshipFeatured, ScholarshipSearch, ScholarshipDescription, GovernmentScholarships, InternationalScholarships, OrganizationalScholarships, ResearchScholarships, PrivateScholarships, SimilarScholarship  } from '../Controllers/scholarshipctrl.js';
 import { ArticleCount, ArticleDelete, ArticleEdit, ArticleGet, ArticlePost, ArticlesDescription, ArticlesFeatured, ArticlesMainFeatured, ArticlesMustRead, ArticlesOnDescriptionPage, ArticlesScholarship, ArticleUpdate } from '../Controllers/articlesctrl.js';
 import { JobCount, JobCategory,JobDescription, JobGet, JobPost, JobDelete, JobsUpdate, JobsEdit, JobFeatured, JobSearch, JobOnDescriptionPage } from '../Controllers/jobctrl.js';
 import { CategoryDelete, CategoryGet, CategoryPost, CategoryEdit, CategoryUpdate } from '../Controllers/categoryctrl.js';
@@ -44,6 +44,7 @@ routes.post('/api/jobs-search', JobSearch);
 routes.put('/api/jobs-update/:id', jobsUpload.single('image'), JobsUpdate);
 
 routes.get('/api/scholarships-get', ScholarshipGet);
+routes.get('/api/scholarships/:countryname/similar', SimilarScholarship);
 routes.get('/api/scholarships-featured', ScholarshipFeatured);
 routes.get('/api/scholarships-description/:id', ScholarshipDescription);
 routes.post('/api/scholarships-post', scholarshipUpload.single('image'),ScholarshipPost);

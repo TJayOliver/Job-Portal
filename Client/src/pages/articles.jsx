@@ -103,8 +103,8 @@ const Articles = ()=>{
                             <ArticleBox key={id}
                                 image={One}
                                 author={post.author || 'T-Jay Oliver'}
-                                
                                 date={post.datecreated}
+                                
                                 title={post.title}
                                 to={`/articles/${post.title}/${post.id}`}
                             />

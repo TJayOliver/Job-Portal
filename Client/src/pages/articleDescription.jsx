@@ -52,7 +52,7 @@ const ArticlePost = () =>{
                 </div>
 
                 <div className="flex justify-between text-justify p-4">
-                    <p className="basis-[80%]">{post.post}</p>
+                    <div className="basis-[80%]" dangerouslySetInnerHTML={{__html:post.post}} />
 
                     <div className="bg-red-500 h-96 basis[10%]">
 

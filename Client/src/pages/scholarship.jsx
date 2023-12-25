@@ -21,13 +21,6 @@ const Scholarship = ()=>{
     const [postPerPage, setPostPerPage] = useState(20);
     const [currentPage, setCurrentPage] = useState(1);
 
-    const [selectedOptions, setSelectedOptions] = useState([]);
-
-    const handleSelectedOptions = (e) =>{
-        const {value,checked} = e.target;
-        setSelectedOptions({...selectedOptions, value})
-    }
-    console.log(selectedOptions)
     useEffect(()=>{
         const controller = new AbortController();
         const signal = controller.signal;
@@ -168,145 +161,10 @@ const Scholarship = ()=>{
                         <p className="font-bold text-4xl mb-2">Explore </p>
                     </div>
 
-                   <div className="flex justify-between gap-2">
-                        {/* filter */}
-                        <form className=" hidden md:block basis-[20rem] h-[28rem] p-2 border-[1px] border-gray-100  rounded-lg">
-                            <div className=" flex justify-between font-bold mb-2">
-                                <p>Filter</p>
-                                <input type='reset'  />
-                            </div>
-
-                            <hr></hr>
-
-                            <div className="p-2">
-                                <p className="font-medium">Degree Level</p>
-                                
-                                <div id="bachelors" className="flex gap-2">
-                                    <input 
-                                        type='checkbox' 
-                                        name="bachelorsdegree"
-                                        value="bachelorsdegree"
-                                        onChange={handleSelectedOptions}
-                                        id="bachelorsdegree" 
-                                        className=" accent-[#004242]"
-                                    />
-                                    <label htmlFor="bachelorsdegree">Bachelors</label>
-                                </div>
-                                <div id="masters" className="flex gap-2">
-                                    <input 
-                                        type='checkbox' 
-                                        name="masters"
-                                        value="masters"                                       
-                                        onChange={handleSelectedOptions}
-                                        id="masters" 
-                                        className=" accent-[#004242]"
-                                    />
-                                    <label htmlFor="masters">Masters</label>
-                                </div>
-                                <div id="doctorate" className="flex gap-2">
-                                    <input 
-                                        type='checkbox' 
-                                        name="doctorate"
-                                        value="doctorate"
-                                        onChange={handleSelectedOptions}
-                                        id="doctorate" 
-                                        className=" accent-[#004242]"
-                                    />
-                                    <label htmlFor="doctorate">Doctorate</label>
-                                </div>
-                                <div id="pgd" className="flex gap-2">
-                                    <input 
-                                        type='checkbox' 
-                                        name="pgd"
-                                        value="pgd"
-                                        onChange={handleSelectedOptions}
-                                        id="pgd" 
-                                        className=" accent-[#004242]"
-                                    />
-                                    <label htmlFor="pgd">Post Graduate Diploma</label>
-                                </div>
-                            </div>
-
-                            <hr></hr>
-
-                            <div className="p-2">
-                                <p className="font-medium">Funding Type</p>
-                                <div id="fullyfunded" className="flex gap-2">
-                                    <input 
-                                        type='checkbox' 
-                                        name="fullyfunded"
-                                        value="fullyfunded"
-                                        onChange={handleSelectedOptions}
-                                        id="fullyfunded" 
-                                        className=" accent-[#004242]"
-                                    />
-                                    <label htmlFor="fullyfunded">Fully Funded</label>
-                                </div>
-                                <div id="partial" className="flex gap-2">
-                                    <input 
-                                        type='checkbox' 
-                                        name="partial"
-                                        value='partial'
-                                        onChange={handleSelectedOptions}
-                                        id="partial" 
-                                        className=" accent-[#004242]"
-                                    />
-                                    <label htmlFor="partial">Partial</label>
-                                </div> 
-                            </div>
-
-                            <div className="p-2">
-                                <p className="font-medium">Category</p>
-                                <div id="government" className="flex gap-2">
-                                    <input 
-                                        type='checkbox' 
-                                        name="government"
-                                        value="government"
-                                        onChange={handleSelectedOptions}
-                                        id="government" 
-                                        className=" accent-[#004242]"
-                                    />
-                                    <label htmlFor="government">Government</label>
-                                </div>
-                                <div id="private" className="flex gap-2">
-                                    <input 
-                                        type='checkbox' 
-                                        name="private"
-                                        value="private"
-                                        onChange={handleSelectedOptions}
-                                        id="private" 
-                                        className=" accent-[#004242]"
-                                    />
-                                    <label htmlFor="private">Private</label>
-                                </div> 
-                                <div id="organizational" className="flex gap-2">
-                                    <input 
-                                        type='checkbox' 
-                                        name="organizational"
-                                        value="organizational"
-                                        onChange={handleSelectedOptions}
-                                        id="organizational" 
-                                        className=" accent-[#004242]"
-                                    />
-                                    <label htmlFor="organizational">Organizational</label>
-                                </div> 
-                                <div id="research" className="flex gap-2">
-                                    <input 
-                                        type='checkbox' 
-                                        name="research"
-                                        value="research"
-                                        onChange={handleSelectedOptions}
-                                        id="research" 
-                                        className=" accent-[#004242]"
-                                    />
-                                    <label htmlFor="research">Research</label>
-                                </div> 
-                            </div>
-
-                        </form>
+                   <div className="flex justify-center gap-2">
                         
                         {/* scholarships and search by country results */}
-                        <div className=" basis-[60rem] flex flex-col gap-4">
+                        <div className=" flex flex-col gap-4">
                             <form onSubmit={submit} className="flex justify-between border-gray-100 border-2 rounded-lg">
 
                                 {/* Location Search */}
@@ -331,7 +189,7 @@ const Scholarship = ()=>{
                             {SResultsVerifier ? 
                                 // search results
                                 <div className="flex flex-col gap-4">
-                                    {loading ? <Loading /> :
+                                    {loading ? <Loading className='justify-center m-auto' /> :
                                         <div className="flex flex-col gap-4">{
                                             searchResults.length === 0 ? `No Scholarships for ${searchInput.country} Found` :
 
@@ -355,8 +213,8 @@ const Scholarship = ()=>{
                             : 
                                 // all scholarships
                                 <div>
-                                    {loading ? <Loading /> :
-                                        <div className="flex flex-col gap-4">{
+                                    {loading ? <Loading className='justify-center m-auto' /> :
+                                        <div className="grid md:grid-cols-2 gap-4">{
                                             schols.map((list, id)=>(
                                                 <ScholarshipBox key={id}
                                                     image={image}
@@ -365,14 +223,15 @@ const Scholarship = ()=>{
                                                     date={list.datecreated}
                                                     location={list.country}
                                                     scholarshipname={list.scholarshipname}
-                                                    about={list.aboutscholarship}
+                                                    description={list.description.slice(3, 100)}
                                                     to={`/scholarships/description/${list.id}/${list.scholarshipname}`}
                                                 />
                                             ))
                                         }
-                                        <Pagination totalPost={scholarships.length} postPerPage={postPerPage} setCurrentPage={setCurrentPage} currentPage={currentPage} />
+                                        
                                         </div>
                                     }
+                                    <Pagination totalPost={scholarships.length} postPerPage={postPerPage} setCurrentPage={setCurrentPage} currentPage={currentPage} />
                                 </div>
                             }
                         </div>

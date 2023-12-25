@@ -11,13 +11,18 @@ import 'react-quill/dist/quill.snow.css';
 const ArticleEditForm = () =>{
     const id = useParams(), ID = id.id;
 
-    const [content, setContent] = useState('');
-    const [aform, setAform] = useState({image:null,title:"",post:'',mainfeatured:false,featured:false,mustread:false})
+    const [aform, setAform] = useState({image:null,title:"",mainfeatured:false,featured:false,mustread:false, post:""})
     const [submitted, setSubmitted] = useState(false);
+
+    const [content, setContent] = useState('')
 
     const formValues = (e) =>{
         const {name, value, type, checked} = e.target;
         setAform(prev=>({...prev, [name] : type === 'checkbox' ? checked : value}))
+    }
+
+    const contentHandle = (value) =>{
+        setContent(value)
     }
 
     const formFiles = (e) =>{
@@ -47,7 +52,8 @@ const ArticleEditForm = () =>{
         axios.get(`http://localhost:4040/api/articles-edit/${ID}`)
         .then(response => {
             const retrievedData = response.data[0];
-            setAform({image:retrievedData.image, title:retrievedData.title,mainfeatured:retrievedData.mainfeatured,featured:retrievedData.featured, mustread:retrievedData.mustread, post:retrievedData.post})
+            setAform({image:retrievedData.image, title:retrievedData.title,mainfeatured:retrievedData.mainfeatured,featured:retrievedData.featured, mustread:retrievedData.mustread})
+            setContent(retrievedData.post)
         }).catch(error => console.error(error.message))
     },[])
 
@@ -81,8 +87,8 @@ const ArticleEditForm = () =>{
                         <ReactQuill
                             className="text-xl border-black border-[1px] rounded-lg"
                             theme="snow"
-                            value={aform.post} 
-                            onChange={formValues}
+                            value={content} 
+                            onChange={contentHandle}
                         />
                     </div>
 

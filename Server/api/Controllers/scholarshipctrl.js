@@ -1,5 +1,7 @@
 import {database} from '../Database/database.js';
-import {v4 as uuid} from 'uuid';
+//import {v4 as uuid} from 'uuid';
+import { nanoid } from 'nanoid';
+const uuid = nanoid(6)
 
 export const ScholarshipGet = async(req,res) =>{
     const query = `SELECT *,
@@ -8,7 +10,28 @@ export const ScholarshipGet = async(req,res) =>{
     FROM scholarships`
     try{
         const [data] = await database.query(query)
-        res.json(data)
+        res.status(200).json(data)
+    } 
+    catch(error){
+        console.error(error.message)
+    }
+};
+
+export const SimilarScholarship = async(req,res) =>{
+    const {countryname} = req.params;
+    console.log(countryname)
+    const query = `SELECT *,
+    DATE_FORMAT(deadline, '%d/%m/%Y') AS deadline, 
+    DATE_FORMAT(datecreated, '%d/%m/%Y') AS datecreated
+    FROM scholarships WHERE country=? LIMIT 15`
+    try{
+        const [data] = await database.query(query, [countryname])
+        //console.log(data.length)
+        if(data.length === 0){
+            return res.status(204).json('No content')
+        }
+        return res.status(200).json(data)
+        
     } 
     catch(error){
         console.error(error.message)
@@ -20,7 +43,7 @@ export const ScholarshipFeatured = async(req,res) =>{
     const parameter = ['true']
     try{
         const [data] = await database.query(query, parameter);
-        res.json(data);
+        res.status(200).json(data);
     }catch(error){
         console.error(error.message);
     }
@@ -54,18 +77,19 @@ export const ScholarshipCount = async(req, res) =>{
 }
 
 export const ScholarshipPost = async(req,res)=>{
-    const {scholarshipname, deadline, scholarshiptype, featured, agent, programs, applicant,hostuniversity, offeredby, aboutscholarship,scholarshipbenefits, eligibilitycriteria, documentsrequired, country, apply, duration} = req.body;
+    const {scholarshipname, deadline, scholarshiptype, featured, programs, country, description, scholarshipcategory,eligibility, duration,programsoffered, documentsrequired, benefits, applicationinformation} = req.body;
     const image = req.file.filename;
 
     const query = `INSERT INTO scholarships  
-    (id, image, scholarshipname, deadline, scholarshiptype,featured, agent, programs, applicant,hostuniversity, offeredby, aboutscholarship,scholarshipbenefits, eligibilitycriteria, documentsrequired, country, apply, duration) 
-    VALUES (?,?, ?, ?, ?, ?, ?, ?,?, ?, ?,?, ?, ?, ?, ?, ?, ?)`;
-    const parameter = [uuid(), image,scholarshipname, deadline, scholarshiptype, featured, agent, programs, applicant,hostuniversity, offeredby, aboutscholarship,scholarshipbenefits, eligibilitycriteria, documentsrequired, country, apply, duration]
-
+    (id, image, scholarshipname, deadline, scholarshiptype,featured, programs, country, description, scholarshipcategory,eligibility, duration,programsoffered, documentsrequired, benefits, applicationinformation,agent) 
+    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+    const parameter = [uuid(), image,scholarshipname, deadline, scholarshiptype, featured, programs, country, description, scholarshipcategory, eligibility, duration,programsoffered, documentsrequired, benefits, applicationinformation,agent]
     try{
         const [data] = await database.query(query, parameter)
+        return res.status(200).send('Successfully Posted')
     }catch(error){
         console.error(error.message)
+        return res.status(404).send('Error Posting')
     }
 }
 
@@ -75,7 +99,7 @@ export const ScholarshipDelete = async(req,res) =>{
     const parameter = [id];
     try {
         const [data] = await database.query(query, parameter);
-        return res.json('Successfully Deleted');
+        return res.status(200).json('Successfully Deleted');
     } catch (error) {
         console.error(error.message)
     }
@@ -86,7 +110,7 @@ export const ScholarshipDescription = async(req, res) =>{
     const parameter = [req.params.id]
     try{
         const [data] = await database.query(query, parameter)
-        res.send(data)
+        res.status(200).json(data)
     }catch(error){
         console.error(error.message)
     }
@@ -106,16 +130,16 @@ export const ScholarshipEdit = async(req, res) =>{
 
 // posts the newly updated scholarships
 export const ScholarshipsUpdate = async(req,res) =>{
-    const {scholarshipname, deadline, scholarshiptype,featured, agent, programs, applicant,hostuniversity, offeredby, aboutscholarship,scholarshipbenefits, eligibilitycriteria, documentsrequired, country, apply, duration} = req.body;
+    const {scholarshipname, deadline, scholarshiptype,featured, programs, country, description, scholarshipcategory, eligibility, duration,programsoffered, documentsrequired, benefits, applicationinformation,agent} = req.body;
 
     const image = req.file.path;
     
-    const query = "UPDATE image, scholarships SET scholarshipname=?, deadline=?, scholarshiptype=?,featured=?, agent=?, programs=?, applicant=?,hostuniversity=?, offeredby=?, aboutscholarship=?,scholarshipbenefits=?, eligibilitycriteria=?, documentsrequired=?, country=?, apply=?, duration=? WHERE id=?"
+    const query = "UPDATE scholarships SET image=?, scholarshipname=?, deadline=?, scholarshiptype=?,featured=?, programs=?, country=?, description=?, scholarshipcategory=?, eligibility=?, duration=?, programsoffered=?, documentsrequired=?, benefits=?, applicationinformation=?, agent=? WHERE id=?"
 
-    const parameter = [image, scholarshipname, deadline, scholarshiptype,featured, agent, programs, applicant,hostuniversity, offeredby, aboutscholarship,scholarshipbenefits, eligibilitycriteria, documentsrequired, country, apply, duration, req.params.id];
+    const parameter = [image, scholarshipname, deadline, scholarshiptype,featured, programs, country, description,scholarshipcategory,eligibility, duration,programsoffered, documentsrequired, benefits, applicationinformation,agent, req.params.id];
     try {
         const [data] = await database.query(query, parameter);
-        return res.json('Successfully Updated')
+        return res.status(200).json('Successfully Updated')
     } catch (error) {
         console.error(error.message)
     }
@@ -175,3 +199,4 @@ export const ResearchScholarships = async(req,res) =>{
         console.error(error.message)
     }
 }
+

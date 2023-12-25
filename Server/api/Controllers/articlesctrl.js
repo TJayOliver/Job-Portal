@@ -1,5 +1,6 @@
 import { database } from "../Database/database.js";
-import {v4 as uuid} from 'uuid';
+import { nanoid } from 'nanoid';
+const uuid = nanoid(6);
 
 export const ArticleGet = async(req, res) =>{
     const query = `SELECT *,DATE_FORMAT(datecreated, '%d/%m/%y') AS datecreated FROM articles ORDER BY datecreated DESC`;

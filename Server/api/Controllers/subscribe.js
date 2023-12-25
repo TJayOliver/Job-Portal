@@ -1,5 +1,6 @@
 import {database} from '../Database/database.js';
-import {v4 as uuid} from 'uuid';
+import { nanoid } from 'nanoid';
+const uuid = nanoid(6);
 
 export const SubscribeGet = async(req, res) =>{
     const query = 'SELECT * FROM subscribe';

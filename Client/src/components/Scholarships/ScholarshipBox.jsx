@@ -1,4 +1,4 @@
-const ScholarshipBox = ({image, scholarshiptype, agent, date, location, about, scholarshipname,to}) =>{
+const ScholarshipBox = ({image, scholarshiptype, agent, date, location, description, scholarshipname,to}) =>{
     return(
         <a href={to} className="w-full bg-white hover:drop-shadow-sm hover:border-[#004242] border-[1px] md:h-40 rounded-lg p-4 flex flex-col justify-between">
             {/* Heading */}
@@ -21,9 +21,9 @@ const ScholarshipBox = ({image, scholarshiptype, agent, date, location, about, s
                 </div>
             </div>
 
-            {/* about scholarships */}
+            {/* description scholarships */}
             <div>
-                <p>{about}</p>
+                <p>{description}...</p>
             </div>
         </a>
     )
