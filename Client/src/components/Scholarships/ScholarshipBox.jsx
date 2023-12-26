@@ -7,7 +7,6 @@ const ScholarshipBox = ({image, scholarshiptype, agent, date, location, descript
                     <img src={image} className="h-10 w-10 object-cover rounded-sm bg-gray-100"></img>
                     <div>
                         <p className="font-bold ">{scholarshipname}</p>
-                        
                         <div className="flex gap-3 whitespace-nowrap">
                             <p>{scholarshiptype}</p>
                             <p className="hidden md:block">{agent}</p>
@@ -23,7 +22,7 @@ const ScholarshipBox = ({image, scholarshiptype, agent, date, location, descript
 
             {/* description scholarships */}
             <div>
-                <p>{description}...</p>
+                <div dangerouslySetInnerHTML={{__html: description }} />
             </div>
         </a>
     )

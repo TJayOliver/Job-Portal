@@ -10,18 +10,17 @@ import 'react-quill/dist/quill.snow.css';
 
 const ScholarshipForm = () =>{
     const [description, setDescription] = useState('');
-    const [scholarshipcategory, setScholarshipcategory] = useState('');
     const [eligibility, setEligibility] = useState('');
     const [duration, setDuration] = useState('');
     const [programsoffered, setProgramsoffered] = useState('');
     const [documentsrequired, setDocumentsrequired] = useState('');
     const [benefits, setBenefits] = useState('');
     const [applicationinformation, setApplicationinformation] = useState('');
-
+   
     const [sForm, setSForm] = useState({
         image : null, scholarshipname:"", deadline:"", scholarshiptype:"",featured:false,
-        programs:"", country:"", description:"", scholarshipcategory:"", eligibility:"", duration:"",programsoffered:"", documentsrequired:"", benefits:"", applicationinformation:"", agent:""
-    });
+        programs:"", country:"", description:"", scholarshipcategory:"", eligibility:"", duration:"",programsoffered:"", documentsrequired:"", benefits:"", applicationinformation:"", agent:"", hostuniversity:""});
+
     const [submitted, setSubmitted] = useState(false);
 
     const FormValues = (e) =>{
@@ -30,10 +29,11 @@ const ScholarshipForm = () =>{
     }
 
     const FormFiles = (e)=>{
-        setSForm({...sForm, image: e.target.files[0], description:description,scholarshipcategory:scholarshipcategory, eligibility:eligibility, duration:duration,programsoffered:programsoffered, documentsrequired:documentsrequired, benefits:benefits, applicationinformation:applicationinformation})
+        setSForm({...sForm, image: e.target.files[0], description:description, eligibility:eligibility, duration:duration,programsoffered:programsoffered, documentsrequired:documentsrequired, benefits:benefits, applicationinformation:applicationinformation})
     }
 
     const [message, setMessage] = useState('')
+
     const Submit = async(e) =>{
         e.preventDefault();
 
@@ -41,7 +41,7 @@ const ScholarshipForm = () =>{
         for (const key in sForm) {
             newFormData.append(key, sForm[key]);
         }
-
+    
         Axios.post('http://localhost:4040/api/scholarships-post', newFormData, {headers :{'Content-Type': 'multipart/form-data'}})
         .then(response =>setMessage(response.data))
         .catch(error =>setMessage(error))
@@ -136,9 +136,9 @@ const ScholarshipForm = () =>{
                                 value={sForm.scholarshipcategory}
                                 onChange={FormValues} 
                                 className="bg-transparent border-[1px] border-black p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" required>
-                                <option value='' disabled >-- Scholarship Category -- </option>
+                                <option value='' disabled >-- Category -- </option>
                                 <option value='Government'>Government</option>
-                                <option value='Organization'>Organization</option>
+                                <option value='Organizational'>Organizational</option>
                                 <option value='Research'>Research</option>
                                 <option value='Private'>Private</option>
                                 <option value='International'>International</option>
@@ -267,7 +267,7 @@ const ScholarshipForm = () =>{
                         accept='image/*'
                     />
 
-                    <button className=" text-xl bg-blue-600 p-2 rounded-md text-white hover:bg-blue-500">POST</button>
+                    <button className=" text-xl bg-[#004242] p-2 rounded-md text-white hover:bg-[#004141]">POST</button>
                 </form>
 
             </section>

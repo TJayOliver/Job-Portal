@@ -1,4 +1,6 @@
 import multer from 'multer';
+import { nanoid } from 'nanoid';
+const uuid = nanoid(6);
 
 export const date = () =>{
     const today = new Date(), 
@@ -23,7 +25,7 @@ const scholarshipStorage = multer.diskStorage({
         cb(null,'uploads/scholarship/');
     },
     filename : (req, file, cb) =>{
-        cb(null, date() +'-' + 'scholarship' + '-' + file.originalname)
+        cb(null, uuid +'scholarship' +'-' + file.originalname)
     }
 });
 

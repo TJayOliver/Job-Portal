@@ -70,7 +70,7 @@ const FeaturedJobs = () =>{
                     company={scholarship.scholarshipname}
                     position={scholarship.country}
                     category={scholarship.scholarshiptype}
-                    description={scholarship.aboutscholarship.replace(/^\d+[.,]/, '').trim().slice(0,38)}
+                    description={scholarship.description.slice(0,50)}
                     to={`/jobs/description/${scholarship.id}/${scholarship.position}/${scholarship.company}`}
                     />
                 ))}

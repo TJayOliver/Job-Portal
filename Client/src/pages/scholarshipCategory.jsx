@@ -1,7 +1,11 @@
 import { useState,useEffect } from "react"
 import { useParams } from "react-router-dom"
 import image from '../assets/eight.jpg'
-import one from '../assets/eight.jpg'
+import  orgImage from '../assets/organizational.png'
+import  resImage from '../assets/research.jpg'
+import  govImage from '../assets/government.jpg'
+import  privImage from '../assets/private.jpg'
+import  intImage from '../assets/international.jpg'
 import axios from "axios"
 import Header from "../components/Header/Header"
 import SocialMedia from "../components/Homepage/SocialMedia/SocialMedia"
@@ -88,18 +92,25 @@ const Scholarship = ()=>{
 
     const searchRes = searchResults.slice(firstPageIndex, lastPageIndex)
 
+    const s = 'bg-red-500 flex w-full h-[14rem] '
+    const colorChange = category === 'government' ? 'bg-gradient-to-r from-cyan-500 to-blue-500 flex w-full h-[14rem]' 
+    : category === 'organizational' ? 'bg-gradient-to-r from-fuchsia-500 to-cyan-500 flex w-full h-[14rem]' 
+    : category === 'private' ? 'bg-gradient-to-r from-blue-600 to-violet-600 flex w-full h-[14rem]'
+    : category === 'international' ? 'bg-gradient-to-r from-violet-500 to-purple-500 flex w-full h-[14rem]'
+    : category === 'research' ? 'bg-gradient-to-r from-fuchsia-600 to-purple-600 flex w-full h-[14rem]'
+    : null;
     return(
         <>
             <Header />
 
-            <main className="max-w-7xl flex flex-col m-auto justify-center p-1">
+            <main className="max-w-7xl flex flex-col m-auto justify-center ">
                 {/* heading */}
-                <section className=" bg-red-500 flex w-full h-[14rem] ">
+                <section className={colorChange}>
                     <div className="w-2/4 rounded-2xl md:px-6 py-10 flex flex-col gap-4">
-                        <p className="text-white text-3xl md:text-5xl font-bold">{category.charAt(0).toUpperCase() + category.slice(1)} Scholarships</p>
-                        <p className="text-sm md:text-md ">Browse through thousands of {category.charAt(0).toUpperCase() + category.slice(1)} Scholarships</p>
+                        <p className="text-white text-3xl md:text-5xl font-bold p-2">{category.charAt(0).toUpperCase() + category.slice(1)} Scholarships</p>
+                        <p className="text-sm md:text-md p-2 ">Browse through thousands of {category.charAt(0).toUpperCase() + category.slice(1)} Scholarships</p>
                     </div>
-                    <img src={image} className="w-2/4 object-cover" />
+                    <img loading="lazy" src={category === 'government' ? govImage : category === 'organizational' ? orgImage : category === 'private' ? privImage : category === 'international' ? intImage : category === 'research' ? resImage : null } className="w-2/4 object-cover" />
                 </section>
 
                 {/* Scholarships */}
@@ -109,140 +120,6 @@ const Scholarship = ()=>{
                     </div>
 
                    <div className="flex justify-between gap-2">
-                        {/* filter */}
-                        <form className=" hidden md:block basis-[20rem] h-[28rem] p-2 border-[1px] border-gray-100  rounded-lg">
-                            <div className=" flex justify-between font-bold mb-2">
-                                <p>Filter</p>
-                                <input type='reset'  />
-                            </div>
-
-                            <hr></hr>
-
-                            <div className="p-2">
-                                <p className="font-medium">Degree Level</p>
-                                <div id="all-levels" className="flex gap-2">
-                                    <input 
-                                        type='checkbox' 
-                                        name="all"
-                                        id="all" 
-                                        className=" accent-[#004242]"
-                                    />
-                                    <label htmlFor="all">All</label>
-                                </div>
-                                <div id="bachelors" className="flex gap-2">
-                                    <input 
-                                        type='checkbox' 
-                                        name="bachelorsdegree"
-                                        
-                                        id="bachelorsdegree" 
-                                        className=" accent-[#004242]"
-                                    />
-                                    <label htmlFor="bachelorsdegree">Bachelors</label>
-                                </div>
-                                <div id="masters" className="flex gap-2">
-                                    <input 
-                                        type='checkbox' 
-                                        name="masters"
-                                        
-                                        id="masters" 
-                                        className=" accent-[#004242]"
-                                    />
-                                    <label htmlFor="masters">Masters</label>
-                                </div>
-                                <div id="doctorate" className="flex gap-2">
-                                    <input 
-                                        type='checkbox' 
-                                        name="doctorate"
-                                        
-                                        id="doctorate" 
-                                        className=" accent-[#004242]"
-                                    />
-                                    <label htmlFor="doctorate">Doctorate</label>
-                                </div>
-                                <div id="pgd" className="flex gap-2">
-                                    <input 
-                                        type='checkbox' 
-                                        name="pgd"
-                                        
-                                        id="pgd" 
-                                        className=" accent-[#004242]"
-                                    />
-                                    <label htmlFor="pgd">Post Graduate Diploma</label>
-                                </div>
-                            </div>
-
-                            <hr></hr>
-
-                            <div className="p-2">
-                                <p className="font-medium">Funding Type</p>
-                                <div id="fullyfunded" className="flex gap-2">
-                                    <input 
-                                        type='checkbox' 
-                                        name="fullyfunded"
-                                        
-                                        id="fullyfunded" 
-                                        className=" accent-[#004242]"
-                                    />
-                                    <label htmlFor="fullyfunded">Fully Funded</label>
-                                </div>
-                                <div id="partial" className="flex gap-2">
-                                    <input 
-                                        type='checkbox' 
-                                        name="partial"
-                                        
-                                        id="partial" 
-                                        className=" accent-[#004242]"
-                                    />
-                                    <label htmlFor="partial">Partial</label>
-                                </div> 
-                            </div>
-
-                            <div className="p-2">
-                                <p className="font-medium">Category</p>
-                                <div id="government" className="flex gap-2">
-                                    <input 
-                                        type='checkbox' 
-                                        name="government"
-                                        
-                                        id="government" 
-                                        className=" accent-[#004242]"
-                                    />
-                                    <label htmlFor="government">Government</label>
-                                </div>
-                                <div id="private" className="flex gap-2">
-                                    <input 
-                                        type='checkbox' 
-                                        name="private"
-                                        
-                                        id="private" 
-                                        className=" accent-[#004242]"
-                                    />
-                                    <label htmlFor="private">Private</label>
-                                </div> 
-                                <div id="organizational" className="flex gap-2">
-                                    <input 
-                                        type='checkbox' 
-                                        name="organizational"
-                                        
-                                        id="organizational" 
-                                        className=" accent-[#004242]"
-                                    />
-                                    <label htmlFor="organizational">Organizational</label>
-                                </div> 
-                                <div id="research" className="flex gap-2">
-                                    <input 
-                                        type='checkbox' 
-                                        name="research"
-                                        
-                                        id="research" 
-                                        className=" accent-[#004242]"
-                                    />
-                                    <label htmlFor="research">Research</label>
-                                </div> 
-                            </div>
-
-                        </form>
-                        
                         {/* scholarships and search by country results */}
                         <div className=" basis-[60rem] flex flex-col gap-4">
                             <form onSubmit={submit} className="flex justify-between border-gray-100 border-2 rounded-lg">
@@ -281,7 +158,7 @@ const Scholarship = ()=>{
                                                     date={list.datecreated}
                                                     location={list.country}
                                                     scholarshipname={list.scholarshipname}
-                                                    about={list.aboutscholarship}
+                                                    description={list.description.slice(0,200)}
                                                     to={`/scholarships/description/${list.id}/${list.scholarshipname}`}
                                                 />
                                             ))
@@ -304,7 +181,7 @@ const Scholarship = ()=>{
                                                     date={list.datecreated}
                                                     location={list.country}
                                                     scholarshipname={list.scholarshipname}
-                                                    about={list.aboutscholarship}
+                                                    description={list.description.slice(0,200)}
                                                     to={`/scholarships/description/${list.id}/${list.scholarshipname}`}
                                                 />
                                             ))
@@ -322,7 +199,7 @@ const Scholarship = ()=>{
                                                     date={list.datecreated}
                                                     location={list.country}
                                                     scholarshipname={list.scholarshipname}
-                                                    about={list.aboutscholarship}
+                                                    description={list.description.slice(0,200)}
                                                     to={`/scholarships/description/${list.id}/${list.scholarshipname}`}
                                                 />
                                             ))
@@ -340,7 +217,7 @@ const Scholarship = ()=>{
                                                     date={list.datecreated}
                                                     location={list.country}
                                                     scholarshipname={list.scholarshipname}
-                                                    about={list.aboutscholarship}
+                                                    description={list.description.slice(0,200)}
                                                     to={`/scholarships/description/${list.id}/${list.scholarshipname}`}
                                                 />
                                             ))
@@ -358,7 +235,7 @@ const Scholarship = ()=>{
                                                     date={list.datecreated}
                                                     location={list.country}
                                                     scholarshipname={list.scholarshipname}
-                                                    about={list.aboutscholarship}
+                                                    description={list.description.slice(0,200)}
                                                     to={`/scholarships/description/${list.id}/${list.scholarshipname}`}
                                                 />
                                             ))
@@ -376,7 +253,7 @@ const Scholarship = ()=>{
                                                     date={list.datecreated}
                                                     location={list.country}
                                                     scholarshipname={list.scholarshipname}
-                                                    about={list.aboutscholarship}
+                                                    description={list.description.slice(0,200)}
                                                     to={`/scholarships/description/${list.id}/${list.scholarshipname}`}
                                                 />
                                             ))
@@ -393,7 +270,7 @@ const Scholarship = ()=>{
                                                 date={list.datecreated}
                                                 location={list.country}
                                                 scholarshipname={list.scholarshipname}
-                                                about={list.aboutscholarship}
+                                                description={list.description.slice(0,200)}
                                                 to={`/scholarships/description/${list.id}/${list.scholarshipname}`}
                                             />
                                         ))
@@ -402,6 +279,10 @@ const Scholarship = ()=>{
                                     </div>}
                                 </div>
                             }
+                        </div>
+
+                        <div className="basis-[15rem]">
+                            <p>Adverts</p>
                         </div>
                    </div>
                     
@@ -421,27 +302,32 @@ const Scholarship = ()=>{
                         <ScholarshipCategoryBox 
                             category='Government'
                             text='Government Scholarships'
-                            image={one}
+                            image={govImage}
+                            to={'/scholarships/government'}
                         />
                         <ScholarshipCategoryBox 
                             category='Organizational'
                             text='Organizational Scholarships'
-                            image={one}
+                            image={orgImage}
+                            to={'/scholarships/organizational'}
                         />
                         <ScholarshipCategoryBox 
                             category='International'
                             text='International Scholarships'
-                            image={one}
+                            image={intImage}
+                            to={'/scholarships/international'}
                         />
                         <ScholarshipCategoryBox 
                             category='Private'
                             text='Private Scholarships'
-                            image={one}
+                            image={privImage}
+                            to={'/scholarships/private'}
                         />
                         <ScholarshipCategoryBox 
                             category='Research'
                             text='Research Scholarships'
-                            image={one}
+                            image={resImage}
+                            to={'/scholarships/research'}
                         />
                         
                     </div>
@@ -460,7 +346,7 @@ const Scholarship = ()=>{
                                 image={image}
                                 author={post.author}
                                 title={post.title}
-                                brief={post.briefinfo.replace(/^\d+[.,]/, '').trim().slice(0,90)}
+                                //brief={post.briefinfo.replace(/^\d+[.,]/, '').trim().slice(0,90)}
                                 to={`/articles/${post.title}/${post.id}`}
                             /> 
                         ))

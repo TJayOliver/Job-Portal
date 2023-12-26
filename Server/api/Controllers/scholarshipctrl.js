@@ -1,7 +1,6 @@
 import {database} from '../Database/database.js';
-//import {v4 as uuid} from 'uuid';
 import { nanoid } from 'nanoid';
-const uuid = nanoid(6)
+const uuid = nanoid(8)
 
 export const ScholarshipGet = async(req,res) =>{
     const query = `SELECT *,
@@ -19,7 +18,7 @@ export const ScholarshipGet = async(req,res) =>{
 
 export const SimilarScholarship = async(req,res) =>{
     const {countryname} = req.params;
-    console.log(countryname)
+    //console.log(countryname)
     const query = `SELECT *,
     DATE_FORMAT(deadline, '%d/%m/%Y') AS deadline, 
     DATE_FORMAT(datecreated, '%d/%m/%Y') AS datecreated
@@ -77,19 +76,19 @@ export const ScholarshipCount = async(req, res) =>{
 }
 
 export const ScholarshipPost = async(req,res)=>{
-    const {scholarshipname, deadline, scholarshiptype, featured, programs, country, description, scholarshipcategory,eligibility, duration,programsoffered, documentsrequired, benefits, applicationinformation} = req.body;
+    const {scholarshipname, deadline, scholarshiptype, featured, programs, country, description, scholarshipcategory,eligibility, duration,programsoffered, documentsrequired, benefits, applicationinformation, agent, hostuniversity} = req.body;
+
     const image = req.file.filename;
 
     const query = `INSERT INTO scholarships  
-    (id, image, scholarshipname, deadline, scholarshiptype,featured, programs, country, description, scholarshipcategory,eligibility, duration,programsoffered, documentsrequired, benefits, applicationinformation,agent) 
-    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
-    const parameter = [uuid(), image,scholarshipname, deadline, scholarshiptype, featured, programs, country, description, scholarshipcategory, eligibility, duration,programsoffered, documentsrequired, benefits, applicationinformation,agent]
+    (id, image, scholarshipname, deadline, scholarshiptype,featured, programs, country, description, scholarshipcategory,eligibility, duration,programsoffered, documentsrequired, benefits, applicationinformation,agent, hostuniversity) 
+    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+    const parameter = [uuid, image,scholarshipname, deadline, scholarshiptype, featured, programs, country, description, scholarshipcategory, eligibility, duration,programsoffered, documentsrequired, benefits, applicationinformation,agent, hostuniversity]
     try{
         const [data] = await database.query(query, parameter)
         return res.status(200).send('Successfully Posted')
     }catch(error){
         console.error(error.message)
-        return res.status(404).send('Error Posting')
     }
 }
 
@@ -118,7 +117,7 @@ export const ScholarshipDescription = async(req, res) =>{
 
 // loads the scholarships post page
 export const ScholarshipEdit = async(req, res) =>{
-    const query =  `SELECT * FROM scholarships WHERE id=?`
+    const query =  `SELECT *, DATE_FORMAT(deadline, '%Y-%m-%d') AS deadline FROM scholarships WHERE id=?`
     const parameter = [req.params.id]
     try{
         const [data] = await database.query(query, parameter)
@@ -130,16 +129,16 @@ export const ScholarshipEdit = async(req, res) =>{
 
 // posts the newly updated scholarships
 export const ScholarshipsUpdate = async(req,res) =>{
-    const {scholarshipname, deadline, scholarshiptype,featured, programs, country, description, scholarshipcategory, eligibility, duration,programsoffered, documentsrequired, benefits, applicationinformation,agent} = req.body;
+    const {scholarshipname, deadline, scholarshiptype,featured, programs, country, description, scholarshipcategory, eligibility, duration,programsoffered, documentsrequired, benefits, applicationinformation,agent,hostuniversity} = req.body;
 
-    const image = req.file.path;
+    const image = req.file.filename;
     
-    const query = "UPDATE scholarships SET image=?, scholarshipname=?, deadline=?, scholarshiptype=?,featured=?, programs=?, country=?, description=?, scholarshipcategory=?, eligibility=?, duration=?, programsoffered=?, documentsrequired=?, benefits=?, applicationinformation=?, agent=? WHERE id=?"
+    const query = "UPDATE scholarships SET image=?, scholarshipname=?, deadline=?, scholarshiptype=?,featured=?, programs=?, country=?, description=?, scholarshipcategory=?, eligibility=?, duration=?, programsoffered=?, documentsrequired=?, benefits=?, applicationinformation=?, agent=?, hostuniversity=? WHERE id=?"
 
-    const parameter = [image, scholarshipname, deadline, scholarshiptype,featured, programs, country, description,scholarshipcategory,eligibility, duration,programsoffered, documentsrequired, benefits, applicationinformation,agent, req.params.id];
+    const parameter = [image, scholarshipname, deadline, scholarshiptype,featured, programs, country, description,scholarshipcategory,eligibility, duration,programsoffered, documentsrequired, benefits, applicationinformation,agent,hostuniversity, req.params.id];
     try {
         const [data] = await database.query(query, parameter);
-        return res.status(200).json('Successfully Updated')
+        return res.status(200).send('Successfully Updated')
     } catch (error) {
         console.error(error.message)
     }

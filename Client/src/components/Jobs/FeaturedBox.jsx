@@ -25,7 +25,7 @@ const FeaturedBox = ({image,description, location, company, duration, position, 
 
                 {/* Job Title and Description */}
                 <p className=' font-medium whitespace-nowrap'>{position}</p>
-                <small>{description} . . . </small>
+                <small dangerouslySetInnerHTML={{__html:description}}/>
                 
                 {/* Apply Button */}
                 <div role='button' className='rounded-full mt-1 bg-red-500 hover:bg-red-600 hover:duration-150 hover:ease-out text-white font-bold h-8 flex items-center justify-center w-24 px-2'>

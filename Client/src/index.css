@@ -4,7 +4,7 @@
 
 *{@apply m-0 p-0 box-border}
 
-html, body{@apply bg-white text-[#004242] h-screen overflow-x-hidden select-none scroll-smooth}
+html, body{@apply bg-white text-[#004242] h-screen overflow-x-hidden select-none scroll-smooth }
 
 
 @font-face {
@@ -14,3 +14,34 @@ html, body{@apply bg-white text-[#004242] h-screen overflow-x-hidden select-none
 
 .scrollbar::-webkit-scrollbar{@apply hidden}
 
+.subscribe{
+    animation-name: well;
+    animation-duration: .2s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+    position: absolute;
+    z-index: 10;
+}
+
+.closeSubscribe{
+    animation-name: notwell;
+    animation-duration: .1s;
+    animation-timing-function: ease-in;
+    animation-fill-mode: forwards;
+    position: absolute;
+    z-index: 10;
+}   
+
+@keyframes well {
+    0%{@apply h-2 w-24  left-2/4 -translate-x-2/4 -top-2/4 bg-white }
+    
+    100%{@apply bg-white top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 w-2/4 md:w-[30rem] rounded-md h-96 shadow-xl}
+}
+
+@keyframes notwell {
+    0%{@apply bg-white top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 w-2/4 md:w-[30rem] rounded-md h-96}
+
+    99%{@apply h-2 w-24 left-2/4 -translate-x-2/4 -translate-y-2/4 -top-2/4 bg-white}
+
+    100%{@apply hidden}
+}

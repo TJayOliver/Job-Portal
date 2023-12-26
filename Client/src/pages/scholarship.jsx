@@ -1,6 +1,10 @@
 import { useState,useEffect } from "react"
 import image from '../assets/eight.jpg'
-import one from '../assets/eight.jpg'
+import  orgImage from '../assets/organizational.png'
+import  resImage from '../assets/research.jpg'
+import  govImage from '../assets/government.jpg'
+import  privImage from '../assets/private.jpg'
+import  intImage from '../assets/international.jpg'
 import axios from "axios"
 import Header from "../components/Header/Header"
 import SocialMedia from "../components/Homepage/SocialMedia/SocialMedia"
@@ -13,6 +17,7 @@ import Loading from '../components/Loading/Loading';
 import ArticleBox from '../components/Articles/ArticleBox';
 import ScholarshipBox from "../components/Scholarships/ScholarshipBox"
 import Pagination from "../components/Pagination.jsx/Pagination"
+import { TypeAnimation } from 'react-type-animation';
 
 const Scholarship = ()=>{
     const [scholarships, setScholarship] = useState([])
@@ -65,37 +70,22 @@ const Scholarship = ()=>{
     firstPageIndex = lastPageIndex - postPerPage ;
     const schols = scholarships.slice(firstPageIndex, lastPageIndex);
     const searchRes = searchResults.slice(firstPageIndex, lastPageIndex)
+    
 
     return(
         <>
             <Header />
 
-            <div className="h-36 p-2 flex items-center relative bg-blue-400">
-                <p className=" text-2xl font-bold text-white">Every Bright Student Deserves a Scholarship!</p>
-                <div className="">
-                    <div className="absolute -right-2">
-                        <div className=" h-12 bg-white w-20 -rotate-12"></div>
-                    </div>
-                    <div className="absolute right-20 -top-2">
-                        <div className=" h-12 bg-blue-100 w-24 -rotate-45"></div>
-                    </div>
-                    <div className="absolute -right-1 top-32 -rotate-12">
-                        <div className=" h-10 bg-black w-44 "></div>
-                    </div>
-                    <div className="absolute right-32 rotate-45">
-                        <div className=" h-10 bg-black w-64 "></div>
-                    </div>
-                    <div className="absolute right-96 top-0 -rotate-45">
-                        <div className=" h-10 bg-black w-40 "></div>
-                    </div>
-                    <div className="absolute right-64 bottom-0 rotate-45">
-                        <div className=" h-10 bg-blue-200 w-36 "></div>
-                    </div>
-                    <div className="absolute right-[26rem] -bottom-2 -rotate-45">
-                        <div className=" h-10 bg-white w-20 "></div>
+            <aside className="h-36 flex items-center relative bg-gradient-to-r from-cyan-500 to-blue-500 m-auto ">
+                <div className="m-auto max-w-7xl w-full text-4xl font-medium text-white">
+                    
+                    
+                    <div className="">
+                        <TypeAnimation sequence={['Every One Deserves a Scholarship','Your Time is Now', 'Apply']} speed={300} repeat={Infinity} />
                     </div>
                 </div>
-            </div>
+                
+            </aside>
 
             <main className="max-w-7xl flex flex-col m-auto justify-center ">
                 <div className=" bg-red-500 hidden w-full h-[8rem] ">
@@ -114,8 +104,8 @@ const Scholarship = ()=>{
                         <div className="flex justify-between">
                             <p>Many categories are presented, each containing numerous scholarships and ready for you to browse through</p>
                             <div className="text-3xl flex gap-4 ">
-                                <BsArrowLeftSquare id="leftbtn" onClick={handleLeftClick}/>
-                                <BsArrowRightSquare id="rightbtn" onClick={handleRightClick}/>
+                                <BsArrowLeftSquare id="leftbtn" onClick={handleLeftClick} className='bg-gradient-to-r from-cyan-500 to-blue-500 text-white cursor-pointer'/>
+                                <BsArrowRightSquare id="rightbtn" onClick={handleRightClick} className='bg-gradient-to-r from-cyan-500 to-blue-500 text-white cursor-pointer'/>
                             </div>
                         </div>
                     </div>
@@ -124,32 +114,37 @@ const Scholarship = ()=>{
                         <ScholarshipCategoryBox 
                             category='Government'
                             text='Government Scholarships'
-                            image={one}
+                            image={govImage}
                             to={'/scholarships/government'}
+                            color='bg-gradient-to-r from-cyan-500 to-blue-500'
                         />
                         <ScholarshipCategoryBox 
                             category='Organizational'
                             text='Organizational Scholarships'
-                            image={one}
+                            image={orgImage}
                             to={'/scholarships/organizational'}
+                            color='bg-gradient-to-r from-cyan-500 to-blue-500'
                         />
                         <ScholarshipCategoryBox 
                             category='International'
                             text='International Scholarships'
-                            image={one}
+                            image={intImage}
                             to={'/scholarships/international'}
+                            color='bg-gradient-to-r from-cyan-500 to-blue-500'
                         />
                         <ScholarshipCategoryBox 
                             category='Private'
                             text='Private Scholarships'
-                            image={one}
+                            image={privImage}
                             to={'/scholarships/private'}
+                            color='bg-gradient-to-r from-cyan-500 to-blue-500'
                         />
                         <ScholarshipCategoryBox 
                             category='Research'
                             text='Research Scholarships'
-                            image={one}
+                            image={resImage}
                             to={'/scholarships/research'}
+                            color='bg-gradient-to-r from-cyan-500 to-blue-500'
                         />
                         
                     </div>
@@ -158,7 +153,7 @@ const Scholarship = ()=>{
                 {/* all Scholarships */}
                 <div className="flex flex-col justify-center py-3 p-2">
                     <div className="p-4">
-                        <p className="font-bold text-4xl mb-2">Explore </p>
+                        <p className="font-bold text-4xl mb-2">Explore</p>
                     </div>
 
                    <div className="flex justify-center gap-2">
@@ -180,7 +175,7 @@ const Scholarship = ()=>{
                                     />
                                 </div>
 
-                                <button type="search" className="bg-[#004242] hover:bg-[#035353] h-8 flex items-center rounded-lg text-white p-2 ml-1 mt-1 whitespace-nowrap">
+                                <button type="search" className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-blue-700 h-8 flex items-center rounded-lg text-white p-2 ml-1 mt-1 whitespace-nowrap">
                                 <p>Find Scholarships</p>
                                 </button>
 
@@ -201,7 +196,7 @@ const Scholarship = ()=>{
                                                     date={list.datecreated}
                                                     location={list.country}
                                                     scholarshipname={list.scholarshipname}
-                                                    about={list.aboutscholarship}
+                                                    about={list.description.slice(0,50)}
                                                     to={`/scholarships/description/${list.id}/${list.scholarshipname}`}
                                                 />
                                             ))
@@ -223,7 +218,7 @@ const Scholarship = ()=>{
                                                     date={list.datecreated}
                                                     location={list.country}
                                                     scholarshipname={list.scholarshipname}
-                                                    description={list.description.slice(3, 100)}
+                                                    description={list.description.slice(3, 200)}
                                                     to={`/scholarships/description/${list.id}/${list.scholarshipname}`}
                                                 />
                                             ))
@@ -246,7 +241,7 @@ const Scholarship = ()=>{
                     </div>
 
                     {loading ? <Loading /> :
-                        <div className="flex flex-wrap gap-2 justify-between shrink-0">{
+                        <div className="flex flex-wrap gap-2 justify-between p-3 shrink-0">{
                             scholarshipsarticle.map((post, id) =>(
                             <ArticleBox key={id}
                                 image={image}

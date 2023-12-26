@@ -13,7 +13,7 @@ app.use(cors())
 
 app.use(bodyParser.json());
 app.use(bodyparser.urlencoded({ extended: true }))
-app.use(express.static('uploads'));
+app.use('/uploads', express.static('uploads'));
 app.use('/', routes)
 
 app.listen(PORT, ()=>{console.log(`Connected on http://localhost:${PORT}`)})

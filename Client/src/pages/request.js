@@ -1,9 +1,9 @@
 import axios from "axios";
 
-export const fetch = async(link, SetState, setLoading, signal)=>{
+export const fetch = async(link, setState, setLoading, signal)=>{
     try {
         const response = await axios.get(`${link}`, {signal});
-        SetState(response.data);
+        setState(response.data);
         setLoading(false);
     } catch (error) {
         //console.error(error.message)
@@ -21,7 +21,7 @@ export const allCategories = async(setCategories, signal) =>{
 }
 
 // retrieve jobs description and display it  on jobs description page
-export const jobdescription = async(setJobs, setloading, id, signal) =>{
+export const jobdescription = async(setJobs,setloading, id, signal) =>{
     try{
         const response = await axios.get(`http://localhost:4040/api/jobs-description/${id}`, {signal});
         setJobs(response.data)

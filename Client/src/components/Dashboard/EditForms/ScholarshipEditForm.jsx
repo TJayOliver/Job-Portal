@@ -1,23 +1,28 @@
 import FormInputs from "../formInputs";
-import FormTextarea from "../formTextarea";
 import { countries } from "../countries";
-import Axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SubmittedBox from "../submittedBox";
 import LeftPanel from "../Panels/LeftPanel";
 import FormsDashboardHead from "../DashboardHeaders/FormsDashboardHead";
-import { useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const ScholarshipEditForm = () =>{
     const id = useParams(), ID = id.id;
 
+    const [description, setDescription] = useState('');
+    const [eligibility, setEligibility] = useState('');
+    const [duration, setDuration] = useState('');
+    const [programsoffered, setProgramsoffered] = useState('');
+    const [documentsrequired, setDocumentsrequired] = useState('');
+    const [benefits, setBenefits] = useState('');
+    const [applicationinformation, setApplicationinformation] = useState('');
+
     const [sForm, setSForm] = useState({
-        image : null, scholarshipname:"", deadline:"", scholarshiptype:"",featured:"",
-        agent : "", programs:"", applicant:"",hostuniversity:"",
-        offeredby:"", aboutscholarship:"", scholarshipbenefits:"", eligibilitycriteria:"",
-        documentsrequired:"", country:"", apply:"", duration:""
+        image : null, scholarshipname:"", deadline:"", scholarshiptype:"",featured:false,
+        programs:"", country:"", description:"", scholarshipcategory:"", eligibility:"", duration:"",programsoffered:"", documentsrequired:"", benefits:"", applicationinformation:"", agent:"", hostuniversity:""
     });
     const [submitted, setSubmitted] = useState(false);
 
@@ -27,8 +32,10 @@ const ScholarshipEditForm = () =>{
     }
 
     const FormFiles = (e)=>{
-        setSForm({...sForm, image: e.target.files[0]})
+        setSForm({...sForm, image: e.target.files[0], description:description, eligibility:eligibility, duration:duration,programsoffered:programsoffered, documentsrequired:documentsrequired, benefits:benefits, applicationinformation:applicationinformation})
     }
+
+    const [message, setMessage] = useState('')
 
     const Submit = async(e) =>{
         e.preventDefault();
@@ -38,8 +45,8 @@ const ScholarshipEditForm = () =>{
             newFormData.append(key, sForm[key]);
         }
 
-        Axios.put(`http://localhost:4040/api/scholarships-update/${ID}`, newFormData, {headers :{'Content-Type': 'multipart/form-data'}})
-        .then(response)
+        axios.put(`http://localhost:4040/api/scholarships-update/${ID}`, newFormData, {headers :{'Content-Type': 'multipart/form-data'}})
+        .then(response => response.status !== 200 ? setMessage('Please Try again') : setMessage(response.data))
         .catch(error =>console.error(error.message))
         
         setSubmitted(true);
@@ -52,14 +59,28 @@ const ScholarshipEditForm = () =>{
     useEffect(()=>{
         axios.get(`http://localhost:4040/api/scholarships-edit/${ID}`)
         .then(response =>{
-            const retrievedData = response.data[0]
-            setSForm({image : retrievedData.image, scholarshipname:retrievedData.scholarshipname, deadline:retrievedData.deadline, scholarshiptype:retrievedData.scholarshiptype,featured:retrievedData.featured,
-            agent : retrievedData.agent, programs:retrievedData.programs, applicant:retrievedData.applicant,hostuniversity:retrievedData.hostuniversity,
-            offeredby:retrievedData.offeredby, aboutscholarship:retrievedData.aboutscholarship, scholarshipbenefits:retrievedData.scholarshipbenefits, eligibilitycriteria:retrievedData.eligibilitycriteria,
-            documentsrequired:retrievedData.documentsrequired, country:retrievedData.country, apply:retrievedData.apply, duration:retrievedData.duration})
-            .catch(error => console.error(error.message))
-        },[])
-    })
+            const retrievedData = response.data[0];
+            setSForm({image : retrievedData.image, 
+                scholarshipname:retrievedData.scholarshipname, 
+                deadline:retrievedData.deadline,
+                scholarshiptype:retrievedData.scholarshiptype,
+                featured:retrievedData.featured,
+                programs:retrievedData.programs,
+                country:retrievedData.country,
+                scholarshipcategory:retrievedData.scholarshipcategory,
+                agent:retrievedData.agent,
+                hostuniversity:retrievedData.hostuniversity
+            })
+            setDescription(retrievedData.description)
+            setEligibility(retrievedData.eligibility)
+            setDuration(retrievedData.duration)
+            setProgramsoffered(retrievedData.programsoffered)
+            setDocumentsrequired(retrievedData.documentsrequired)
+            setBenefits(retrievedData.benefits)
+            setApplicationinformation(retrievedData.applicationinformation)
+        })
+        .catch(error =>console.error(error.message))
+    },[])
 
     return(
         <main>
@@ -69,14 +90,14 @@ const ScholarshipEditForm = () =>{
 
             <section className=" md:ml-64 relative">
 
-                {submitted && <SubmittedBox successMessage={'Scholarship Successfully Added'} /> }
+                {submitted && <SubmittedBox successMessage={message} /> }
 
                 <FormsDashboardHead title='Scholarship Form' />
 
                 <form onSubmit={Submit} className=' p-3 flex flex-col gap-4'>
                     
                     <FormInputs 
-                        label='Scholarship Name' 
+                        label='Name' 
                         htmlFor='scholarshipname'
                         type='text'
                         id='scholarshipname'
@@ -87,104 +108,6 @@ const ScholarshipEditForm = () =>{
                     />
 
                     <FormInputs 
-                        label='Scholarship Deadline' 
-                        htmlFor='deadline'
-                        type='date'
-                        id='deadline'
-                        name='deadline'
-                        value={sForm.deadline}
-                        onChange={FormValues}
-                    />
-
-                    <FormInputs 
-                        label='Who Can Apply' 
-                        htmlFor='applicant'
-                        type='text'
-                        id='applicant'
-                        name='applicant'
-                        value={sForm.applicant}
-                        onChange={FormValues}
-                        placeholder='e.g. World Wide Students'
-                    />
-
-                    <div className=" flex flex-col gap-1">
-                        <label htmlFor='scholarshiptype' className=" text-xl">Scholarship Type</label>
-                        <select 
-                            id='scholarshiptype' 
-                            name='scholarshiptype'
-                            value={sForm.scholarshiptype}
-                            onChange={FormValues} 
-                            className="bg-transparent border-[1px] border-blue-600 p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" required>
-                            <option value='' disabled >-- Select Scholarship Type -- </option>
-                            <option value='Fully Funded'>Fully Funded</option>
-                            <option value='Partial'>Partial</option>
-                        </select>                 
-                    </div>
-
-                    <div className=" flex flex-col gap-1">
-                        <label htmlFor='agent' className=" text-xl">Agent Needed?</label>
-                        <select 
-                            id='agent' 
-                            name='agent' 
-                            value={sForm.agent}
-                            onChange={FormValues}
-                            className="bg-transparent border-[1px] border-blue-600 p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" required>
-                            <option value='' disabled>-- Select Agent Option -- </option>
-                            <option value='Agent'>Agent</option>
-                            <option value='No Agent'>No Agent</option>
-                        </select>                 
-                    </div>
-
-                    <div className=" flex flex-col gap-1">
-                        <label htmlFor='programs' className=" text-xl">Study Area</label>
-                        <select 
-                            id='programs' 
-                            name='programs' 
-                            value={sForm.programs}
-                            onChange={FormValues}
-                            className="bg-transparent border-[1px] border-blue-600 p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" required>
-                            <option value='' disabled>-- Select Study Area -- </option>
-                            <option value='All Levels'>All Levels</option>
-                            <option value='Bachelors Degree'>Bachelors Degree</option>
-                            <option value='Masters Degree'>Masters Degree</option>
-                            <option value='Doctorate Degree'>Doctorate Degree</option>
-                            <option value='Post Graduate Diploma'>Post Graduate Diploma</option>
-                        </select>                 
-                    </div>
-
-                    <div className=" flex flex-col gap-1">
-                        <label htmlFor='duration' className=" text-xl">Scholarship Duration</label>
-                        <select 
-                            id='duration' 
-                            name='duration' 
-                            value={sForm.duration}
-                            onChange={FormValues}
-                            className="bg-transparent border-[1px] border-blue-600 p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" required>
-                            <option value='' disabled>-- Select Scholarship Duration -- </option>
-                            <option value='1 Year'>1 Year</option>
-                            <option value='2 Years'>2 Years</option>
-                            <option value='3 Years'>3 Years</option>
-                            <option value='4 Years'>4 Years</option>
-                            <option value='5 Years'>5 Years</option>
-                            <option value='6 Years'>6 Years</option>
-                            <option value='7 Years'>7 Years</option>
-                        </select>                 
-                    </div>
-
-                    <div className=" flex flex-col gap-1">
-                        <label htmlFor='country' className=" text-xl">Select Host Country</label>
-                        <select 
-                        id='country' 
-                        name='country' 
-                        value={sForm.country}
-                        onChange={FormValues}
-                        className="bg-transparent border-[1px] border-blue-600 p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" required>
-                            <option value='' disabled>-- Select Country -- </option>
-                            {countries.map((country, id)=>(<option value={country} key={id}>{country}</option>))}
-                        </select>                 
-                    </div>
-
-                    <FormInputs 
                         label='Host University' 
                         htmlFor='hostuniversity'
                         type='text'
@@ -192,82 +115,175 @@ const ScholarshipEditForm = () =>{
                         name='hostuniversity'
                         value={sForm.hostuniversity}
                         onChange={FormValues}
-                        placeholder='e.g. University for Development Studies, Ghana'
+                        placeholder='e.g. University for Development Studies'
                     />
 
-                    <FormInputs 
-                        label='Scholarship Offered By' 
-                        htmlFor='offeredby'
-                        type='text'
-                        id='offeredby'
-                        name='offeredby'
-                        value={sForm.offeredby}
-                        onChange={FormValues}
-                        placeholder='e.g. University for Development Studies Funded'
-                    />
+                    <div className="flex flex-col md:flex md:flex-row gap-4">
+                        <FormInputs 
+                            label='Deadline' 
+                            htmlFor='deadline'
+                            type='date'
+                            id='deadline'
+                            name='deadline'
+                            value={sForm.deadline}
+                            onChange={FormValues}
+                        />
+
+                        <div className=" flex flex-col gap-1">
+                            <label htmlFor='scholarshiptype' className=" text-xl">Type</label>
+                            <select 
+                                id='scholarshiptype' 
+                                name='scholarshiptype'
+                                value={sForm.scholarshiptype}
+                                onChange={FormValues} 
+                                className="bg-transparent border-[1px] border-black p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" required>
+                                <option value='' disabled >--Scholarship Type --</option>
+                                <option value='Fully Funded'>Fully Funded</option>
+                                <option value='Partial'>Partial</option>
+                            </select>                 
+                        </div>
+
+                        <div className=" flex flex-col gap-1">
+                            <label htmlFor='scholarshiptype' className=" text-xl">Agent</label>
+                            <select 
+                                id='agent' 
+                                name='agent'
+                                value={sForm.agent}
+                                onChange={FormValues} 
+                                className="bg-transparent border-[1px] border-black p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" required>
+                                <option value='' disabled >--Agent --</option>
+                                <option value='Agent'>Agent</option>
+                                <option value='No agent'>No Agent</option>
+                            </select>                 
+                        </div>
+
+                        <div className=" flex flex-col gap-1">
+                            <label htmlFor='scholarshipcategory' className=" text-xl">Category</label>
+                            <select 
+                                id='scholarshipcategory' 
+                                name='scholarshipcategory'
+                                value={sForm.scholarshipcategory}
+                                onChange={FormValues} 
+                                className="bg-transparent border-[1px] border-black p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" required>
+                                <option value='' disabled >-- Category -- </option>
+                                <option value='Government'>Government</option>
+                                <option value='Organizational'>Organizational</option>
+                                <option value='Research'>Research</option>
+                                <option value='Private'>Private</option>
+                                <option value='International'>International</option>
+                            </select>                 
+                        </div>
+
+                        <div className=" flex flex-col gap-1">
+                            <label htmlFor='programs' className=" text-xl">Study Area</label>
+                            <select 
+                                id='programs' 
+                                name='programs' 
+                                value={sForm.programs}
+                                onChange={FormValues}
+                                className="bg-transparent border-[1px] border-black p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" required>
+                                <option value='' disabled>-- Select Study Area -- </option>
+                                <option value='All Levels'>All Levels</option>
+                                <option value='Bachelors Degree'>Bachelors Degree</option>
+                                <option value='Masters Degree'>Masters Degree</option>
+                                <option value='Doctorate Degree'>Doctorate Degree</option>
+                                <option value='Post Graduate Diploma'>Post Graduate Diploma</option>
+                            </select>                 
+                        </div>
+
+                        <div className=" flex flex-col gap-1">
+                            <label htmlFor='country' className=" text-xl">Select Host Country</label>
+                            <select 
+                            id='country' 
+                            name='country' 
+                            value={sForm.country}
+                            onChange={FormValues}
+                            className="bg-transparent border-[1px] border-black p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" required>
+                                <option value='' disabled>-- Select Country -- </option>
+                                {countries.map((country, id)=>(<option value={country} key={id}>{country}</option>))}
+                            </select>                 
+                        </div>
+                    </div>
                     
-                    <FormTextarea
-                        label='Info About Scholarship'
-                        htmlFor='aboutscholarship'
-                        id='aboutscholarship'
-                        name='aboutscholarship'
-                        value={sForm.aboutscholarship}
-                        onChange={FormValues}
-                        placeholder='Brief info about the Scholarship'
-                    />
+                    <div>
+                        <p className="text-xl">Description</p>
+                        <ReactQuill
+                            className="text-xl border-black border-[1px] rounded-lg"
+                            theme="snow"
+                            value={description}
+                            onChange={(value)=>setDescription(value)}
+                        />
+                    </div>
 
-                    <FormTextarea
-                        label='Benefits of the Scholarship'
-                        htmlFor='scholarshipbenefits'
-                        id='scholarshipbenefits'
-                        name='scholarshipbenefits'
-                        value={sForm.scholarshipbenefits}
-                        onChange={FormValues}
-                        placeholder='Brief info about the benefits of the Scholarship'
-                    />
+                    <div>
+                        <p className="text-xl">Eligibility Criteria</p>
+                        <ReactQuill
+                            className="text-xl border-black border-[1px] rounded-lg"
+                            theme="snow"
+                            value={eligibility}
+                            onChange={(value)=>setEligibility(value)}
+                        />
+                    </div>
 
-                    <FormTextarea
-                        label='Eligibility Criteria for the Scholarship'
-                        htmlFor='eligibilitycriteria'
-                        id='eligibilitycriteria'
-                        name='eligibilitycriteria'
-                        value={sForm.eligibilitycriteria}
-                        onChange={FormValues}
-                        placeholder='Eligibility Criteria required to meet the Scholarship'
-                    />
+                    <div>
+                        <p className="text-xl">Duration</p>
+                        <ReactQuill
+                            className="text-xl border-black border-[1px] rounded-lg"
+                            theme="snow"
+                            value={duration}
+                            onChange={(value)=>setDuration(value)}
+                        />
+                    </div>
 
-                    <FormTextarea
-                        label='Documents required for the Scholarship'
-                        htmlFor='documentsrequired'
-                        id='documentsrequired'
-                        name='documentsrequired'
-                        value={sForm.documentsrequired}
-                        onChange={FormValues}
-                        placeholder='Documents required to meet the Scholarship'
-                    />
+                    <div>
+                        <p className="text-xl">Programs Offered</p>
+                        <ReactQuill
+                            className="text-xl border-black border-[1px] rounded-lg"
+                            theme="snow"
+                            value={programsoffered}
+                            onChange={(value)=>setProgramsoffered(value)}
+                        />
+                    </div>
 
-                    <FormTextarea
-                        label='How to Apply'
-                        htmlFor='apply'
-                        id='apply'
-                        name='apply'
-                        value={sForm.apply}
-                        onChange={FormValues}
-                        placeholder='e.g apply through..'
-                    />
+                    <div>
+                        <p className="text-xl">Documents Required</p>
+                        <ReactQuill
+                            className="text-xl border-black border-[1px] rounded-lg"
+                            theme="snow"
+                            value={documentsrequired}
+                            onChange={(value)=>setDocumentsrequired(value)}
+                        />
+                    </div>
 
-                    <div className=" flex flex-col gap-1">
-                        <label htmlFor='featured' className=" text-xl">Featured</label>
-                        <select 
-                        id='featured' 
-                        name='featured' 
-                        value={sForm.featured}
-                        onChange={FormValues}
-                        className="bg-transparent border-[1px] border-blue-600 p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" required>
-                            <option value='' disabled>-- Select Featured -- </option>
-                            <option value='true' >Yes</option>
-                            <option value='false' >No</option>
-                        </select>                 
+                    <div>
+                        <p className="text-xl">Benefits</p>
+                        <ReactQuill
+                            className="text-xl border-black border-[1px] rounded-lg"
+                            theme="snow"
+                            value={benefits}
+                            onChange={(value)=>setBenefits(value)}
+                        />
+                    </div>
+
+                    <div>
+                        <p className="text-xl">Application Information</p>
+                        <ReactQuill
+                            className="text-xl border-black border-[1px] rounded-lg"
+                            theme="snow"
+                            value={applicationinformation}
+                            onChange={(value)=>setApplicationinformation(value)}
+                        />
+                    </div>
+
+                    {/* checkbox */}
+                    <div className="flex items-center gap-1">
+                        <label htmlFor='featured' className=" text-lg">Featured</label>
+                        <input 
+                            type='checkbox'
+                            id='featured' 
+                            name='featured'
+                            onChange={FormValues}
+                        />
                     </div>
 
                     <FormInputs 
@@ -280,7 +296,7 @@ const ScholarshipEditForm = () =>{
                         accept='image/*'
                     />
 
-                    <button className=" text-xl bg-blue-600 p-2 rounded-md text-white hover:bg-blue-500">POST</button>
+                    <button className=" text-xl bg-[#004242] p-2 rounded-md text-white hover:bg-[#004141]">POST</button>
                 </form>
 
             </section>
