@@ -18,8 +18,8 @@ const FeaturedJobs = () =>{
         const controller = new AbortController();
         const signal = controller.signal;
 
-        fetch('http://localhost:4040/api/scholarships-featured', setScholarshipFeatured, setloading, signal);
-        fetch('http://localhost:4040/api/jobs-featured', setJobsFeatured, setloading, signal);
+        fetch('http://localhost:4040/scholarship/featured', setScholarshipFeatured, setloading, signal);
+        fetch('http://localhost:4040/jobs/featured', setJobsFeatured, setloading, signal);
 
         return ()=>{controller.abort()}
     }, [])

@@ -39,19 +39,19 @@ const RightPanel = ({Delete, Edit}) =>{
     }
 
     useEffect(() =>{
-        axios.get('http://localhost:4040/api/articles-get').then(response => setRetrievedArticlesData(response.data)).catch(error => console.error(error.message));
+        axios.get('http://localhost:4040/article').then(response => setRetrievedArticlesData(response.data)).catch(error => console.error(error.message));
 
-        axios.get('http://localhost:4040/api/categories-get').then(response => setRetrievedCategoriesData(response.data)).catch(error => console.error(error.message));
+        axios.get('http://localhost:4040/category').then(response => setRetrievedCategoriesData(response.data)).catch(error => console.error(error.message));
 
-        axios.get('http://localhost:4040/api/jobs-get').then(response => setRetrievedJobsData(response.data)).catch(error => console.error(error.message));
+        axios.get('http://localhost:4040/jobs').then(response => setRetrievedJobsData(response.data)).catch(error => console.error(error.message));
 
-        axios.get('http://localhost:4040/api/scholarships-get').then(response => setRetrievedScholarshipData(response.data)).catch(error => console.error(error.message));
+        axios.get('http://localhost:4040/scholarship').then(response => setRetrievedScholarshipData(response.data)).catch(error => console.error(error.message));
         
-        axios.get('http://localhost:4040/api/articles-count').then(response => setCountArticle(response.data)).catch(error => console.error(error.message));
+        axios.get('http://localhost:4040/article/count').then(response => setCountArticle(response.data)).catch(error => console.error(error.message));
 
-        axios.get('http://localhost:4040/api/jobs-count').then(response => setCountJobs(response.data)).catch(error => console.error(error.message));
+        axios.get('http://localhost:4040/jobs/count').then(response => setCountJobs(response.data)).catch(error => console.error(error.message));
 
-        axios.get('http://localhost:4040/api/scholarships-count').then(response => setCountScholarship(response.data)).catch(error => console.error(error.message));
+        axios.get('http://localhost:4040/scholarship/count').then(response => setCountScholarship(response.data)).catch(error => console.error(error.message));
     }, [])
 
     const lastPostIndex = currentPage * postPerPage;

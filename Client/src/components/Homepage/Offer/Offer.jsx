@@ -1,6 +1,6 @@
-import Six from '../../../assets/Six.jpg'
-import Seven from '../../../assets/Seven.jpg'
-import Eight from '../../../assets/Eight.jpg'
+import careerImage from '../../../assets/career.jpg'
+import scholarshipImage from '../../../assets/sch.jpg'
+import jobImage from '../../../assets/job.jpg'
 
 const Offer = () =>{
     return(
@@ -12,15 +12,15 @@ const Offer = () =>{
         <div className='flex flex-wrap gap-4 relative justify-center'>
 
             {/* Career Guidance */}
-            <div className=' flex flex-col gap-2'>
+            <div className='w-72 flex flex-col gap-2'>
                 <div className='h-52 w-[22rem]rounded-lg'>
-                    <img src={Six} loading='lazy' className='rounded-lg object-cover h-full w-full duration-75 ease-in' alt='scholarships' />
+                    <img src={careerImage} loading='lazy' className='rounded-lg object-cover h-full w-full duration-75 ease-in' alt='scholarships' />
                 </div>
             
                 <div className=' flex items-center gap-2'>
                     {/* circle */}
                     <div className=' relative'>
-                        <div className='h-14 w-14 rounded-full bg-red-500'></div>
+                        <div className='h-14 w-14 rounded-full bg-gradient-to-r from-rose-400 to-red-500'></div>
 
                         <p className='absolute -bottom-1.5 text-6xl font-bold text-white left-5'>1</p>
                     </div>
@@ -35,15 +35,15 @@ const Offer = () =>{
             </div>
             
             {/* Scholarships */}
-            <div className=' flex flex-col gap-2'>
+            <div className='w-72 flex flex-col gap-2'>
                 <div className='h-52 w-[22rem]rounded-lg '>
-                    <img src={Seven} loading='lazy' className='rounded-lg object-cover h-full w-full' alt='scholarships' />
+                    <img src={scholarshipImage} loading='lazy' className='rounded-lg object-cover h-full w-full' alt='scholarships' />
                 </div>
             
                 <div className=' flex items-center gap-2'>
                     {/* circle */}
                     <div className=' relative'>
-                        <div className='h-14 w-14 rounded-full bg-red-500'></div>
+                        <div className='h-14 w-14 rounded-full bg-gradient-to-r from-rose-400 to-red-500'></div>
 
                         <p className='absolute -bottom-1.5 text-6xl font-bold text-white left-5'>2</p>
                     </div>
@@ -58,15 +58,15 @@ const Offer = () =>{
             </div>
 
             {/* Jobs */}
-            <div className=' flex flex-col gap-2'>
+            <div className=' w-72 flex flex-col gap-2'>
                 <div className='h-52 w-[22rem]rounded-lg '>
-                    <img src={Eight} loading='lazy' className='rounded-lg object-cover h-full w-full' alt='jobs' />
+                    <img src={jobImage} loading='lazy' className='rounded-lg object-cover h-full w-full' alt='jobs' />
                 </div>
             
                 <div className=' flex items-center gap-2'>
                     {/* circle */}
                     <div className=' relative'>
-                        <div className='h-14 w-14 rounded-full bg-red-500'></div>
+                        <div className='h-14 w-14 rounded-full bg-gradient-to-r from-rose-400 to-red-500'></div>
 
                         <p className='absolute -bottom-1.5 text-6xl font-bold text-white left-5'>3</p>
                     </div>

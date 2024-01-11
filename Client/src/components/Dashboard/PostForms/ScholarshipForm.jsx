@@ -42,7 +42,7 @@ const ScholarshipForm = () =>{
             newFormData.append(key, sForm[key]);
         }
     
-        Axios.post('http://localhost:4040/api/scholarships-post', newFormData, {headers :{'Content-Type': 'multipart/form-data'}})
+        Axios.post('http://localhost:4040/scholarship', newFormData, {headers :{'Content-Type': 'multipart/form-data'}})
         .then(response =>setMessage(response.data))
         .catch(error =>setMessage(error))
         

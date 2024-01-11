@@ -6,10 +6,11 @@ import LeftPanel from "../Panels/LeftPanel";
 import FormsDashboardHead from "../DashboardHeaders/FormsDashboardHead";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { modules, formats } from "../../reactquillmodules"; 
 
 const ArticleForm = () =>{
     const [content, setContent] = useState('');
-    const [aform, setAform] = useState({image:null,title:"",post:"",mainfeatured:false,featured:false,mustread:false})
+    const [aform, setAform] = useState({image:null,title:"",post:"",mainfeatured:false,featured:false,mustread:false, category:""})
 
     const [submitted, setSubmitted] = useState(false);
 
@@ -29,18 +30,22 @@ const ArticleForm = () =>{
         for(const key in aform){
             newformData.append(key, aform[key])
         }
-    
-        axios.post('http://localhost:4040/api/articles-post',newformData, {headers :{'Content-Type': 'multipart/form-data'}})
-        .then(response => console.log(response))
-        .catch(error => console.error(error.message))
+        try{
+            const response = await axios.post('http://localhost:4040/article/create',newformData, {headers :{'Content-Type': 'multipart/form-data'}})
 
-        setSubmitted(true);
-        setTimeout(() => {
-            window.location.reload();
-        }, 2000);  
-          
+            const data = response.data.message;
+            setMessage(data)
+            setSubmitted(true);
+
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000); 
+
+        }catch(error){
+            setMessage(error.message)
+        }  
     }
-
+    const [message, setMessage] = useState('')
     return(
         <main>
             {/* Left Panel */}
@@ -48,7 +53,7 @@ const ArticleForm = () =>{
             
             <section className=" md:ml-64 relative">
 
-                {submitted && <SubmittedBox successMessage={'Article Successfully Added'} /> }
+                {submitted && <SubmittedBox successMessage={message} /> }
 
                 <FormsDashboardHead title='Article Form' />
                 
@@ -70,9 +75,28 @@ const ArticleForm = () =>{
                         <ReactQuill
                             className="text-xl border-black border-[1px] rounded-lg"
                             theme="snow"
+                            modules={modules}
+                            formats={formats}
                             value={content} 
                             onChange={setContent}
                         />
+                    </div>
+
+                    <div className=" flex flex-col gap-1">
+                        <label htmlFor='category' className=" text-xl">Category</label>
+                        <select 
+                        id='category' 
+                        name='category' 
+                        value={aform.category}
+                        onChange={formValues}
+                        className="bg-transparent border-[1px] border-blue-600 p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" required>
+                            <option value='' disabled>-- Select Category -- </option>
+                            <option value='Job' >Job</option>
+                            <option value='Scholarship' >Scholarship</option>
+                            <option value='Internship' >Internship</option>
+                            <option value='Business' >Business</option>
+                            <option value='Other' >Other</option>
+                        </select>                 
                     </div>
 
                     {/* checkbox */}
@@ -121,7 +145,7 @@ const ArticleForm = () =>{
                         accept='.jpg, .jpeg, .png, .JPG'
                     />
 
-                    <button className=" text-xl p-2 bg-teal-600 rounded-md text-white hover:bg-teal-500 w-full">POST</button>
+                    <button className=" text-xl p-2 bg-[#004242] hover:bg-[#1d3d3d] rounded-md text-white w-full">POST</button>
                     
                 </form>
                 

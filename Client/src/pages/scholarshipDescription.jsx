@@ -31,7 +31,7 @@ const ScholarshipDescription = () =>{
             const countryPromises = scholarship.map(async (count) => count.country);
             const countryname = await Promise.all(countryPromises);
           try {
-            await fetch(`http://localhost:4040/api/scholarships/${countryname}/similar`, setSimilar, setloading, signal);
+            await fetch(`http://localhost:4040/scholarship/${countryname}/similar`, setSimilar, setloading, signal);
 
             return()=>{controller.abort();}
           } catch (error) {

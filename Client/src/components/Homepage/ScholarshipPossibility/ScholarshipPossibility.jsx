@@ -10,7 +10,7 @@ const ScholarshipPossibility = () =>{
                 <p className=' text-4xl font-bold mb-1'>A Step <br></br><span className='text-red-500'>Nearer To A Possibility</span> <br></br>Of A Scholarship</p>
                 <small>Discover thousands of scholarships with all the details you require. Your moment is now!</small><br></br>
                 <Link to={'/scholarships'}>
-                    <p className='p-2 w-[10rem] rounded-md whitespace-nowrap bg-[#004242] text-white hover:bg-[#024d4d]'>Search Scholarships</p>
+                    <p className='p-2 w-[10rem] rounded-md whitespace-nowrap bg-gradient-to-r from-rose-400 to-red-500 text-white hover:bg-[#024d4d]'>Search Scholarships</p>
                 </Link>
             </div>
 

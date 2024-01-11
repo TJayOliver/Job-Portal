@@ -10,7 +10,6 @@ const Footer = () =>{
     }
     const Submit = (e) =>{
         e.preventDefault();
-        console.log(subscribe)
         axios.post('http://localhost:4040/api/subscribe-post', subscribe)
         .then(response)
         .catch(error => console.error(error.message))
@@ -19,55 +18,61 @@ const Footer = () =>{
     const date = new Date()
     const Year = date.getFullYear();
     return(
-        <div className="  h-48 md:h-96 flex flex-col justify-center text-md">
+        <section className="  h-full p-8 flex flex-col justify-center text-md bg-black/90 text-white/80">
             
-            <div className=" flex md:flex md:flex-row justify-center text-justify gap-4 md:gap-14 m-auto">
-                <p className=" font-AliandoRocky text-2xl md:text-5xl ">Future<br></br>Forte</p>
-                
-                {/* Terms */}
-                <div className=" flex flex-col">
-                    <p className=" font-medium text-xl">Terms</p>
-                    <p>Privacy</p>
-                    <p>Policy</p>
-                    <p>Terms</p>
+            <div className="flex flex-col justify-center m-auto max-w-5xl w-full gap-10">
+                <div className="flex justify-between items-center ">
+                    <p className=" font-AliandoRocky text-4xl text-white">Future Forte</p>
+                    <div className="flex items-center gap-1">
+                        <p>Subscribe to our newsletter</p>
+                        <div role='button' className="p-2 bg-teal-500 rounded-md">Subscribe</div>
+                    </div>
                 </div>
 
-                {/* About */}
-                <div className=" flex flex-col">
-                    <p className=" font-medium text-xl">About</p>
-                    <p>Home</p>
-                    <p>Features</p>
-                    <p>About</p>
-                </div>
+                <hr></hr>
 
-                {/* Contact */}
-                <div className="hidden  flex-col">
-                    <p className=" font-medium text-xl">Contact</p>
-                    <p>0203695063</p>
-                    <p>tjayoliver99@gmail.com</p>
-                </div>
+                <div className="flex gap-20">
+                    {/* about and address */}
+                    <div className="flex flex-col gap-4">
+                        {/* about */}
+                        <div>
+                            <p className="font-bold">About</p>
+                            <small className="text">Lorem ipsum dolor sit amet consectetur adipisicing elit</small>
+                        </div>
 
-                {/* Subscribe */}
-                <div className=" flex flex-col">
-                    <p className=" font-medium text-xl">Subscribe</p>
-                    <form onSubmit={Submit} className="relative flex flex-wrap justify-center items-center">
-                        <button type='submit' className=" h-7 rounded-sm w-7 bg-red-500 absolute right-1 outline-none align-center flex justify-center items-center hover:bg-teal-900">
-                            <p className="p-2 text-sm text-white font-medium">GO</p>
-                        </button>
-                        <input 
-                            type='email' 
-                            inputMode="email" 
-                            placeholder="Enter your e-mail " 
-                            name="email" 
-                            value={subscribe.email} 
-                            onChange={SubscribeValues} 
-                            className="p-2 rounded-sm w-full border-2 border-[#004242] outline-[#004242]"
-                        />
-                    </form>
+                        {/* address */}
+                        <div>
+                            <p className="font-bold">Address</p>
+                            <small>futureforte@gmail.com</small>
+                        </div>
+
+                        <small className="flex">&copy;FutureForte {Year}</small>
+                    </div>
+                    
+                    {/* quick link */}
+                    <div>
+                        <p className="mb-2 font-bold">Quick Links</p>
+                        <div className="flex flex-col gap-2">
+                            <small>Help & Support</small>
+                            <small>Privacy</small>
+                            <small>Terms & Conditions</small>
+                        </div>
+                    </div>
+
+                    {/* Tags */}
+                    <div>
+                        <p className="font-bold">Tags</p>
+                        <div className="md:flex md:flex-col flex flex-row text-center justify-center flex-wrap gap-3 mt-1">
+                            <small className="p-1 bg-white/50 rounded-md">Job Search</small>
+                            <small className="p-1 bg-white/50 rounded-md">Scholarships</small>
+                            <small className="p-1 bg-white/50 rounded-md">Internships</small>
+                            <small className="p-1 bg-white/50 rounded-md">Career Guidance</small>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <p className="flex justify-center p-2">&copy;FutureForte {Year}</p>
-        </div>
+
+        </section>
         
     )
 }

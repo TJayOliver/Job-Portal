@@ -10,7 +10,7 @@ const BrowseJobs = () =>{
                 <small className='font-sm text-center font-normal'>Initiate your quest for the most exceptional and transformative employment prospects in certain fields with ease.
                 </small>
             </div>
-            <button className=' bg-red-500 p-4 rounded-md text-white hover:bg-red-600' >
+            <button className=' bg-gradient-to-r from-rose-400 to-red-500 p-4 rounded-md text-white hover:bg-red-600' >
                 <Link to='/jobs'>
                 Browse Jobs
                 </Link>

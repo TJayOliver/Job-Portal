@@ -7,14 +7,15 @@ import FormsDashboardHead from "../DashboardHeaders/FormsDashboardHead";
 import { useParams } from "react-router-dom";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { modules, formats } from "../../reactquillmodules"; 
 
 const ArticleEditForm = () =>{
     const id = useParams(), ID = id.id;
 
-    const [aform, setAform] = useState({image:null,title:"",mainfeatured:false,featured:false,mustread:false, post:""})
+    const [aform, setAform] = useState({image:null,title:"",mainfeatured:false,featured:false,mustread:false, post:"", category:""})
     const [submitted, setSubmitted] = useState(false);
 
-    const [content, setContent] = useState('')
+    const [content, setContent] = useState('');
 
     const formValues = (e) =>{
         const {name, value, type, checked} = e.target;
@@ -37,7 +38,7 @@ const ArticleEditForm = () =>{
             newformData.append(key, aform[key])
         }
         
-        axios.put(`http://localhost:4040/api/articles-update/${ID}`,newformData, {headers :{'Content-Type': 'multipart/form-data'}})
+        axios.put(`http://localhost:4040/article/update/${ID}`,newformData, {headers :{'Content-Type': 'multipart/form-data'}})
         .then(response =>console.log(response))
         .catch(error =>console.error(error.message))
         
@@ -49,13 +50,16 @@ const ArticleEditForm = () =>{
     }
 
     useEffect(()=>{
-        axios.get(`http://localhost:4040/api/articles-edit/${ID}`)
+        axios.get(`http://localhost:4040/article/edit/${ID}`)
         .then(response => {
             const retrievedData = response.data[0];
-            setAform({image:retrievedData.image, title:retrievedData.title,mainfeatured:retrievedData.mainfeatured,featured:retrievedData.featured, mustread:retrievedData.mustread})
+            setMessage(removeEventListener.data.message)
+            setAform({image:retrievedData.image, title:retrievedData.title,mainfeatured:retrievedData.mainfeatured,featured:retrievedData.featured, mustread:retrievedData.mustread, category:retrievedData.category})
             setContent(retrievedData.post)
         }).catch(error => console.error(error.message))
     },[])
+
+    const [message, setMessage] = useState('')
 
     return(
         <main>
@@ -65,13 +69,13 @@ const ArticleEditForm = () =>{
 
             <section className=" md:ml-64 relative">
 
-                {submitted && <SubmittedBox successMessage={'Categories Successfully Added'} /> }
+                {submitted && <SubmittedBox successMessage={message} /> }
 
                 <FormsDashboardHead title='Article Form' />
                 
                 <form className=' w-full p-3 flex flex-col gap-4 ' onSubmit={submit}>   
                    
-                <FormInputs 
+                    <FormInputs 
                         label='Title' 
                         htmlFor='title'
                         type='text'
@@ -87,9 +91,28 @@ const ArticleEditForm = () =>{
                         <ReactQuill
                             className="text-xl border-black border-[1px] rounded-lg"
                             theme="snow"
+                            modules={modules}
+                            formats={formats}
                             value={content} 
                             onChange={contentHandle}
                         />
+                    </div>
+
+                    <div className=" flex flex-col gap-1">
+                        <label htmlFor='category' className=" text-xl">Category</label>
+                        <select 
+                        id='category' 
+                        name='category' 
+                        value={aform.category}
+                        onChange={formValues}
+                        className="bg-transparent border-[1px] p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" required>
+                            <option value='' disabled>-- Select Category -- </option>
+                            <option value='Job' >Job</option>
+                            <option value='Scholarship' >Scholarship</option>
+                            <option value='Internship' >Internship</option>
+                            <option value='Business' >Business</option>
+                            <option value='Other' >Other</option>
+                        </select>                 
                     </div>
 
                     {/* checkbox */}
@@ -138,7 +161,7 @@ const ArticleEditForm = () =>{
                         accept='.jpg, .jpeg, .png, .JPG'
                     />
 
-                    <button className=" text-xl p-2 bg-teal-600 rounded-md text-white hover:bg-teal-500 w-full">POST</button>
+                    <button className=" text-xl p-2 bg-[#004242] rounded-md text-white hover:bg-teal-500 w-full">POST</button>
                     
                 </form>
                 

@@ -13,7 +13,7 @@ export const fetch = async(link, setState, setLoading, signal)=>{
 // retrieve all categories and display it on the jobs page
 export const allCategories = async(setCategories, signal) =>{
     try{
-        const response = await axios.get('http://localhost:4040/api/categories-get', {signal});
+        const response = await axios.get('http://localhost:4040/category', {signal});
         setCategories(response.data)
     }catch(error){
         console.error(error.message)
@@ -23,7 +23,7 @@ export const allCategories = async(setCategories, signal) =>{
 // retrieve jobs description and display it  on jobs description page
 export const jobdescription = async(setJobs,setloading, id, signal) =>{
     try{
-        const response = await axios.get(`http://localhost:4040/api/jobs-description/${id}`, {signal});
+        const response = await axios.get(`http://localhost:4040/api/job/read/${id}`, {signal});
         setJobs(response.data)
         setloading(false);
     }catch(error){
@@ -34,7 +34,7 @@ export const jobdescription = async(setJobs,setloading, id, signal) =>{
 // job categories request
 export const jobscategory = async(category, signal) =>{
     try{
-        const response = await axios.get(`http://localhost:4040/api/jobs-category/${category}`, {signal});
+        const response = await axios.get(`http://localhost:4040/api/job/category/${category}`, {signal});
         setJobs(response.data)
         setloading(false);
     }catch(error){
@@ -56,7 +56,7 @@ export const jobscategory = async(category, signal) =>{
 // retrieve scholarships description and display it  on scholarships description page
 export const scholarshipsdescription = async(setScholarship, setloading, id, signal) =>{
     try{
-        const response = await axios.get(`http://localhost:4040/api/scholarships-description/${id}`, {signal});
+        const response = await axios.get(`http://localhost:4040/api/scholarship/read/${id}`, {signal});
         setScholarship(response.data)
         setloading(false);
     }catch(error){
@@ -68,7 +68,7 @@ export const scholarshipsdescription = async(setScholarship, setloading, id, sig
 // articles description page
 export const articlesDescription = async(setArticles, setloading, id, signal) =>{
     try{
-        const response = await axios.get(`http://localhost:4040/api/articles-description/${id}`, {signal});
+        const response = await axios.get(`http://localhost:4040/article/read/${id}`, {signal});
         setArticles(response.data)
         setloading(false)
     }catch(error){

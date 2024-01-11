@@ -28,7 +28,7 @@ const FeaturedBox = ({image,description, location, company, duration, position, 
                 <small dangerouslySetInnerHTML={{__html:description}}/>
                 
                 {/* Apply Button */}
-                <div role='button' className='rounded-full mt-1 bg-red-500 hover:bg-red-600 hover:duration-150 hover:ease-out text-white font-bold h-8 flex items-center justify-center w-24 px-2'>
+                <div role='button' className='rounded-full mt-1 bg-gradient-to-r from-rose-400 to-red-500 hover:duration-150 hover:ease-out text-white font-bold h-8 flex items-center justify-center w-24 px-2'>
                     <Link to={to}>Apply</Link>
                 </div>
                 

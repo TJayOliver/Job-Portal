@@ -45,8 +45,8 @@ const ScholarshipEditForm = () =>{
             newFormData.append(key, sForm[key]);
         }
 
-        axios.put(`http://localhost:4040/api/scholarships-update/${ID}`, newFormData, {headers :{'Content-Type': 'multipart/form-data'}})
-        .then(response => response.status !== 200 ? setMessage('Please Try again') : setMessage(response.data))
+        axios.put(`http://localhost:4040/scholarship/update/${ID}`, newFormData, {headers :{'Content-Type': 'multipart/form-data'}})
+        .then(response => setMessage(response.data.messge))
         .catch(error =>console.error(error.message))
         
         setSubmitted(true);
@@ -57,7 +57,7 @@ const ScholarshipEditForm = () =>{
     }
 
     useEffect(()=>{
-        axios.get(`http://localhost:4040/api/scholarships-edit/${ID}`)
+        axios.get(`http://localhost:4040/scholarship/edit/${ID}`)
         .then(response =>{
             const retrievedData = response.data[0];
             setSForm({image : retrievedData.image, 

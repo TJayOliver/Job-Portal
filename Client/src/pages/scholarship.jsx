@@ -30,8 +30,8 @@ const Scholarship = ()=>{
         const controller = new AbortController();
         const signal = controller.signal;
 
-        fetch('http://localhost:4040/api/scholarships-get', setScholarship, setloading, signal);
-        fetch('http://localhost:4040/api/articles-scholarship', setArticleScholarship, setloading, signal);
+        fetch('http://localhost:4040/scholarships', setScholarship, setloading, signal);
+        fetch('http://localhost:4040/article/category/scholarship', setArticleScholarship, setloading, signal);
 
         return ()=>{controller.abort()}
     },[])    
@@ -58,7 +58,7 @@ const Scholarship = ()=>{
 
     const submit = (e) =>{
         e.preventDefault();
-        axios.post('http://localhost:4040/api/scholarships-search', searchInput)
+        axios.post('http://localhost:4040/scholarship/search', searchInput)
         .then(response =>{
             setSResultsVerifier(true)
             setSearchResults(response.data)

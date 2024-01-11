@@ -114,7 +114,9 @@ const JobForm = () =>{
                         value={gform.website}
                         onChange={formValues}
                         placeholder='e.g. www.cocacola.com'
-                    /><div className=" flex flex-col gap-1">
+                    />
+                    
+                    <div className=" flex flex-col gap-1">
                         <label htmlFor='featured' className=" text-xl">Featured</label>
                         <select 
                         id='featured' 

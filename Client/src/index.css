@@ -15,7 +15,7 @@ html, body{@apply bg-white text-[#004242] h-screen overflow-x-hidden select-none
 .scrollbar::-webkit-scrollbar{@apply hidden}
 
 .subscribe{
-    animation-name: well;
+    animation-name: opening;
     animation-duration: .2s;
     animation-timing-function: ease-out;
     animation-fill-mode: forwards;
@@ -24,7 +24,7 @@ html, body{@apply bg-white text-[#004242] h-screen overflow-x-hidden select-none
 }
 
 .closeSubscribe{
-    animation-name: notwell;
+    animation-name: notopening;
     animation-duration: .1s;
     animation-timing-function: ease-in;
     animation-fill-mode: forwards;
@@ -32,16 +32,85 @@ html, body{@apply bg-white text-[#004242] h-screen overflow-x-hidden select-none
     z-index: 10;
 }   
 
-@keyframes well {
+.barcodeUp{
+    animation: barup forwards .3s ease-in;
+}
+.barcodeDown{
+    animation: bardown forwards .3s ease-in;
+}
+
+.featuredArticleMove{
+    animation: featMove .5s ease-in ;
+    color: white;
+}
+.featuredArticleImage{
+    animation: imageSqueeze 2s ease-out ;
+}
+
+.mobileOpener{
+    display: none;
+    background-color: white;
+    width: 100%;
+    height: 0px;
+    left: 0;
+    animation: mobileMenu 1s forwards ease-out;
+    position: absolute;
+    z-index: 0;
+}
+.mobileOpener p{
+    opacity: 0;
+    animation: mobileText 2s forwards ease-in;
+}
+
+@keyframes mobileText {
+    100%{
+       @apply  opacity-100;
+    }
+}
+
+@keyframes mobileMenu {
+    100%{
+       @apply h-72 block shadow-md;
+    }
+}
+
+@keyframes imageSqueeze {
+    0%{opacity: 0;}
+    100%{opacity: 1;}
+}
+
+@keyframes featMove {
+    50%{height: 50px;opacity: 0.5;}
+    100%{height: 0px;display: hidden;opacity: 0;}
+}
+
+@keyframes barup {
+    0%{
+        @apply rounded-full bg-white left-3 h-20 w-20 fixed bottom-14  drop-shadow-md 
+    }
+    100%{
+        @apply bottom-48 left-3 rounded-lg h-24 w-24 fixed drop-shadow-md 
+    }
+}
+
+@keyframes bardown {
+    0%{
+        @apply bottom-48 left-3 rounded-lg h-24 w-24 fixed drop-shadow-md 
+    }
+    100%{
+        @apply rounded-full left-3 h-16 w-16 fixed bottom-14 drop-shadow-md 
+    }
+}
+
+@keyframes opening {
     0%{@apply h-2 w-24  left-2/4 -translate-x-2/4 -top-2/4 bg-white }
     
-    100%{@apply bg-white top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 w-2/4 md:w-[30rem] rounded-md h-96 shadow-xl}
+    100%{@apply bg-white top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 w-2/4 md:w-[30rem] rounded-md  shadow-xl}
 }
 
-@keyframes notwell {
-    0%{@apply bg-white top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 w-2/4 md:w-[30rem] rounded-md h-96}
+@keyframes notopening {
+    0%{@apply bg-white top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 w-2/4 md:w-[30rem] rounded-md h-64 shadow-xl}
 
-    99%{@apply h-2 w-24 left-2/4 -translate-x-2/4 -translate-y-2/4 -top-2/4 bg-white}
-
-    100%{@apply hidden}
+    100%{@apply h-2 w-24 left-2/4 -translate-x-2/4 -translate-y-2/4 -top-96 bg-white}
 }
+
