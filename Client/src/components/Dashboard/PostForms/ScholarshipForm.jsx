@@ -1,6 +1,6 @@
 import FormInputs from "../formInputs";
 import { countries } from "../countries";
-import Axios from "axios";
+import axios from "axios";
 import { useState } from "react";
 import SubmittedBox from "../submittedBox";
 import LeftPanel from "../Panels/LeftPanel";
@@ -34,17 +34,17 @@ const ScholarshipForm = () =>{
 
     const [message, setMessage] = useState('')
 
-    const Submit = async(e) =>{
+    const Submit = async (e) =>{
         e.preventDefault();
 
         const newFormData = new FormData();
         for (const key in sForm) {
             newFormData.append(key, sForm[key]);
         }
-    
-        Axios.post('http://localhost:4040/scholarship', newFormData, {headers :{'Content-Type': 'multipart/form-data'}})
-        .then(response =>setMessage(response.data))
-        .catch(error =>setMessage(error))
+        
+        axios.post('http://localhost:4040/scholarship/create', newFormData, {headers :{'Content-Type': 'multipart/form-data'}})
+        .then(response => setMessage(response.data.message))
+        .catch(error => setMessage(error.message))
         
         setSubmitted(true);
         setTimeout(() => {

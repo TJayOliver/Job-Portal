@@ -77,10 +77,10 @@ CREATE TABLE `subscribe`(
     PRIMARY KEY(`id`)
 );
 
-CREATE TABLE `regions`(
-    `id` INT NOT NULL AUTO_INCREMENT,
-    `regionname` ENUM('Ahafo Region', 'Ashanti Region', 'Bono Region', 'Bono East Region', 'Central Region', 'Eastern Region', 'Greater Accra Region', 'North East Region', 'Northern Region', 'Oti Region', 'Savannah Region', 'Upper East Region', 'Upper West Region', 'Volta Region', 'Western Region', 'Western North Region') NOT NULL,
+CREATE TABLE `mailmessages`(
+    `id` VARCHAR(80) NOT NULL,
+    `subject` VARCHAR(500) NOT NULL,
+    `message` LONGTEXT NOT NULL,
     PRIMARY KEY(`id`)
-);
-
+)
 

@@ -14,67 +14,49 @@ const Administrator = () =>{
 
     const submit = (e) =>{
         e.preventDefault();
-        axios.post('http://localhost:4040/api/login', credentials)
+        axios.post('http://localhost:4040/admin/signin', credentials)
         .then(response => setMessage(response.data.message))
         .catch(error => console.error(error.message))
     }
 
     return(
         <>
-        <div className="flex bg-red-600 h-screen justify-center p-2 ">
-            <div className=" bg-white h-[28rem] w-[30rem] m-auto rounded-md p-4">
-                <div className=" flex justify-between">
-                    <div>
-                    <p className=" text-2xl">Administrator</p>
-                    <p className=" text-sm">@Jobsportal</p>
+        <section className="flex from-blue-600 to-green-500 bg-gradient-to-tr h-screen justify-center">
+            <div className=' md:w-2/4 bg-white px-8 flex flex-col'>
+                <div className='m-auto w-2/3'>
+                    <div className=' md:flex md:flex-row flex flex-col justify-between mb-8 items-center'>
+                        <p className=' font-AliandoRocky text-3xl whitespace-nowrap'>Future Forte</p>
+                        <small>@Administrator</small>
                     </div>
 
-                    <div className=' h-5 w-24'>
-                        <img src={logo} alt='site logo'  />
-                    </div>
+                    <form className='flex flex-col gap-8'>
+                        <div className=' flex flex-col gap-4'>
+                            <label className='font-medium'>Username</label>
+                            <input 
+                                type='text'
+                                name='username'
+                                value={credentials.username}
+                                onChange={handleCredentials}  
+                                className='border-[0.5px] bg-gray-50 focus:bg-white outline-none rounded-md px-2 h-10'
+                            />
+                        </div>
+
+                        <div className=' flex flex-col gap-4'>
+                            <label className='font-medium'>Password</label>
+                            <input 
+                                type='password'
+                                name='password'
+                                value={credentials.password}
+                                onChange={handleCredentials}  
+                                className='border-[0.5px] bg-gray-50 focus:bg-white outline-none rounded-md px-2 h-10'
+                            />
+                        </div>
+
+                        <button className='rounded-md h-10 px-2 bg-blue-500 text-white font-medium hover:bg-blue-600'>Sign In</button>
+                    </form>
                 </div>
-
-                <form onSubmit={submit} className=" flex flex-col m-auto gap-8 mt-8">
-                    <div className=' flex flex-col'>
-                        <label htmlFor='username' className=" text-xl">Username</label>
-                        <input 
-                        type='text'
-                        id='username'
-                        name='username'
-                        value={credentials.username}
-                        onChange={handleCredentials}
-                        placeholder="username"
-                        required
-                        className=" p-4 bg-slate-100 rounded-sm
-                        outline-red-600
-                        "
-                        />
-                    </div>
-
-                    <div className=' flex flex-col'>
-                        <label htmlFor='password' className="text-xl">Password</label>
-                        <input 
-                        type='password'
-                        id='password'
-                        name='password'
-                        inputMode='password'
-                        value={credentials.password}
-                        onChange={handleCredentials}
-                        placeholder="mypassword1234"
-                        required
-                        className=" p-4 bg-slate-100 rounded-sm
-                        outline-red-600"
-                        />
-                    </div>
-                    <div>{message}</div>
-                    <button 
-                    type='submit'
-                    className=" p-4 bg-red-600 hover:bg-red-700 rounded-sm text-white">Log in
-                    </button>
-                </form>
-
             </div>
-        </div>
+        </section>
         </>
     )
 }

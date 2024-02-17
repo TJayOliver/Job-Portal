@@ -14,6 +14,10 @@ subscriberRouter.post('/subscribe',
     async (req, res) => subscriberController.subscribe(req, res)
 );
 
+subscriberRouter.post('/subscribe/notify', 
+    async (req, res) => subscriberController.subscribe(req, res)
+);
+
 subscriberRouter.delete('/unsubscribe/:id', 
     async (req, res) => subscriberController.unSubscribe(req, res)
 );

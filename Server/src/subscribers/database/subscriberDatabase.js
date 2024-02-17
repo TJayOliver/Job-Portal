@@ -41,7 +41,18 @@ class SubscriberDatabase {
             const subscriber = await executeQuery(query, parameter);
             return subscriber;
         } catch (error) {
-            
+            throw error;
+        }
+    }
+
+    async notifySubscribers ({id, subject, message}) {
+        try {
+            const query = `INSERT INTO mailmessages VALUES(id, subject, message)`;
+            const parameter = [id, subject, message];
+            const subscriber = await executeQuery(query, parameter);
+            return subscriber;
+        } catch (error) {
+            throw error;
         }
     }
 }

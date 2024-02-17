@@ -11,7 +11,7 @@ const BrowseJobs = () =>{
                 </small>
             </div>
             <button className=' bg-gradient-to-r from-rose-400 to-red-500 p-4 rounded-md text-white hover:bg-red-600' >
-                <Link to='/jobs'>
+                <Link to='/job'>
                 Browse Jobs
                 </Link>
             </button>

@@ -1,6 +1,6 @@
 import express from 'express';
 import { upload } from '../../../configuration/multer.js'
-import {administratorDependencies} from '../settings/administratorDependency.js';
+import { administratorDependencies } from '../settings/administratorDependency.js';
 import { verifyToken } from '../../../configuration/verifyToken.js';
 
 const {administratorController}  = administratorDependencies();

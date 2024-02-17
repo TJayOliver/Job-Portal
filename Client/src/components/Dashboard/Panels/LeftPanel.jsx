@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { BiTrophy, BiCategory, BiBookReader } from "react-icons/bi";
-import { BsPeople, BsMortarboard } from "react-icons/bs";
-import {CiGlobe, CiMail} from "react-icons/ci";
+import { BsPeople } from "react-icons/bs";
+import { CiGlobe, CiMail } from "react-icons/ci";
 import DashboardBox from "../dashboardBox";
 
 const LeftPanel = () =>{
@@ -35,15 +35,15 @@ const LeftPanel = () =>{
             <div className={displayMobileMenu ? 
             'bg-gray-50 h-64 opacity-100 left-0 top-[4.5rem] w-full absolute md:bg-transparent md:static md:block duration-200 ease-in z-50' : `hidden bg-gray-50 h-0 opacity-0 md:opacity-100 left-0 top-[4.5rem] w-full absolute md:bg-transparent md:static md:block duration-200 ease-out`}>
                 <h1 className=" hidden md:block text-2xl p-3 nb-2 font-bold">Dashboard</h1>
-                <DashboardBox Title='Add Articles' to="/forms/articles"  icon={<BiBookReader className=" mt-1"/>} />
-                <DashboardBox Title='Add Categories' to="/forms/categories" icon={<BiCategory className=" mt-1"/>} />
-                <DashboardBox Title='Add Jobs' to="/forms/jobs" icon={<BsPeople className=" mt-1"/>} />
-                <DashboardBox Title='Add Scholarships' to="/forms/scholarships" icon={<BiTrophy className=" mt-1"/>} />
+                <DashboardBox Title='Add Articles' to="/form/article"  icon={<BiBookReader className=" mt-1"/>} />
+                <DashboardBox Title='Add Categories' to="/form/category" icon={<BiCategory className=" mt-1"/>} />
+                <DashboardBox Title='Add Jobs' to="/form/job" icon={<BsPeople className=" mt-1"/>} />
+                <DashboardBox Title='Add Scholarships' to="/form/scholarship" icon={<BiTrophy className=" mt-1"/>} />
             </div>
             
             {/* Subscriptions and Administrator Picture */}
             <div className=" hidden md:flex md:flex-col gap-2 h">
-                <DashboardBox Title='Subscriptions' icon={<CiMail className=" mt-1"/>} />
+                <DashboardBox Title='Subscribers' to="/subscribers" icon={<CiMail className=" mt-1"/>} />
                 <DashboardBox Title='Settings' icon={<CiGlobe className=" mt-1"/>} />
 
                 <div className=" border border-gray-200 rounded-md flex justify-between items-center px-2 py-1">

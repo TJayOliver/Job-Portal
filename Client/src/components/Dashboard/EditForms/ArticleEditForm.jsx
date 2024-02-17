@@ -8,6 +8,7 @@ import { useParams } from "react-router-dom";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { modules, formats } from "../../reactquillmodules"; 
+import { fetchByID } from "../../../pages/request";
 
 const ArticleEditForm = () =>{
     const id = useParams(), ID = id.id;
@@ -38,8 +39,10 @@ const ArticleEditForm = () =>{
             newformData.append(key, aform[key])
         }
         
-        axios.put(`http://localhost:4040/article/update/${ID}`,newformData, {headers :{'Content-Type': 'multipart/form-data'}})
-        .then(response =>console.log(response))
+        axios.put(`http://localhost:4040/article/update/${ID}`,
+        newformData, 
+        {headers :{'Content-Type': 'multipart/form-data'}})
+        .then(response => response.data.message)
         .catch(error =>console.error(error.message))
         
         setSubmitted(true);
@@ -49,11 +52,10 @@ const ArticleEditForm = () =>{
     
     }
 
-    useEffect(()=>{
+    useEffect( () => {
         axios.get(`http://localhost:4040/article/edit/${ID}`)
         .then(response => {
-            const retrievedData = response.data[0];
-            setMessage(removeEventListener.data.message)
+            const retrievedData = response.data.data[0];
             setAform({image:retrievedData.image, title:retrievedData.title,mainfeatured:retrievedData.mainfeatured,featured:retrievedData.featured, mustread:retrievedData.mustread, category:retrievedData.category})
             setContent(retrievedData.post)
         }).catch(error => console.error(error.message))

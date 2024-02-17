@@ -2,7 +2,7 @@ import {sendMail} from '../../../mail/sendMail.js';
 import {id} from '../../../configuration/nanoid.config.js';
 import fs from 'fs'
 
-const subscriptionMail =  'C:/Users/tjoli/Desktop/Server/mail/template/subscribeTemplate.html'
+const subscriptionMail =  'D:/Web/Projects/Job Portal/Server/mail/template/subscribeTemplate.html'
 const subscribeMessage = fs.readFileSync(subscriptionMail);
 
 class SubscriberService {
@@ -25,8 +25,9 @@ class SubscriberService {
                 const subscriber = await this.model.subscribeModel(subscriberDetails);
                 const receiverID = subscriberDetails[0];
                 const receiverEmail = subscriberDetails[1]
-                const unSubscribeLink = `<a href='http://localhost:4040/${receiverID}'>Click to Unsubscribe</a>`
+                const unSubscribeLink = `<a href='http://localhost:5173/unsubscribe/${receiverID}'>Click to Unsubscribe</a>`
                 const htmlContent = `${subscribeMessage} ${unSubscribeLink}`;
+        
                 await sendMail(
                     receiverEmail, 
                     'Empowering Your Journey: Exclusive Job Opportunities, Scholarships, and Career Guidance Await You!', 
@@ -54,6 +55,22 @@ class SubscriberService {
             return subscriber;
         } catch (error) {
             console.error('service {unsubscribe}:', error.message);
+        }
+    }
+
+    async notifySubscribersService ({subject, message}) {
+        try {
+            const receipients = await this.model.getSubscriberModel();
+            await sendMail(
+                receipients,
+                subject,
+                message
+            )
+            const subscriber = await this.model.notifySubscribersModel({id, subject, message});
+            return subscriber;
+        } catch (error) {
+            console.error('service {notifySubscribers}:', error.message);
+            res.status(500).json({message:'Internal Server Error'});
         }
     }
 

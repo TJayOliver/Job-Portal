@@ -1,16 +1,27 @@
 import { FiAlertTriangle } from "react-icons/fi";
+import { FaCheckDouble } from 'react-icons/fa'
 import { CgClose } from "react-icons/cg";
 import axios from 'axios'
+import { useState } from "react";
 
 const ConfirmDelete = ({Cancel, ID, route, title}) =>{
     const id = ID;
-    
-    const handleDelete = () =>{
-        axios.delete(`http://localhost:4040/api/${route}/${id}`)
-        .then(response=>response)
-        .catch(error => console.error(error));  
-        window.location.reload();      
+    const [ message, setMessage ] = useState('');
+    const [ done, setDone ] = useState(false);
+
+    const handleDelete = async () => {
+        try {
+            const response = await axios.delete(`http://localhost:4040/${route}/delete/${id}`);
+            setDone(true);
+            setMessage(response.message);
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000); 
+        } catch (error) {
+            console.error(error.message);
+        }             
     }
+
     return(
         <div className=" fixed w-full h-full bg-[#f65a5a33] z-50 grid place-content-center p-2">
 
@@ -24,21 +35,39 @@ const ConfirmDelete = ({Cancel, ID, route, title}) =>{
 
                 </div>
                
-                {/* Caution */}
-                <div className=" h-14 md:h-[20rem] w-14 bg-gray-100 rounded-full items-center flex justify-center text-center">
-                    <FiAlertTriangle className="text-4xl text-red-700 text-bold" />
-                </div>
+               { done ? 
+                    <div className="items-center justify-center flex flex-col gap-2">
+                        {/* success */}
+                        <div className=" h-14 md:h-[4rem] w-14 bg-gray-100 rounded-full items-center flex justify-center text-center">
+                            <FaCheckDouble className="text-4xl text-blue-700 text-bold" />
+                        </div>
+
+                        <p className=" font-bold text-xl">{message}</p>
+
+                        <button onClick={Cancel} className="  h-10 p-2 rounded-md w-full bg-blue-600 hover:text-white hover:border-none hover:duration-300 hover:ease-in">DONE</button> 
+                    </div> 
+
+                    :
             
-                <p className=" font-bold text-xl">Delete {title}?</p>
+                    <div className="items-center justify-center flex flex-col gap-2">
+                        {/* Caution */}
+                        <div className=" h-14 md:h-[4rem] w-14 bg-gray-100 rounded-full items-center flex justify-center text-center">
+                            <FiAlertTriangle className="text-4xl text-red-700 text-bold" />
+                        </div>
 
-                <p className=" text-center">Are you sure you want to delete this {title}? It will be permanently deleted from the servers forever. This action cannot be undone.</p>
+                        <p className=" font-bold text-xl">Delete {title}?</p>
 
-                {/* buttons */}
-                <div className=" w-full flex flex-col md:flex md:flex-row gap-2">
-                    <button onClick={Cancel} className=" border border-black h-10 p-2 rounded-md w-full hover:bg-blue-600 hover:text-white hover:border-none hover:duration-300 hover:ease-in">CANCEL</button> 
+                        <p className=" text-center">Are you sure you want to delete this {title}? It will be permanently deleted from the servers forever. This action cannot be undone.</p>
 
-                    <button onClick={()=>handleDelete()} className=" border border-black h-10 p-2 rounded-md w-full hover:bg-red-600 hover:text-white hover:border-none hover:duration-300 hover:ease-in">DELETE</button> 
-                </div>
+                        {/* buttons */}
+                        <div className=" w-full flex flex-col md:flex md:flex-row gap-2">
+                            <button onClick={Cancel} className=" border border-black h-10 p-2 rounded-md w-full hover:bg-blue-600 hover:text-white hover:border-none hover:duration-300 hover:ease-in">CANCEL</button> 
+
+                            <button onClick={()=>handleDelete()} className=" border border-black h-10 p-2 rounded-md w-full hover:bg-red-600 hover:text-white hover:border-none hover:duration-300 hover:ease-in">DELETE</button> 
+                        </div>
+                    </div>
+                }
+
             </div>
 
         </div>

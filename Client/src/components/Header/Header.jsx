@@ -19,7 +19,7 @@ const Header=()=>{
     }
     
     return(
-        <header className=' bg-white sticky top-0 z-50 p-2 border-b-gray-50 border-b-2'>
+        <header className=' bg-white sticky top-0 z-50 px-4 py-8 border-b-gray-50 border-b-2'>
             <nav className=' flex m-auto max-w-7xl justify-between'>
                 <div className='font-AliandoRocky text-3xl whitespace-nowrap'>
                     <Link to='/'>FutureForte</Link>
@@ -27,9 +27,9 @@ const Header=()=>{
                 
                 <ul className=' flex gap-4 items-center font-medium '>
                     
-                    <li className='hidden md:block'><Link to='/articles'>Articles</Link></li>
-                    <li className='hidden md:block'><Link to='/scholarships'>Scholarships</Link></li>
-                    <li className='hidden md:block'><Link to='/jobs'>Jobs</Link></li>
+                    <li className='hidden md:block'><Link to='/article'>Article</Link></li>
+                    <li className='hidden md:block'><Link to='/scholarship'>Scholarship</Link></li>
+                    <li className='hidden md:block'><Link to='/job'>Jobs</Link></li>
                 </ul>
 
                 {/* mobile button */}
@@ -42,22 +42,22 @@ const Header=()=>{
                 </div>
             </nav>
 
-            <div className={ displayMobileMenu ?'mobileOpener hidden' : 'mobileCloser '}>
+            <div className={displayMobileMenu ? ` bg-red-500  mobileMenu hidden` : ` bg-red-500  mobileClose hidden` }>
                 <div className='flex flex-col gap-8 p-8 font-medium text-black/40 '>
                     <Link to='/' >
                         <p className='font-bold text-black'>Home</p>
                     </Link>
-                    <Link to='/jobs' >
+                    <Link to='/job' >
                         <p className='hover:text-black duration-100 ease-in'>
                             Browse Jobs
                         </p>
                     </Link>
-                    <Link to='/scholarships'>
+                    <Link to='/scholarship'>
                         <p className='hover:text-black duration-100 ease-in'>
                             Search Scholarships
                         </p>
                     </Link>
-                    <Link to='/articles'>
+                    <Link to='/article'>
                         <p className='hover:text-black duration-100 ease-in'>
                             Career Guidance
                         </p>

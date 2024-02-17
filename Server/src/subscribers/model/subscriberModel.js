@@ -40,6 +40,15 @@ class SubscriberModel {
         }
     }
 
+    async notifySubscribersModel ({subject, message}) {
+        try {
+            const subscriber = await this.externalDatabase.notifySubscribers({subject, message});
+            return subscriber;
+        } catch (error) {
+            console.error('model {notify subscriber}:', error.message);
+        }
+    }
+
 }
 
 export default SubscriberModel;

@@ -9,9 +9,9 @@ import { useParams } from "react-router-dom";
 const CategoriesEditForm = () =>{
     const id = useParams(), ID = id.id;
 
-    const [cForm, setCForm] = useState({categoriesname:""});
+    const [cForm, setCForm] = useState({categoryname:""});
     const [submitted, setSubmitted] = useState(false);
-    const [Msg, SetMsg] = useState("")
+    const [message, setMessage] = useState("")
 
     const formValues = (e)=>{
         const {name, value} = e.target;
@@ -21,8 +21,8 @@ const CategoriesEditForm = () =>{
     const submit =  (e) =>{
         e.preventDefault();
 
-        axios.put(`http://localhost:4040/api/categories-update/${ID}`, cForm)
-        .then(response => SetMsg(response.data))
+        axios.put(`http://localhost:4040/category/update/${ID}`, cForm)
+        .then(response => setMessage(response.data.message))
         .catch(error => console.error(error))
     
         setSubmitted(true);
@@ -33,10 +33,10 @@ const CategoriesEditForm = () =>{
     }
 
     useEffect(()=>{
-        axios.get(`http://localhost:4040/api/categories-edit/${ID}`)
+        axios.get(`http://localhost:4040/category/edit/${ID}`)
         .then((response)=>{
-            const retrievedData = response.data[0];
-            setCForm({categoriesname : retrievedData.categoriesname})
+            const retrievedData = response.data.data[0];
+            setCForm({categoryname : retrievedData.categoryname})
         })
         .catch(error=>console.error(error))
     }, []);
@@ -49,7 +49,7 @@ const CategoriesEditForm = () =>{
 
             <section className=" md:ml-64 relative">
 
-                {submitted && <SubmittedBox successMessage={'Category Successfully Added'} /> }
+                {submitted && <SubmittedBox successMessage={message} /> }
 
                 <FormsDashboardHead title='Category Edit' />
 
@@ -57,11 +57,11 @@ const CategoriesEditForm = () =>{
 
                     <FormInputs 
                     label='Name of Job Category' 
-                    htmlFor='categoriesname'
+                    htmlFor='categoryname'
                     type='text'
-                    id='categoriesname'
-                    name='categoriesname'
-                    value={cForm.categoriesname}
+                    id='categoryname'
+                    name='categoryname'
+                    value={cForm.categoryname}
                     onChange={formValues}
                     placeholder='e.g. Name of Job Category' 
                     />

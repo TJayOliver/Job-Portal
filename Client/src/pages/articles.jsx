@@ -17,10 +17,11 @@ import {MdNavigateNext} from 'react-icons/md'
 
 const Articles = ()=>{
     const [articles, setArticles] = useState([]);
-    const [loading, setloading] = useState(true);
+    const [loading, setLoading] = useState(true);
     const [featured, setFeatured] = useState([]);
     const [mainfeatured, setMainFeatured] = useState([]);
     const [mustRead, setMustRead] = useState([]);
+    const [message, setMessage] = useState([]);
     
     const [postPerPage, setPostPerPage] = useState(15);
     const [currentPage, setCurrentPage] = useState(1);
@@ -29,10 +30,10 @@ const Articles = ()=>{
         const controller = new AbortController();
         const signal = controller.signal;
 
-        fetch('http://localhost:4040/article', setArticles, setloading, signal);
-        fetch('http://localhost:4040/article/featured', setFeatured, setloading, signal);
-        fetch('http://localhost:4040/article/mainfeatured', setMainFeatured, setloading, signal);
-        fetch('http://localhost:4040/article/mustread', setMustRead, setloading, signal);
+        fetch('article', setArticles, setLoading, signal, setMessage);
+        fetch('article/featured', setFeatured, setLoading, signal, setMessage);
+        fetch('article/mainfeatured', setMainFeatured, setLoading, signal, setMessage);
+        fetch('article/mustread', setMustRead, setLoading, signal, setMessage);
 
         return ()=>{controller.abort()}
     },[])
@@ -77,9 +78,9 @@ const Articles = ()=>{
         } 
     }
     
-    setInterval(() => {
+    setInterval( () => {
         shuffleFeatured()
-    }, 10000);
+    }, 100000);
    
     return(
         <>
@@ -88,17 +89,19 @@ const Articles = ()=>{
             <Subscribe SubscribeState={SubscribeState} SetSubscribeState={SetSubscribeState} onChange={handleSubscribe} value={subcribeEmail.email} onClick={submitSubscribe} checkSubscribeResponse={checkSubscribeResponse} subscribeResponse={subscribeResponse} />
 
             <main className="flex flex-col justify-center m-auto max-w-4xl gap-10">
-                {mainfeatured.map((post, id)=>(
-                    <MainArticle key={id}
-                        title={post.title}
-                        category={post.category}
-                        post={post.post}
-                    />
-                ))
-                }
+                <div className="p-3">
+                    { loading ? <Loading /> :
+                    mainfeatured.map((post, id)=>(
+                        <MainArticle key={id}
+                            title={post.title}
+                            category={post.category}
+                            post={post.post}
+                        />))
+                    }
+                </div>
 
                 {/* subscribe */}
-                <section>
+                <section className="p-4">
                     <div className="h-24 p-3 bg-gradient-to-r from-cyan-500 to-blue-500 flex items-center rounded-md text-white justify-between">
                         <div>
                             <p className="text-2xl font-medium mb-2">Never Miss an Article!</p>
@@ -110,7 +113,7 @@ const Articles = ()=>{
                 {/* all articles */}
                 <section >
                     <p className="font-bold text-xl mt-4 mb-2 justify-center md:justify-normal flex">Recent Topics</p>
-                    <div className="flex items-center justify-center md:justify-start gap-8 flex-wrap ">
+                    <div className="flex flex-col md:flex md:flex-row items-center justify-center md:justify-start gap-8 flex-wrap ">
                         {loading ? <Loading/> : 
                         allpost.map((post,id)=>(
                             <ArticleBox key={id}
@@ -118,16 +121,16 @@ const Articles = ()=>{
                                 title={post.title}
                                 author={post.author}
                                 category={post.category}
-                                to={`articles/${post.title}/${post.id}`}
+                                to={`article/${post.title}/${post.id}`}
                             />
                         ))  
                         }
-                        {loading ? null : <Pagination totalPost={articles.length} postPerPage={postPerPage} setCurrentPage={setCurrentPage} currentPage={currentPage} />}
+                        <Pagination totalPost={articles.length} postPerPage={postPerPage} setCurrentPage={setCurrentPage} currentPage={currentPage} />
                     </div>
                 </section>
 
                 {/* featured articles */}
-                <section className="relative">
+                <section className="relative w-full p-2">
                     <p className="text-xl font-bold mb-8 flex justify-center md:flex-none">Featured Article</p>
 
                     <div onClick={shuffleFeatured} className="rounded-full bg-gray-50 h-6 w-6 mb-1 flex items-center justify-center text-xl cursor-pointer">
@@ -137,7 +140,7 @@ const Articles = ()=>{
                     <div className="absolute h-[27rem] md:h-96  bg-white opacity-10 rounded-lg w-full "></div>
                         
                     {/* the article */}
-                    <div className="h-[27rem] md:h-96 relative">
+                    <div className="h-[27rem] md:h-96 relative p-3">
                         {loading ? <Loading/> :
                         featured.map((post, index)=>{
                             if(index === newIndex){
@@ -145,7 +148,7 @@ const Articles = ()=>{
                                     <FeaturedArticleBox key={index}
                                         title={post.title}
                                         date={post.datecreated}
-                                        post={post.post}
+                                        post={post.post.slice(0, 50)}
                                         onClick={shuffleFeatured}
                                         category={post.category}
                                     />
@@ -157,18 +160,17 @@ const Articles = ()=>{
                 </section>
                 
                 {/* must read articles */}
-                <section>
+                <section className="mb-4">
                     <p className="font-bold text-xl mb-2 justify-center flex md:justify-start">Must Read Topics</p>
                     <div className=" flex flex-wrap gap-4 justify-center md:justify-start">
                         {loading ? <Loading/> 
-
                         : mustRead.map((post, id) =>(
                             <MustReadArticles key={id}
                             date={post.datecreated}
                             title={post.title}
                             author={post.author}
                             category={post.category}
-                            to={`articles/${post.title}/${post.id}`}
+                            to={`article/${post.title}/${post.id}`}
                         />
                         ))   
                         }                       
@@ -180,7 +182,7 @@ const Articles = ()=>{
             <Platforms platformsState={platformsState} setPlatformsState={setPlatformsState} />
 
             <SocialMedia/>
-            <Footer/>
+            <Footer onClick={ () => SetSubscribeState(true)} />
         </>
     )
 }

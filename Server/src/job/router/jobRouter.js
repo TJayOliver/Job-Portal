@@ -29,6 +29,9 @@ jobRouter.post('/job/create',
     upload.single('image'), 
     async (req, res) => jobController.createJob(req, res)
 );
+jobRouter.post('/job/search',  
+    async (req, res) => jobController.searchJob(req, res)
+);
 jobRouter.put('/job/update/:id',
     upload.single('image'), 
     async (req, res) => jobController.updateJob(req, res)

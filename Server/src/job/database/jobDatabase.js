@@ -84,13 +84,53 @@ class JobDatabase {
     }
 
     async searchJob (jobDetails) {
+        const position = jobDetails.position;
+        const location = jobDetails.location;
+        const duration = jobDetails.duration;
+        const jobcategory = jobDetails.jobcategory;
         try {
-            const position = jobDetails.position;
-            const location = jobDetails.location;
-            const query = `SELECT * FROM jobs WHERE position LIKE? OR location LIKE?`;
-            const parameter = [`%${position}%`, `%${location}%`];
-            const job = await executeQuery(query, parameter);
-            return job;
+            if (position.length > 0 && location.length < 1 && duration.length < 1 && jobcategory.length < 1) {
+                const query = `SELECT * FROM jobs WHERE position LIKE?`;
+                const parameter = [`%${position}%`];
+                const job = await executeQuery(query, parameter);
+                return job;
+            } 
+            if (location.length > 0 && position.length < 1 && duration.length < 1 && jobcategory.length < 1) {
+                const query = `SELECT * FROM jobs WHERE location LIKE?`;
+                const parameter = [`%${location}%`];
+                const job = await executeQuery(query, parameter);
+                return job;
+            }
+            if (duration.length > 0 && location.length < 1 && position.length < 1 && jobcategory.length < 1) {
+                const query = `SELECT * FROM jobs WHERE duration LIKE?`;
+                const parameter = [`${duration}`];
+                const job = await executeQuery(query, parameter);
+                return job;
+            }
+            if (jobcategory.length > 0 && location.length < 1 && position.length < 1 && duration.length < 1) {
+                const query = `SELECT * FROM jobs WHERE jobcategory LIKE?`;
+                const parameter = [`${jobcategory}`];
+                const job = await executeQuery(query, parameter);
+                return job;
+            }
+            // search must match one
+            // if (position.length > 0 || location.length > 0 || duration.length > 0 || jobcategory.length > 0) {
+            //     const query = `SELECT * FROM jobs 
+            //     WHERE position LIKE ? OR 
+            //     location LIKE ? OR 
+            //     duration LIKE ? OR 
+            //     jobcategory LIKE ?`;
+            //     const parameter = [`${position}`, `%${location}%`, `${duration}`, `${jobcategory}`];
+            //     const job = await executeQuery(query, parameter);
+            //     return job;
+            // }
+            //search must match all
+            if (position.length > 0 && location.length > 0 && duration.length > 0 && jobcategory.length > 0) {
+                const query = `SELECT * FROM jobs WHERE position LIKE? AND location LIKE? AND duration LIKE? AND jobcategory LIKE?`;
+                const parameter = [`%${position}%`, `%${location}%`, , `${duration}`, `${jobcategory}`];
+                const job = await executeQuery(query, parameter);
+                return job;
+            } 
         } catch (error) {
             throw error;
         }

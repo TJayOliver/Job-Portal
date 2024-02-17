@@ -1,10 +1,10 @@
 import { useState,useEffect } from "react"
 import image from '../assets/eight.jpg'
-import  orgImage from '../assets/organizational.png'
-import  resImage from '../assets/research.jpg'
-import  govImage from '../assets/government.jpg'
-import  privImage from '../assets/private.jpg'
-import  intImage from '../assets/international.jpg'
+import orgImage from '../assets/organizational.png'
+import resImage from '../assets/research.jpg'
+import govImage from '../assets/government.jpg'
+import privImage from '../assets/private.jpg'
+import intImage from '../assets/international.jpg'
 import axios from "axios"
 import Header from "../components/Header/Header"
 import SocialMedia from "../components/Homepage/SocialMedia/SocialMedia"
@@ -18,24 +18,27 @@ import ArticleBox from '../components/Articles/ArticleBox';
 import ScholarshipBox from "../components/Scholarships/ScholarshipBox"
 import Pagination from "../components/Pagination.jsx/Pagination"
 import { TypeAnimation } from 'react-type-animation';
+import Platforms from "../components/Platforms/Platforms";
+import Subscribe from '../components/Subscribe/Subscribe';
 
 const Scholarship = ()=>{
     const [scholarships, setScholarship] = useState([])
-    const [scholarshipsarticle, setArticleScholarship] = useState([])
-    const [loading, setloading] = useState(true);
+    const [article, setArticle] = useState([])
+    const [loading, setLoading] = useState(true);
     const [postPerPage, setPostPerPage] = useState(20);
     const [currentPage, setCurrentPage] = useState(1);
+    const [message, setMessage] = useState('');
 
     useEffect(()=>{
         const controller = new AbortController();
         const signal = controller.signal;
 
-        fetch('http://localhost:4040/scholarships', setScholarship, setloading, signal);
-        fetch('http://localhost:4040/article/category/scholarship', setArticleScholarship, setloading, signal);
+        fetch('scholarship', setScholarship, setLoading, signal, setMessage);
+        fetch('article/category/scholarship', setArticle, setLoading, signal, setMessage);
 
         return ()=>{controller.abort()}
-    },[])    
-
+    },[]);
+    
     const container = document.getElementById('container')
 
     const handleLeftClick = () =>{
@@ -56,29 +59,56 @@ const Scholarship = ()=>{
     const [searchResults, setSearchResults] = useState([]);
     const [SResultsVerifier, setSResultsVerifier] = useState(false)
 
-    const submit = (e) =>{
+    const submit = async (e) =>{
         e.preventDefault();
-        axios.post('http://localhost:4040/scholarship/search', searchInput)
-        .then(response =>{
+        try {
+            const response = await axios.post('http://localhost:4040/scholarship/search', searchInput);
             setSResultsVerifier(true)
-            setSearchResults(response.data)
-        } )
-        .catch(error => console.error(error.message))
+            setSearchResults(response.data.data)
+        } catch (error) {
+            console.error(error.message)
+        }
     }
 
-    const lastPageIndex = currentPage * postPerPage,
-    firstPageIndex = lastPageIndex - postPerPage ;
-    const schols = scholarships.slice(firstPageIndex, lastPageIndex);
-    const searchRes = searchResults.slice(firstPageIndex, lastPageIndex)
-    
+    const [subscribeResponse, setSubscribeResponse] = useState('');
+    const [subcribeEmail, setSubscribeEmail] = useState({email: ''})
+    const [checkSubscribeResponse, setCheckSubscribeResponse] = useState(false);
 
+    const handleSubscribe = (e)=>{
+        const{name, value} = e.target;
+        setSubscribeEmail(prev =>({...prev, [name] : value}));
+    }
+    const submitSubscribe = async(e) =>{
+        e.preventDefault();
+        try{
+            const response = await axios.post('http://localhost:4040/subscribe', subcribeEmail);
+            const data = response.data.message;
+            setSubscribeResponse(data)
+            setCheckSubscribeResponse(true)
+            setTimeout(() => {
+                window.location.reload()
+            }, 1000);
+        }catch(error){
+            setSubscribeResponse(error.message)
+        } 
+    }
+    
+    const [SubscribeState, SetSubscribeState] = useState(false)
+    const [platformsState, setPlatformsState] = useState(false)
+
+    const lastPageIndex = currentPage * postPerPage;
+    const firstPageIndex = lastPageIndex - postPerPage ;
+    const scholarshipSlicedData = scholarships.slice(firstPageIndex, lastPageIndex);
+    const searchResultsData = searchResults.slice(firstPageIndex, lastPageIndex);
+    
     return(
         <>
             <Header />
 
+            <Subscribe SubscribeState={SubscribeState} SetSubscribeState={SetSubscribeState} onChange={handleSubscribe} value={subcribeEmail.email} onClick={submitSubscribe} checkSubscribeResponse={checkSubscribeResponse} subscribeResponse={subscribeResponse} />
+
             <aside className="h-36 flex items-center relative bg-gradient-to-r from-cyan-500 to-blue-500 m-auto ">
                 <div className="m-auto max-w-7xl w-full text-4xl font-medium text-white">
-                    
                     
                     <div className="">
                         <TypeAnimation sequence={['Every One Deserves a Scholarship','Your Time is Now', 'Apply']} speed={300} repeat={Infinity} />
@@ -115,35 +145,35 @@ const Scholarship = ()=>{
                             category='Government'
                             text='Government Scholarships'
                             image={govImage}
-                            to={'/scholarships/government'}
+                            to={'/scholarship/Government'}
                             color='bg-gradient-to-r from-cyan-500 to-blue-500'
                         />
                         <ScholarshipCategoryBox 
                             category='Organizational'
                             text='Organizational Scholarships'
                             image={orgImage}
-                            to={'/scholarships/organizational'}
+                            to={'/scholarship/Organizational'}
                             color='bg-gradient-to-r from-cyan-500 to-blue-500'
                         />
                         <ScholarshipCategoryBox 
                             category='International'
                             text='International Scholarships'
                             image={intImage}
-                            to={'/scholarships/international'}
+                            to={'/scholarship/International'}
                             color='bg-gradient-to-r from-cyan-500 to-blue-500'
                         />
                         <ScholarshipCategoryBox 
                             category='Private'
                             text='Private Scholarships'
                             image={privImage}
-                            to={'/scholarships/private'}
+                            to={'/scholarship/Private'}
                             color='bg-gradient-to-r from-cyan-500 to-blue-500'
                         />
                         <ScholarshipCategoryBox 
                             category='Research'
                             text='Research Scholarships'
                             image={resImage}
-                            to={'/scholarships/research'}
+                            to={'/scholarship/Research'}
                             color='bg-gradient-to-r from-cyan-500 to-blue-500'
                         />
                         
@@ -159,7 +189,7 @@ const Scholarship = ()=>{
                    <div className="flex justify-center gap-2">
                         
                         {/* scholarships and search by country results */}
-                        <div className=" flex flex-col gap-4">
+                        <div className=" flex flex-col gap-4 w-full">
                             <form onSubmit={submit} className="flex justify-between border-gray-100 border-2 rounded-lg">
 
                                 {/* Location Search */}
@@ -184,11 +214,13 @@ const Scholarship = ()=>{
                             {SResultsVerifier ? 
                                 // search results
                                 <div className="flex flex-col gap-4">
-                                    {loading ? <Loading className='justify-center m-auto' /> :
-                                        <div className="flex flex-col gap-4">{
+                                    {loading ? 
+                                        <Loading className='justify-center m-auto' /> 
+                                        :
+                                        <div className="flex flex-wrap gap-4">{
                                             searchResults.length === 0 ? `No Scholarships for ${searchInput.country} Found` :
 
-                                            searchRes.map((list, id)=>(
+                                            searchResultsData.map((list, id)=>(
                                                 <ScholarshipBox key={id}
                                                     image={image}
                                                     scholarshiptype={list.scholarshiptype}
@@ -196,8 +228,8 @@ const Scholarship = ()=>{
                                                     date={list.datecreated}
                                                     location={list.country}
                                                     scholarshipname={list.scholarshipname}
-                                                    about={list.description.slice(0,50)}
-                                                    to={`/scholarships/description/${list.id}/${list.scholarshipname}`}
+                                                    description={list.description.slice(0, 200)}
+                                                    to={`/scholarship/${list.scholarshipname}/${list.id}`}
                                                 />
                                             ))
                                         }
@@ -205,12 +237,12 @@ const Scholarship = ()=>{
                                         </div>
                                     }  
                                 </div> 
-                            : 
+                            :  
                                 // all scholarships
                                 <div>
                                     {loading ? <Loading className='justify-center m-auto' /> :
                                         <div className="grid md:grid-cols-2 gap-4">{
-                                            schols.map((list, id)=>(
+                                            scholarshipSlicedData.map((list, id)=>(
                                                 <ScholarshipBox key={id}
                                                     image={image}
                                                     scholarshiptype={list.scholarshiptype}
@@ -218,8 +250,8 @@ const Scholarship = ()=>{
                                                     date={list.datecreated}
                                                     location={list.country}
                                                     scholarshipname={list.scholarshipname}
-                                                    description={list.description.slice(3, 200)}
-                                                    to={`/scholarships/description/${list.id}/${list.scholarshipname}`}
+                                                    description={list.description.slice(0, 200)}
+                                                    to={`/scholarship/${list.scholarshipname}/${list.id}`}
                                                 />
                                             ))
                                         }
@@ -235,29 +267,32 @@ const Scholarship = ()=>{
                 </div>
 
                 {/* Quick Scholarship Tip */}
-                <div className="flex flex-col justify-center py-8">
+                <section className="flex flex-col justify-center py-2 p-2">
                     <div className="p-4">
-                        <p className="font-bold text-4xl mb-2">Quick Scholarship Tip </p>
+                        <p className="font-bold text-2xl md:text-4xl mb-2">Quick Scholarship Tip </p>
                     </div>
-
+                    <div className="flex flex-wrap gap-2 justify-between shrink-0 ">
                     {loading ? <Loading /> :
-                        <div className="flex flex-wrap gap-2 justify-between p-3 shrink-0">{
-                            scholarshipsarticle.map((post, id) =>(
+                        article.map( (post, id) => (
                             <ArticleBox key={id}
-                                image={image}
-                                author={post.author}
-                                title={post.title}
-                                to={`/articles/${post.title}/${post.id}`}
-                            /> 
+                                image = {post.image}
+                                date = {post.datecreated}
+                                title = {post.title}
+                                category = {post.category}
+                                author = {post.author}
+                                to = {`/article/${post.title}/${post.id}`}
+                            />
                         ))
-                        }</div>
                     }
-                </div>
+                    </div>
+                </section>
                 
             </main>
+
+            <Platforms platformsState={platformsState} setPlatformsState={setPlatformsState} />
              
             <SocialMedia />
-            <Footer />
+            <Footer onClick={ () => SetSubscribeState(true)} />
         </>
     )
 }

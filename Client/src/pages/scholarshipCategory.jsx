@@ -1,11 +1,11 @@
 import { useState,useEffect } from "react"
 import { useParams } from "react-router-dom"
 import image from '../assets/eight.jpg'
-import  orgImage from '../assets/organizational.png'
-import  resImage from '../assets/research.jpg'
-import  govImage from '../assets/government.jpg'
-import  privImage from '../assets/private.jpg'
-import  intImage from '../assets/international.jpg'
+import orgImage from '../assets/organizational.png'
+import resImage from '../assets/research.jpg'
+import govImage from '../assets/government.jpg'
+import privImage from '../assets/private.jpg'
+import intImage from '../assets/international.jpg'
 import axios from "axios"
 import Header from "../components/Header/Header"
 import SocialMedia from "../components/Homepage/SocialMedia/SocialMedia"
@@ -17,38 +17,43 @@ import {fetch} from "./request"
 import Loading from '../components/Loading/Loading';
 import ArticleBox from '../components/Articles/ArticleBox';
 import ScholarshipBox from "../components/Scholarships/ScholarshipBox"
-import Pagination from "../components/Pagination.jsx/Pagination"
+import Pagination from "../components/Pagination.jsx/Pagination";
+import Platforms from '../components/Platforms/Platforms';
+import Subscribe from "../components/Subscribe/Subscribe"
 
 const Scholarship = ()=>{
-    const params = useParams(), category = params.category;
+    const params = useParams();
+    const category = params.category;
 
-    const [scholarships, setScholarship] = useState([]),
-    [scholarshipsarticle, setArticleScholarship] = useState([]);
+    const [scholarships, setScholarship] = useState([]);
+    const [article, setArticle] = useState([]);
 
-    const [governmentScholarship, setGovernmentScholarships] = useState([]),
-    [organizationalScholarship, setOrganizationalScholarships] = useState([]),
-    [privateScholarship, setPrivateScholarships] = useState([]),
-    [researchScholarship, setResearchScholarships] = useState([]),
-    [internationalScholarship, setInternationalScholarships] = useState([]);
+    const [governmentScholarship, setGovernmentScholarships] = useState([]);
+    const [organizationalScholarship, setOrganizationalScholarships] = useState([]);
+    const [privateScholarship, setPrivateScholarships] = useState([]);
+    const [researchScholarship, setResearchScholarships] = useState([]);
+    const [internationalScholarship, setInternationalScholarships] = useState([]);
 
-    const [loading, setloading] = useState(true);
+    const [loading, setLoading] = useState(true);
     const [postPerPage, setPostPerPage] = useState(20);
     const [currentPage, setCurrentPage] = useState(1);
+
+    const [message, setMessage] = useState('');
 
     useEffect(()=>{
         const controller = new AbortController();
         const signal = controller.signal;
 
-        fetch('http://localhost:4040/api/scholarships-get', setScholarship, setloading, signal);
-        fetch('http://localhost:4040/api/scholarships/government', setGovernmentScholarships, setloading, signal);
-        fetch('http://localhost:4040/api/scholarships/organizational', setOrganizationalScholarships, setloading, signal);
-        fetch('http://localhost:4040/api/scholarships/private', setPrivateScholarships, setloading, signal);
-        fetch('http://localhost:4040/api/scholarships/research', setResearchScholarships, setloading, signal);
-        fetch('http://localhost:4040/api/scholarships/international', setInternationalScholarships, setloading, signal);
-        fetch('http://localhost:4040/api/articles-scholarship', setArticleScholarship, setloading, signal);
+        fetch('scholarship', setScholarship, setLoading, signal, setMessage);
+        fetch('scholarship/category/Government', setGovernmentScholarships, setLoading, signal, setMessage);
+        fetch('scholarship/category/Organizational', setOrganizationalScholarships, setLoading, signal, setMessage);
+        fetch('scholarship/category/Private', setPrivateScholarships, setLoading, signal, setMessage);
+        fetch('scholarship/category/Research', setResearchScholarships, setLoading, signal, setMessage);
+        fetch('scholarship/category/International', setInternationalScholarships, setLoading, signal, setMessage);
+        fetch('article/category/scholarship', setArticle, setLoading, signal, setMessage);
 
         return()=>{controller.abort()}
-    },[])    
+    },[]) 
 
     const container = document.getElementById('container')
 
@@ -70,47 +75,74 @@ const Scholarship = ()=>{
     const [searchResults, setSearchResults] = useState([]);
     const [SResultsVerifier, setSResultsVerifier] = useState(false)
 
-    const submit = (e) =>{
+    const submit = async (e) =>{
         e.preventDefault();
-        axios.post('http://localhost:4040/api/scholarships-search', searchInput)
-        .then(response =>{
+        try {
+            const response = await axios.post('http://localhost:4040/scholarship/search', searchInput);
             setSResultsVerifier(true)
-            setSearchResults(response.data)
-        } )
-        .catch(error => console.error(error.message))
+            setSearchResults(response.data.data)
+        } catch (error) {
+            console.error(error.message)
+        }
     }
 
-    const lastPageIndex = currentPage * postPerPage,
-    firstPageIndex = lastPageIndex - postPerPage ;
+    const [subscribeResponse, setSubscribeResponse] = useState('');
+    const [subcribeEmail, setSubscribeEmail] = useState({email: ''})
+    const [checkSubscribeResponse, setCheckSubscribeResponse] = useState(false);
 
-    const allScholars = scholarships.slice(firstPageIndex, lastPageIndex),
-    gov = governmentScholarship.slice(firstPageIndex, lastPageIndex),
-    org = organizationalScholarship.slice(firstPageIndex, lastPageIndex),
-    priv = privateScholarship.slice(firstPageIndex, lastPageIndex),
-    res = researchScholarship.slice(firstPageIndex, lastPageIndex),
-    int = internationalScholarship.slice(firstPageIndex, lastPageIndex);
+    const handleSubscribe = (e)=>{
+        const{name, value} = e.target;
+        setSubscribeEmail(prev =>({...prev, [name] : value}));
+    }
+    const submitSubscribe = async(e) =>{
+        e.preventDefault();
+        try{
+            const response = await axios.post('http://localhost:4040/subscribe', subcribeEmail);
+            const data = response.data.message;
+            setSubscribeResponse(data)
+            setCheckSubscribeResponse(true)
+            setTimeout(() => {
+                window.location.reload()
+            }, 1000);
+        }catch(error){
+            setSubscribeResponse(error.message)
+        } 
+    }
+    
+    const [SubscribeState, SetSubscribeState] = useState(false)
+    const [platformsState, setPlatformsState] = useState(false)
 
-    const searchRes = searchResults.slice(firstPageIndex, lastPageIndex)
+    const lastPageIndex = currentPage * postPerPage;
+    const firstPageIndex = lastPageIndex - postPerPage ;
 
-    const s = 'bg-red-500 flex w-full h-[14rem] '
-    const colorChange = category === 'government' ? 'bg-gradient-to-r from-cyan-500 to-blue-500 flex w-full h-[14rem]' 
-    : category === 'organizational' ? 'bg-gradient-to-r from-fuchsia-500 to-cyan-500 flex w-full h-[14rem]' 
-    : category === 'private' ? 'bg-gradient-to-r from-blue-600 to-violet-600 flex w-full h-[14rem]'
-    : category === 'international' ? 'bg-gradient-to-r from-violet-500 to-purple-500 flex w-full h-[14rem]'
-    : category === 'research' ? 'bg-gradient-to-r from-fuchsia-600 to-purple-600 flex w-full h-[14rem]'
-    : null;
+    const allScholars = scholarships.slice(firstPageIndex, lastPageIndex);
+    const gov = governmentScholarship.slice(firstPageIndex, lastPageIndex);
+    const org = organizationalScholarship.slice(firstPageIndex, lastPageIndex);
+    const priv = privateScholarship.slice(firstPageIndex, lastPageIndex);
+    const res = researchScholarship.slice(firstPageIndex, lastPageIndex);
+    const int = internationalScholarship.slice(firstPageIndex, lastPageIndex);
+    const searchResultsData = searchResults.slice(firstPageIndex, lastPageIndex);
+
+    const colorChange = category === 'Government' ? 'bg-gradient-to-r from-cyan-500 to-blue-500' 
+    : category === 'Organizational' ? 'bg-gradient-to-r from-fuchsia-500 to-cyan-500' 
+    : category === 'Private' ? 'bg-gradient-to-r from-blue-600 to-violet-600'
+    : category === 'International' ? 'bg-gradient-to-r from-violet-500 to-purple-500'
+    : category === 'Research' ? 'bg-gradient-to-r from-fuchsia-600 to-purple-600': null;
+    
     return(
         <>
             <Header />
 
+            <Subscribe SubscribeState={SubscribeState} SetSubscribeState={SetSubscribeState} onChange={handleSubscribe} value={subcribeEmail.email} onClick={submitSubscribe} checkSubscribeResponse={checkSubscribeResponse} subscribeResponse={subscribeResponse} />
+
             <main className="max-w-7xl flex flex-col m-auto justify-center ">
                 {/* heading */}
-                <section className={colorChange}>
+                <section className={`${colorChange} w-full h-[14rem] flex`}>
                     <div className="w-2/4 rounded-2xl md:px-6 py-10 flex flex-col gap-4">
-                        <p className="text-white text-3xl md:text-5xl font-bold p-2">{category.charAt(0).toUpperCase() + category.slice(1)} Scholarships</p>
-                        <p className="text-sm md:text-md p-2 ">Browse through thousands of {category.charAt(0).toUpperCase() + category.slice(1)} Scholarships</p>
+                        <p className="text-white text-3xl md:text-5xl font-bold p-2">{category} Scholarships</p>
+                        <p className="text-sm md:text-md p-2 ">Browse through thousands of {category} Scholarships</p>
                     </div>
-                    <img loading="lazy" src={category === 'government' ? govImage : category === 'organizational' ? orgImage : category === 'private' ? privImage : category === 'international' ? intImage : category === 'research' ? resImage : null } className="w-2/4 object-cover" />
+                    <img loading="lazy" src={category === 'Government' ? govImage : category === 'Organizational' ? orgImage : category === 'Private' ? privImage : category === 'International' ? intImage : category === 'Research' ? resImage : null } className="w-2/4 object-cover" />
                 </section>
 
                 {/* Scholarships */}
@@ -146,11 +178,13 @@ const Scholarship = ()=>{
                             {SResultsVerifier ? 
                                 // search results
                                 <div className="flex flex-col gap-4">
-                                    {loading ? <Loading /> :
-                                        <div className="flex flex-col gap-4">{
+                                    {loading ? 
+                                        <Loading className='justify-center m-auto' /> 
+                                        :
+                                        <div className="flex flex-wrap gap-4">{
                                             searchResults.length === 0 ? `No Scholarships for ${searchInput.country} Found` :
 
-                                            searchRes.map((list, id)=>(
+                                            searchResultsData.map((list, id)=>(
                                                 <ScholarshipBox key={id}
                                                     image={image}
                                                     scholarshiptype={list.scholarshiptype}
@@ -158,19 +192,19 @@ const Scholarship = ()=>{
                                                     date={list.datecreated}
                                                     location={list.country}
                                                     scholarshipname={list.scholarshipname}
-                                                    description={list.description.slice(0,200)}
-                                                    to={`/scholarships/description/${list.id}/${list.scholarshipname}`}
+                                                    description={list.description.slice(0, 200)}
+                                                    to={`/scholarship/${list.scholarshipname}/${list.id}`}
                                                 />
                                             ))
                                         }
                                         <Pagination totalPost={searchResults.length} postPerPage={postPerPage} setCurrentPage={setCurrentPage} currentPage={currentPage} />
                                         </div>
                                     }  
-                                </div> 
+                                </div>
                             : 
                                 // display all scholarships by category
                                 <div>
-                                    {category === 'government' ? 
+                                    {category === 'Government' ? 
                                         <div className="flex flex-col gap-4">
                                         {
                                             gov.map((list, id)=>(
@@ -182,13 +216,13 @@ const Scholarship = ()=>{
                                                     location={list.country}
                                                     scholarshipname={list.scholarshipname}
                                                     description={list.description.slice(0,200)}
-                                                    to={`/scholarships/description/${list.id}/${list.scholarshipname}`}
+                                                    to={`/scholarship/${list.scholarshipname}/${list.id}`}
                                                 />
                                             ))
                                         }
                                         <Pagination totalPost={governmentScholarship.length} postPerPage={postPerPage} setCurrentPage={setCurrentPage} currentPage={currentPage} />
                                         </div> : 
-                                    category === 'organizational' ? 
+                                    category === 'Organizational' ? 
                                         <div className="flex flex-col gap-4">
                                         {
                                             org.map((list, id)=>(
@@ -200,13 +234,13 @@ const Scholarship = ()=>{
                                                     location={list.country}
                                                     scholarshipname={list.scholarshipname}
                                                     description={list.description.slice(0,200)}
-                                                    to={`/scholarships/description/${list.id}/${list.scholarshipname}`}
+                                                    to={`/scholarship/${list.scholarshipname}/${list.id}`}
                                                 />
                                             ))
                                         }
                                         <Pagination totalPost={organizationalScholarship.length} postPerPage={postPerPage} setCurrentPage={setCurrentPage} currentPage={currentPage} />
                                         </div> :
-                                    category === 'private' ? 
+                                    category === 'Private' ? 
                                         <div className="flex flex-col gap-4">
                                         {
                                             priv.map((list, id)=>(
@@ -218,13 +252,13 @@ const Scholarship = ()=>{
                                                     location={list.country}
                                                     scholarshipname={list.scholarshipname}
                                                     description={list.description.slice(0,200)}
-                                                    to={`/scholarships/description/${list.id}/${list.scholarshipname}`}
+                                                    to={`/scholarship/${list.scholarshipname}/${list.id}`}
                                                 />
                                             ))
                                         }
                                         <Pagination totalPost={privateScholarship.length} postPerPage={postPerPage} setCurrentPage={setCurrentPage} currentPage={currentPage} />
                                         </div> : 
-                                    category === 'research' ? 
+                                    category === 'Research' ? 
                                         <div className="flex flex-col gap-4">
                                         {
                                             res.map((list, id)=>(
@@ -236,13 +270,13 @@ const Scholarship = ()=>{
                                                     location={list.country}
                                                     scholarshipname={list.scholarshipname}
                                                     description={list.description.slice(0,200)}
-                                                    to={`/scholarships/description/${list.id}/${list.scholarshipname}`}
+                                                    to={`/scholarship/${list.scholarshipname}/${list.id}`}
                                                 />
                                             ))
                                         }
                                         <Pagination totalPost={researchScholarship.length} postPerPage={postPerPage} setCurrentPage={setCurrentPage} currentPage={currentPage} />
                                         </div> : 
-                                    category === 'international' ? 
+                                    category === 'International' ? 
                                         <div className="flex flex-col gap-4">
                                         {
                                             int.map((list, id)=>(
@@ -254,7 +288,7 @@ const Scholarship = ()=>{
                                                     location={list.country}
                                                     scholarshipname={list.scholarshipname}
                                                     description={list.description.slice(0,200)}
-                                                    to={`/scholarships/description/${list.id}/${list.scholarshipname}`}
+                                                    to={`/scholarship/${list.scholarshipname}/${list.id}`}
                                                 />
                                             ))
                                         }
@@ -271,7 +305,7 @@ const Scholarship = ()=>{
                                                 location={list.country}
                                                 scholarshipname={list.scholarshipname}
                                                 description={list.description.slice(0,200)}
-                                                to={`/scholarships/description/${list.id}/${list.scholarshipname}`}
+                                                to={`/scholarship/${list.scholarshipname}/${list.id}`}
                                             />
                                         ))
                                     }
@@ -300,34 +334,39 @@ const Scholarship = ()=>{
 
                     <div id="container" className="flex justify-between p-2 gap-2 overflow-x-scroll scrollbar duration-100 ease-in shrink-0">
                         <ScholarshipCategoryBox 
+                            color={colorChange}
                             category='Government'
                             text='Government Scholarships'
                             image={govImage}
-                            to={'/scholarships/government'}
+                            to={'/scholarship/Government'}
                         />
                         <ScholarshipCategoryBox 
+                            color={colorChange}
                             category='Organizational'
                             text='Organizational Scholarships'
                             image={orgImage}
-                            to={'/scholarships/organizational'}
+                            to={'/scholarship/Organizational'}
                         />
                         <ScholarshipCategoryBox 
+                            color={colorChange}
                             category='International'
                             text='International Scholarships'
                             image={intImage}
-                            to={'/scholarships/international'}
+                            to={'/scholarship/International'}
                         />
                         <ScholarshipCategoryBox 
+                            color={colorChange}
                             category='Private'
                             text='Private Scholarships'
                             image={privImage}
-                            to={'/scholarships/private'}
+                            to={'/scholarship/Private'}
                         />
                         <ScholarshipCategoryBox 
+                            color={colorChange}
                             category='Research'
                             text='Research Scholarships'
                             image={resImage}
-                            to={'/scholarships/research'}
+                            to={'/scholarship/Research'}
                         />
                         
                     </div>
@@ -338,25 +377,27 @@ const Scholarship = ()=>{
                     <div className="p-4">
                         <p className="font-bold text-2xl md:text-4xl mb-2">Quick Scholarship Tip </p>
                     </div>
-
+                    <div className="flex flex-wrap gap-2 justify-between shrink-0 ">
                     {loading ? <Loading /> :
-                        <div className="flex flex-wrap gap-2 justify-between shrink-0 ">{
-                            scholarshipsarticle.map((post, id) =>(
+                        article.map( (post, id) => (
                             <ArticleBox key={id}
-                                image={image}
-                                author={post.author}
-                                title={post.title}
-                                //brief={post.briefinfo.replace(/^\d+[.,]/, '').trim().slice(0,90)}
-                                to={`/articles/${post.title}/${post.id}`}
-                            /> 
+                                image = {post.image}
+                                date = {post.datecreated}
+                                title = {post.title}
+                                category = {post.category}
+                                author = {post.author}
+                                to = {`/article/${post.title}/${post.id}`}
+                            />
                         ))
-                        }</div>
                     }
+                    </div>
                 </section>
             </main>
-             
+            
+            <Platforms platformsState={platformsState} setPlatformsState={setPlatformsState} />
+
             <SocialMedia />
-            <Footer />
+            <Footer onClick={ () => SetSubscribeState(true)} />
         </>
     )
 }

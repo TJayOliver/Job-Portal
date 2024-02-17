@@ -1,4 +1,5 @@
-import main from '../../assets/cyril.jpg'
+import main from '../../assets/cyril.jpg';
+import parser from 'html-react-parser';
 
 const FeaturedArticleBox = ({image, title, post, date, to, category}) =>{
     return(
@@ -11,7 +12,7 @@ const FeaturedArticleBox = ({image, title, post, date, to, category}) =>{
                 </div>
                 <div className="flex flex-col gap-8">
                     <p className="font-bold text-3xl">{title}</p>
-                    <small>{post}</small>
+                    <small>{ parser(post) }</small>
                 </div>
             </div>
             {/* image */}

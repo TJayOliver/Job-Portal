@@ -7,7 +7,16 @@ class ArticleDatabase {
             const query = `INSERT INTO articles
             (id,image,title,post,featured,mustread,mainfeatured, category)
             VALUES(?,?,?,?,?,?,?,?)`;
-            const parameter = [articleData];
+            const parameter = [
+                articleData.id,
+                articleData.image,
+                articleData.title,
+                articleData.post,
+                articleData.featured,
+                articleData.mustread,
+                articleData.mainfeatured,
+                articleData.category
+            ];
             const article = await executeQuery(query, parameter)
             return article;
         } catch (error) {

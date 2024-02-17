@@ -1,4 +1,4 @@
 import { nanoid } from "nanoid";
 
-const number = 10;
+const number = 12;
 export const id = nanoid(number);

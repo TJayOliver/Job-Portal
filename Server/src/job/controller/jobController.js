@@ -6,7 +6,7 @@ class JobController {
 
     async createJob (req, res) {
         try {
-            const {image,
+            const {
                 company,
                 salary,
                 location,
@@ -19,7 +19,7 @@ class JobController {
                 otherinformation,
                 jobcategory
             } = req.body;
-            //const image = req.file.filename;
+            const image = req.file.filename;
             const jobDetails = {
                 image,
                 company,
@@ -35,7 +35,7 @@ class JobController {
                 jobcategory
             }
             const job = await this.service.createJobService(jobDetails);
-            return res.status(201).json({message : 'Successfully Created', job})
+            return res.status(201).json({message : 'Successfully Created', data : job})
         } catch (error) {
             console.error('controller {create job}:', error.message);
             res.status(500).json({message: 'Internal Server Error'});
@@ -45,7 +45,7 @@ class JobController {
     async countJob (req, res) {
         try {
             const job = await this.service.countJobService();
-            return res.status(200).send(job);
+            return res.status(200).json({ data : job});
         } catch (error) {
             console.error('controller {count job}:', error.message);
             return res.status(500).json({message : 'Internal Server Error'});
@@ -55,7 +55,7 @@ class JobController {
     async readAllJobs (req, res) {
         try {
             const job = await this.service.readAllJobsService();
-            return res.status(201).json({message:'Successfully Retrieved', job});
+            return res.status(201).json({message:'Successfully Retrieved', data : job});
         } catch (error) {
             console.error('controller {read all jobs}:', error.message);
             return res.status(500).json({messge:'Internal Server Error'});
@@ -66,7 +66,7 @@ class JobController {
         try {
             const value = 'true';
             const job = await this.service.readFeaturedJobService(value);
-            return res.status(500).json({message : 'Successfully Retrieved', job});
+            return res.status(201).json({message : 'Successfully Retrieved', data : job});
         } catch (error) {
             console.error('controller {read featured job}:', error.message);
             return res.status(500).json({message : 'Internal Server Error'});
@@ -77,7 +77,7 @@ class JobController {
         try {
             const { jobcategory } = req.params;
             const job = await this.service.readJobByCategoryService(jobcategory);
-            return res.status(201).json({message : 'Successfully Retrieved', job});
+            return res.status(201).json({message : 'Successfully Retrieved', data : job});
         } catch (error) {
             console.error('controller {read job by category}:', error.message);
             return res.status(500).json({message : 'Internal Server Error'});
@@ -88,7 +88,7 @@ class JobController {
         try {
             const {id} = req.params;
             const job = await this.service.readJobByIDService(id);
-            return res.status(200).json({message : 'Successfully retrieved', job}); 
+            return res.status(200).json({message : 'Successfully retrieved', data : job}); 
         } catch (error) {
             console.error('service {read job by id}:', error.message);
         }
@@ -96,13 +96,15 @@ class JobController {
 
     async searchJob (req, res) {
         try {
-            const {position, location} = req.body; 
+            const { position, location, jobcategory, duration } = req.body; 
             const jobDetails = {
                 position,
-                location
+                location,
+                jobcategory,
+                duration
             };
             const job = await this.service.searchJobService(jobDetails);
-            return res.status(201).json({message : 'Successfully Retrieved', job})
+            return res.status(201).json({message : 'Successfully Retrieved', data : job})
         } catch (error) {
             console.error('controller {search job}:', error.message);
             return res.status(500).json({message:'Internal Server Error'})
@@ -113,7 +115,7 @@ class JobController {
         try {
             const {id} = req.params;
             const job = await this.service.editJobService(id);
-            return res.status(200).json({message : 'Successfully Update', job});
+            return res.status(200).json({message : 'Successfully Update', data : job});
         } catch (error) {
             console.error('controller {edit job}:', error.message);
             res.status(500).json({message: 'Internal Server Error'});
@@ -123,7 +125,7 @@ class JobController {
     async updateJob (req, res) {
         try {
             const {id} = req.params;
-            const {image,
+            const {
                 company,
                 salary,
                 location,
@@ -136,7 +138,7 @@ class JobController {
                 otherinformation,
                 jobcategory
             } = req.body;
-            //const image = req.file.filename;
+            const image = req.file.filename;
             const jobDetails = {
                 id,
                 image,
@@ -153,7 +155,7 @@ class JobController {
                 jobcategory
             }
             const job = await this.service.updateJobService(jobDetails);
-            return res.status(201).json({message : 'Successfully Updated', job});
+            return res.status(201).json({message : 'Successfully Updated', data : job});
         } catch (error) {
             console.error('controller {update job}:', error.message);
             res.status(500).json({message: 'Internal Server Error'});
@@ -164,7 +166,7 @@ class JobController {
         try {
             const {id} = req.params;
             const job = await this.service.deleteJobService(id);
-            return res.status(201).json({message : 'Successfully Deleted', job});
+            return res.status(201).json({message : 'Successfully Deleted', data : job});
         } catch (error) {
             console.error('controller {delete}:', error.message);
             res.status(500).json({message: 'Internal Server Error'});

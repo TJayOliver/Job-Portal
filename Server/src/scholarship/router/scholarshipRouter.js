@@ -24,6 +24,12 @@ scholarshipRouter.get('/scholarship/count',
 scholarshipRouter.get('/scholarship/edit/:id', 
     async (req, res) => scholarshipController.editScholarship(req, res)
 );
+scholarshipRouter.get('/scholarship/country/:countryname', 
+    async (req, res) => scholarshipController.readScholarshipByCountry(req, res)
+);
+scholarshipRouter.post('/scholarship/search', 
+    async (req, res) => scholarshipController.searchScholarshipByCountry(req, res)
+);
 scholarshipRouter.post('/scholarship/create', 
     upload.single('image'), 
     async (req, res) => scholarshipController.createScholarship(req, res)

@@ -105,14 +105,8 @@ class JobService {
         }
     }
 
-    async searchJobService ({position, location}) {
+    async searchJobService (jobDetails) {
         try {
-            await position.trim();
-            await location.trim();
-            const jobDetails = {
-                position,
-                location
-            };
             const job = await this.model.searchJobModel(jobDetails);
             return job;
         } catch (error) {

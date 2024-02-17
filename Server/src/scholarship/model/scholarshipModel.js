@@ -69,10 +69,10 @@ class ScholarshipModel {
 
     async searchScholarshipByCountryModel (countryname) {
         try {
-            const scholarship = await this.externalDatabase.searchScholarshpByCountry(countryname);
+            const scholarship = await this.externalDatabase.searchScholarshipByCountry(countryname);
             return scholarship;
         } catch (error) {
-            console.error('model {}:', error.message);
+            console.error('model {search scholarship by country}:', error.message);
         }
     }
 

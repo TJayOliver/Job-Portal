@@ -2,7 +2,7 @@ import main from '../../assets/cyril.jpg'
 
 const MustReadArticles = ({image,date, title, author, to, category}) =>{
     return(
-        <a href={to} className=" h-[21rem] md:h-[20rem] w-64 md:w-[27rem] shrink-0 rounded-md bg-white drop-shadow-md">
+        <a href={to} className=" h-[24rem] md:h-[20rem] w-64 md:w-[27rem] shrink-0 rounded-md bg-white drop-shadow-md">
             <div className='bg-red-600 h-2/4 rounded-t-md relative'>
                 <img src={main} className='w-full h-full object-cover rounded-t-md' />
                 <div className={ 

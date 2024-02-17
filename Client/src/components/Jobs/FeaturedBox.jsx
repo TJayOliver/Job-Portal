@@ -1,8 +1,9 @@
 import one from '../../assets/eight.jpg'
 import { Link } from 'react-router-dom';
+import parser from 'html-react-parser';
 
 
-const FeaturedBox = ({image,description, location, company, duration, position, category, salary, to}) =>{
+const FeaturedBox = ({image,description, location, company, position, to}) =>{
     
     return(
        <div className=' h-24 shrink-0 text-md'>
@@ -17,7 +18,7 @@ const FeaturedBox = ({image,description, location, company, duration, position, 
 
                         {/* Company Name and Location */}
                         <div>
-                            <p className=' font-bold text-md'>{company}</p>
+                            <p className=' font-bold text-md'>{company}..</p>
                             <small>{location}</small>
                         </div>
                     </div>
@@ -25,7 +26,7 @@ const FeaturedBox = ({image,description, location, company, duration, position, 
 
                 {/* Job Title and Description */}
                 <p className=' font-medium whitespace-nowrap'>{position}</p>
-                <small dangerouslySetInnerHTML={{__html:description}}/>
+                <small>{ parser(description) }</small>
                 
                 {/* Apply Button */}
                 <div role='button' className='rounded-full mt-1 bg-gradient-to-r from-rose-400 to-red-500 hover:duration-150 hover:ease-out text-white font-bold h-8 flex items-center justify-center w-24 px-2'>

@@ -22,43 +22,47 @@ import JobDescription from './pages/jobdescription.jsx';
 import ScholarshipDescription from './pages/scholarshipDescription.jsx';
 import ScholarshipCategory from './pages/scholarshipCategory.jsx';
 
+import SubscribersList from './components/Dashboard/subscriberList/subscribersList.jsx';
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
       <Route path='/' element={<Home />} />
 
-      <Route path='/articles'> 
-        <Route path='/articles' element={<Articles />} />
-        <Route path='/articles/:title/:id' element={<ArticleDescription />} />
+      <Route path='/article'> 
+        <Route path='/article' element={<Articles />} />
+        <Route path='/article/:title/:id' element={<ArticleDescription />} />
       </Route>
 
       <Route path='/administrator' element={<Administrator />} />
 
-      <Route path='/jobs' >
-        <Route path='/jobs' element={<Jobs />} />
-        <Route path='/jobs/description/:id/:position/:company' element={<JobDescription />} />
-        <Route path='/jobs/category/:categoriesname' element={<JobDescription />} />
+      <Route path='/job' >
+        <Route path='/job' element={<Jobs />} />
+        <Route path='/job/:id/:position' element={<JobDescription />} />
+        <Route path='/job/:categoriesname' element={<JobDescription />} />
       </Route>
       
-      <Route path='/scholarships'>
-        <Route path='/scholarships' element={<Scholarship />} />
-        <Route path='/scholarships/:category' element={<ScholarshipCategory />} />
-        <Route path='/scholarships/description/:id/:scholarshipname' element={<ScholarshipDescription />} />
+      <Route path='/scholarship'>
+        <Route path='/scholarship' element={<Scholarship />} />
+        <Route path='/scholarship/:category' element={<ScholarshipCategory />} />
+        <Route path='/scholarship/:scholarshipname/:id' element={<ScholarshipDescription />} />
       </Route>
 
       <Route path='/dashboard' element={<Dash />} />
 
-      <Route path='/forms/articles' element={<ArticleForm />} />
-      <Route path='/forms/articles-edit/:id' element={<ArticleEditForm />} />
+      <Route path='/form/article' element={<ArticleForm />} />
+      <Route path='/form/article/edit/:id' element={<ArticleEditForm />} />
 
-      <Route path='/forms/categories' element={<CategoriesForm />} />
-      <Route path='/forms/categories-edit/:id' element={<CategoriesEditForm />} />
+      <Route path='/form/category' element={<CategoriesForm />} />
+      <Route path='/form/category/edit/:id' element={<CategoriesEditForm />} />
 
-      <Route path='/forms/jobs' element={<JobForm />} />
-      <Route path='/forms/jobs-edit/:id' element={<JobEditForm />} />
+      <Route path='/form/job' element={<JobForm />} />
+      <Route path='/form/job/edit/:id' element={<JobEditForm />} />
       
-      <Route path='/forms/scholarships' element={<ScholarshipForm />} />
-      <Route path='/forms/scholarships-edit/:id' element={<ScholarshipEditForm />} />
+      <Route path='/form/scholarship' element={<ScholarshipForm />} />
+      <Route path='/form/scholarship/edit/:id' element={<ScholarshipEditForm />} />
+
+      <Route path='/subscribers' element={<SubscribersList />} />
     </Route>
   )
 )

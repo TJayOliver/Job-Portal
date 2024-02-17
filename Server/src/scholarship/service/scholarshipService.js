@@ -58,7 +58,7 @@ class ScholarshipService {
         try {
             const scholarshipCount = await this.model.countScholarshipModel();
             let count = "";
-            scholarshipCount.map((newData)=>{
+            scholarshipCount.map( (newData) => {
                 const number = Object.values(newData);
                 count += number;
             });

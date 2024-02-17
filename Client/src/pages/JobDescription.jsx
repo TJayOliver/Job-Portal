@@ -7,7 +7,7 @@ import SocialMedia from "../components/Homepage/SocialMedia/SocialMedia";
 import Footer from "../components/Footer/Footer";
 import {ImFilesEmpty} from 'react-icons/im';
 import { Link, useParams } from "react-router-dom";
-import { fetch, jobdescription } from "./request";
+import { fetch, fetchByID } from "./request";
 
 const JobDescription = () =>{
     const params = useParams(), id = params.id, position = params.position, company = params.company;
@@ -17,14 +17,16 @@ const JobDescription = () =>{
     const [FeaturedJobs,setFeaturedJobs] = useState([]);
     const [BestMatchesJobs,setBestMatchesJobs] = useState([]);
     const [mostRecentJobs,setMostRecentJobs] = useState([]);
-    const [loading, setloading] = useState(true);
+    const [loading, setLoading] = useState(true);
+    const [message, setMessage] = useState('');
     
     useEffect(()=>{
         const controller = new AbortController();
         const signal = controller.signal;
-        jobdescription(setJobs, setloading, id, signal)
 
-        fetch('http://localhost:4040/api/jobs-featured', setFeaturedJobs, setloading, signal);
+        fetch ('jobs/featured', setFeaturedJobs, setLoading, signal, setMessage);
+        fetchByID ('jobs/read/', id, setJobs, setLoading, signal, setMessage);
+
         return ()=>{controller.abort()}
     },[])
    
@@ -92,7 +94,7 @@ const JobDescription = () =>{
                                 category={list.categoriesname}
                                 salary={list.salary}
                                 description={list.responsibilities.replace(/^\d+[.,]/, '').trim().slice(0,60)}
-                                to={`/jobs/description/${list.id}/${list.position}/${list.company}`}/>)) 
+                                to={`/jobs/${list.id}/${list.position}/${list.company}`}/>)) 
                             : null}
 
                             {loading ? <Loading/> : feat ? FeaturedJobs.map((list,id)=>(

@@ -7,9 +7,9 @@ import FormsDashboardHead from "../DashboardHeaders/FormsDashboardHead";
 
 
 const CategoriesForm = () =>{
-    const [cForm, setCForm] = useState({categoriesname:""});
+    const [cForm, setCForm] = useState({categoryname:""});
     const [submitted, setSubmitted] = useState(false);
-    const [Msg, SetMsg] = useState("")
+    const [message, setMessage] = useState("")
 
     const formValues = (e)=>{
         const {name, value} = e.target;
@@ -19,8 +19,8 @@ const CategoriesForm = () =>{
     const submit =  (e) =>{
         e.preventDefault();
 
-        axios.post('http://localhost:4040/api/categories-post', cForm)
-        .then(response => SetMsg(response.data))
+        axios.post('http://localhost:4040/category/create', cForm)
+        .then(response => setMessage(response.data.message))
         .catch(error => console.error(error))
     
         setSubmitted(true);
@@ -31,9 +31,9 @@ const CategoriesForm = () =>{
     }
 
     useEffect(()=>{
-        axios.get('http://localhost:4040/api/categories-get/')
+        axios.get('http://localhost:4040/category')
         .then((response)=>{
-            setretrievedCat(response.data)
+            setretrievedCat(response.data.data)
         })
         .catch(error=>console.error(error))
     }, []);
@@ -46,7 +46,7 @@ const CategoriesForm = () =>{
 
             <section className=" md:ml-64 relative">
 
-                {submitted && <SubmittedBox successMessage={'Category Successfully Added'} /> }
+                {submitted && <SubmittedBox successMessage={message} /> }
 
                 <FormsDashboardHead title='Categories Form' />
 
@@ -54,11 +54,11 @@ const CategoriesForm = () =>{
 
                     <FormInputs 
                     label='Name of Job Category' 
-                    htmlFor='categoriesname'
+                    htmlFor='categoryname'
                     type='text'
-                    id='categoriesname'
-                    name='categoriesname'
-                    value={cForm.categoriesname}
+                    id='categoryname'
+                    name='categoryname'
+                    value={cForm.categoryname}
                     onChange={formValues}
                     placeholder='e.g. Name of Job Category'
                     />

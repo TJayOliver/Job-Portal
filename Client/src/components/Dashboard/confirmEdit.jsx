@@ -31,7 +31,7 @@ const ConfirmEdit = ({Cancel, ID, route, title}) =>{
                 <div className=" w-full flex flex-col md:flex md:flex-row gap-2">
                     <button onClick={Cancel} className=" border border-black h-10 p-2 rounded-md w-full hover:bg-cyan-600 hover:text-white hover:border-none hover:duration-300 hover:ease-in">CANCEL</button> 
 
-                    <Link to={`/forms/${route}/${id}`} className=" border border-black h-10 p-2 rounded-md w-full hover:bg-teal-600 hover:text-white hover:border-none hover:duration-300 hover:ease-in text-center">EDIT</Link> 
+                    <Link to={`/form/${route}/edit/${id}`} className=" border border-black h-10 p-2 rounded-md w-full hover:bg-teal-600 hover:text-white hover:border-none hover:duration-300 hover:ease-in text-center">EDIT</Link> 
                 </div>
             </div>
 

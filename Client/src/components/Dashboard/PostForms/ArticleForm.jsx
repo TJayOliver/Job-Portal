@@ -1,6 +1,6 @@
 import axios from "axios";
 import FormInputs from "../formInputs";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import SubmittedBox from "../submittedBox";
 import LeftPanel from "../Panels/LeftPanel";
 import FormsDashboardHead from "../DashboardHeaders/FormsDashboardHead";
@@ -27,12 +27,11 @@ const ArticleForm = () =>{
         e.preventDefault();
 
         const newformData = new FormData();
-        for(const key in aform){
+        for (const key in aform) {
             newformData.append(key, aform[key])
         }
-        try{
+        try {
             const response = await axios.post('http://localhost:4040/article/create',newformData, {headers :{'Content-Type': 'multipart/form-data'}})
-
             const data = response.data.message;
             setMessage(data)
             setSubmitted(true);
@@ -41,7 +40,7 @@ const ArticleForm = () =>{
                 window.location.reload();
             }, 2000); 
 
-        }catch(error){
+        } catch (error) {
             setMessage(error.message)
         }  
     }
