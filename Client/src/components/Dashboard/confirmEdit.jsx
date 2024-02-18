@@ -1,21 +1,32 @@
 import { FiAlertTriangle } from "react-icons/fi";
 import { CgClose } from "react-icons/cg";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 
-const ConfirmEdit = ({Cancel, ID, route, title}) =>{
+const ConfirmEdit = ({ ID, title, checker}) =>{
     const id = ID;
-    
-    return(
-        <div className=" fixed w-full h-full bg-[#f65a5a33] z-50 grid place-content-center p-2">
+    const boxClass = "fixed w-full h-full bg-[#f65a5a33] z-50 grid place-content-center p-2"
+    const [display, setDisplay] = useState(false);
 
+    useEffect( () => {
+        setDisplay(true)
+    }, [ID])
+
+    const handleDisplay = () => {
+        setDisplay(false)
+    }
+    
+
+
+    const [editA, setEditA] = useState(false);
+
+    return(
+        <div className={display ? boxClass : 'hidden'}>
             {/* edit Box */}
             <div className={`bg-white drop-shadow-md h-96 md:h-64 md:w-[35rem] rounded-md flex flex-col items-center justify-center p-4 gap-4 relative duration-300 ease-in z-50` }>
 
                 {/* Close Button */}
-                <div onClick={Cancel} className="  h-[2rem] w-8 bg-gray-200 rounded-full items-center flex justify-center text-center absolute right-2 top-2 p-2 cursor-pointer ">
-
+                <div onClick={handleDisplay} className="  h-[2rem] w-8 bg-gray-200 rounded-full items-center flex justify-center text-center absolute right-2 top-2 p-2 cursor-pointer ">
                     <CgClose className="absolute -right-0.5 top-0 p-2 text-4xl text-center text-gray-600 cursor-pointer" /> 
-
                 </div>
                
                 {/* Caution */}
@@ -29,12 +40,11 @@ const ConfirmEdit = ({Cancel, ID, route, title}) =>{
 
                 {/* buttons */}
                 <div className=" w-full flex flex-col md:flex md:flex-row gap-2">
-                    <button onClick={Cancel} className=" border border-black h-10 p-2 rounded-md w-full hover:bg-cyan-600 hover:text-white hover:border-none hover:duration-300 hover:ease-in">CANCEL</button> 
+                    <button onClick={handleDisplay} className=" border border-black h-10 p-2 rounded-md w-full hover:bg-cyan-600 hover:text-white hover:border-none hover:duration-300 hover:ease-in">CANCEL</button> 
 
-                    <Link to={`/form/${route}/edit/${id}`} className=" border border-black h-10 p-2 rounded-md w-full hover:bg-teal-600 hover:text-white hover:border-none hover:duration-300 hover:ease-in text-center">EDIT</Link> 
+                    <div className=" border border-black h-10 p-2 rounded-md w-full hover:bg-teal-600 hover:text-white hover:border-none hover:duration-300 hover:ease-in text-center">EDIT</div> 
                 </div>
             </div>
-
         </div>
     );
 };

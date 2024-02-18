@@ -23,6 +23,8 @@ import ScholarshipDescription from './pages/scholarshipDescription.jsx';
 import ScholarshipCategory from './pages/scholarshipCategory.jsx';
 
 import SubscribersList from './components/Dashboard/subscriberList/subscribersList.jsx';
+import Dashboard from './pages/administrator/dashboard.jsx';
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -49,6 +51,7 @@ const router = createBrowserRouter(
       </Route>
 
       <Route path='/dashboard' element={<Dash />} />
+      <Route path='/dash' element={<Dashboard />} />
 
       <Route path='/form/article' element={<ArticleForm />} />
       <Route path='/form/article/edit/:id' element={<ArticleEditForm />} />

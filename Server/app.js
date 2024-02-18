@@ -3,6 +3,7 @@ import cors from 'cors';
 import bodyparser from 'body-parser';
 import helmet from 'helmet';
 import morgan from 'morgan';
+import cookieParser from 'cookie-parser'
 
 import articleRouter from './src/article/router/articleRouter.js';
 import administratorRouter from './src/admin/router/adminstratorRouter.js';
@@ -16,10 +17,11 @@ const app = express();
 
 const PORT = process.env.PORT || '4040';
 
-app.use(cors());
+app.use(cors( { origin : ['http://localhost:5173'], credentials : true } ));
 app.use(helmet());
 app.use(morgan('dev'));
 
+app.use(cookieParser())
 app.use(bodyparser.json())
 app.use(bodyparser.urlencoded({extended:true}));
 

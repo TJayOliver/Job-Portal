@@ -1,7 +1,7 @@
 const FormInputs = ({label,htmlFor,type, id, name, placeholder, accept, value, onChange}) =>{
     return(
         <div className=" flex flex-col gap-1">
-            <label htmlFor={htmlFor} className=" text-xl">{label}</label>
+            <label htmlFor={htmlFor} className=" text-md">{label}</label>
             <input 
             type={type} 
             id={id} 

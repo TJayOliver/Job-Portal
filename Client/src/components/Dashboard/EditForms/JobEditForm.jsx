@@ -52,213 +52,151 @@ const JobEditForm = () =>{
     },[])
 
     return(
-        <main>
-            {/* Left Panel */}
-            <LeftPanel />
+        <section>
+            <form className=' p-3 flex flex-col gap-4 text-md' onSubmit={submit}>
+                
+                <FormInputs 
+                    label='Name of Company' 
+                    htmlFor='company'
+                    type='text'
+                    id='company'
+                    name='company'
+                    value={gform.company}
+                    onChange={formValues}
+                    placeholder='e.g. Kwaata Industries Ltd'
+                />
 
-            <section className=" md:ml-64 relative">
+                <FormInputs 
+                    label='Salary' 
+                    htmlFor='salary'
+                    type='text'
+                    id='salary'
+                    name='salary'
+                    value={gform.salary}
+                    onChange={formValues}
+                    placeholder='e.g. 500 or Confidential'
+                />
 
-                {submitted && <SubmittedBox successMessage='Job Opportunity Submitted' />}
+                <FormInputs 
+                    label='Position' 
+                    htmlFor='position'
+                    type='text'
+                    id='position'
+                    name='position'
+                    value={gform.position}
+                    onChange={formValues}
+                    placeholder='e.g. General Manager'
+                />
 
-                <FormsDashboardHead title='Jobs Edit Form' />
+                <FormInputs 
+                    label='Company Website' 
+                    htmlFor='website'
+                    type='text'
+                    id='website'
+                    name='website'
+                    value={gform.website}
+                    onChange={formValues}
+                    placeholder='e.g. www.cocacola.com'
+                />
+                
+                <div className=" flex flex-col gap-1">
+                    <label htmlFor='featured'>Featured</label>
+                    <select 
+                    id='featured' 
+                    name='featured' 
+                    value={gform.featured}
+                    onChange={formValues}
+                    className="bg-transparent border-[1px] border-black p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" required>
+                        <option value='' disabled>-- Select Featured -- </option>
+                        <option value='true' >Yes</option>
+                        <option value='false' >No</option>
+                    </select>                 
+                </div>
 
-                <form className=' p-3 flex flex-col gap-4' onSubmit={submit}>
-                    
-                    <FormInputs 
-                        label='Name of Company' 
-                        htmlFor='company'
-                        type='text'
-                        id='company'
-                        name='company'
-                        value={gform.company}
-                        onChange={formValues}
-                        placeholder='e.g. Kwaata Industries Ltd'
+                <div className=" flex flex-col gap-1">
+                    <label htmlFor='duration'>Contract Type</label>
+                    <select 
+                    id='duration' 
+                    name='duration' 
+                    value={gform.duration}
+                    onChange={formValues}
+                    className="bg-transparent border-[1px] border-black p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" required>
+                        <option value='' disabled >-- Select Job Contract Type -- </option>
+                        <option value='Full Time'>Full Time</option>
+                        <option value='Part Time'>Part Time</option>
+                    </select>                 
+                </div>
+
+                <div className=" flex flex-col gap-1">
+                    <label htmlFor='location'>Select Location</label>
+                    <select 
+                    id='location' 
+                    name='location' 
+                    value={gform.location}
+                    onChange={formValues}
+                    className="bg-transparent border-[1px] border-black p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" required>
+                        <option value='' disabled>-- Select Country -- </option>
+                        {countries.map((country, id)=>(<option value={country} key={id}>{country}</option>))}
+                    </select>                 
+                </div>
+
+                <div className=" flex flex-col gap-1">
+                    <label htmlFor='jobcategory'>Select Job Category</label>
+                    <select 
+                    id='jobcategory' 
+                    name='jobcategory' 
+                    value={gform.jobcategory}
+                    onChange={formValues}
+                    className="bg-transparent border-[1px] border-black p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" required>
+                        <option value='' disabled>-- Select Job Category -- </option>
+                        {category.map((cat,id)=>(<option key={id} value={cat.categoriesname}>{cat.categoriesname}</option>))}
+                    </select>                 
+                </div>
+
+                <div>
+                    <p>Responsibility</p>
+                    <ReactQuill
+                        className=" border-black border-[1px] rounded-lg"
+                        theme="snow"
+                        value={responsibility}
+                        onChange={setResponsibility}
                     />
+                </div>
 
-                    <FormInputs 
-                        label='Salary' 
-                        htmlFor='salary'
-                        type='text'
-                        id='salary'
-                        name='salary'
-                        value={gform.salary}
-                        onChange={formValues}
-                        placeholder='e.g. 500 or Confidential'
+                <div>
+                    <p>Requirements</p>
+                    <ReactQuill
+                        className=" border-black border-[1px] rounded-lg"
+                        theme="snow"
+                        value={requirements}
+                        onChange={setRequirements}
                     />
+                </div>
 
-                    <FormInputs 
-                        label='Position' 
-                        htmlFor='position'
-                        type='text'
-                        id='position'
-                        name='position'
-                        value={gform.position}
-                        onChange={formValues}
-                        placeholder='e.g. General Manager'
+                <div>
+                    <p>Other Information</p>
+                    <ReactQuill
+                        className=" border-black border-[1px] rounded-lg"
+                        theme="snow"
+                        value={otherinformation}
+                        onChange={setOtherinformation}
                     />
+                </div>
 
-                    <FormInputs 
-                        label='Location' 
-                        htmlFor='location'
-                        type='text'
-                        id='location'
-                        name='location'
-                        value={gform.location}
-                        onChange={formValues}
-                        placeholder='e.g. New Weija, Accra'
-                    />
+                <FormInputs 
+                    label='Upload Job Flyer' 
+                    htmlFor='image'
+                    type='file'
+                    id='image'
+                    name='image'
+                    onChange={formFiles}
+                    accept='image/*'
+                />
 
-                    <FormInputs 
-                        label='Company Website' 
-                        htmlFor='website'
-                        type='text'
-                        id='website'
-                        name='website'
-                        value={gform.website}
-                        onChange={formValues}
-                        placeholder='e.g. www.cocacola.com'
-                    />
+                <button className="bg-teal-600 p-2 rounded-md text-white hover:bg-teal-500">POST</button>
 
-                    <div className=" flex flex-col gap-1">
-                        <label htmlFor='duration' className=" text-xl">Contract Type</label>
-                        <select 
-                        id='duration' 
-                        name='duration' 
-                        value={gform.duration}
-                        onChange={formValues}
-                        className="bg-transparent border-[1px] border-blue-600 p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" required>
-                            <option value='' disabled >-- Select Job Contract Type -- </option>
-                            <option value='Full Time'>Full Time</option>
-                            <option value='Part Time'>Part Time</option>
-                        </select>                 
-                    </div>
-
-                    <div className=" flex flex-col gap-1">
-                        <label htmlFor='country' className=" text-xl">Select Host Country</label>
-                        <select 
-                        id='country' 
-                        name='country' 
-                        value={gform.country}
-                        onChange={formValues}
-                        className="bg-transparent border-[1px] border-blue-600 p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" required>
-                            <option value='' disabled>-- Select Country -- </option>
-                            {countries.map((country, id)=>(<option value={country} key={id}>{country}</option>))}
-                        </select>                 
-                    </div>
-
-                    <div className=" flex flex-col gap-1">
-                        <label htmlFor='featured' className=" text-xl">Featured</label>
-                        <select 
-                        id='featured' 
-                        name='featured' 
-                        value={gform.featured}
-                        onChange={formValues}
-                        className="bg-transparent border-[1px] border-blue-600 p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" required>
-                            <option value='' disabled>-- Select Featured -- </option>
-                            <option value='true' >Yes</option>
-                            <option value='false' >No</option>
-                        </select>                 
-                    </div>
-
-                    <div className=" flex flex-col gap-1">
-                        <label htmlFor='categoriesname' className=" text-xl">Select Job Category</label>
-                        <select 
-                        id='categoriesname' 
-                        name='categoriesname' 
-                        value={gform.categoriesname}
-                        onChange={formValues}
-                        className="bg-transparent border-[1px] border-blue-600 p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" required>
-                            <option value='' disabled>-- Select Job Category -- </option>
-                            {cData.map((cat,id)=>(<option key={id} value={cat.categoriesname}>{cat.categoriesname}</option>))}
-                        </select>                 
-                    </div>
-                    
-                    <FormTextarea
-                        label='Minimum Qualification'
-                        htmlFor='minimumqualification'
-                        id='minimumqualification'
-                        name='minimumqualification'
-                        value={gform.minimumqualification}
-                        onChange={formValues}
-                        placeholder='e.g. Bachelors Degree in Accounting'
-                    />
-                    
-                    <FormTextarea
-                        label='Experience Level'
-                        htmlFor='experiencelevel'
-                        id='experiencelevel'
-                        name='experiencelevel'
-                        value={gform.experiencelevel}
-                        onChange={formValues}
-                        placeholder='experience level'
-                    />
-                    
-                    <FormTextarea
-                        label='Experience Length'
-                        htmlFor='experiencelength'
-                        id='experiencelength'
-                        name='experiencelength'
-                        value={gform.experiencelength}
-                        onChange={formValues}
-                        placeholder='e.g. Three - Five experience'
-                    />
-                    
-                    <FormTextarea
-                        label='Job Responsibilities'
-                        htmlFor='responsibilities'
-                        id='responsibilities'
-                        name='responsibilities'
-                        value={gform.responsibilities}
-                        onChange={formValues}
-                        placeholder='Job Responsibilies'
-                    />
-                    
-                    <FormTextarea
-                        label='Job Requirements'
-                        htmlFor='requirements'
-                        id='requirements'
-                        name='requirements'
-                        value={gform.requirements}
-                        onChange={formValues}
-                        placeholder='Job Requirements'
-                    />
-
-                    <FormTextarea
-                        label='Other Information'
-                        htmlFor='otherinformation'
-                        id='otherinformation'
-                        name='otherinformation'
-                        value={gform.otherinformation}
-                        onChange={formValues}
-                        placeholder='Other Relevant Information'
-                    />
-
-                    <FormTextarea
-                        label='How to Apply'
-                        htmlFor='apply'
-                        id='apply'
-                        name='apply'
-                        value={gform.apply}
-                        onChange={formValues}
-                        placeholder='e.g. Apply through...'
-                    />
-
-                    <FormInputs 
-                        label='Upload Job Flyer' 
-                        htmlFor='image'
-                        type='file'
-                        id='image'
-                        name='image'
-                        onChange={formFiles}
-                        accept='image/*'
-                    />
-
-                    <button className=" text-xl bg-blue-600 p-2 rounded-md text-white hover:bg-blue-500">POST</button>
-
-                </form>
-
-            </section>
-        </main>
+            </form>
+        </section>
     )
 }
 

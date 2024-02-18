@@ -44,15 +44,21 @@ class AdministratorService {
         }
     }
 
-    async signInAdminService ({username, password}) {
+    async signInAdminService (adminDetails) {
         try {
-            const checkAdminUsername = await this.model.getAdminByUsernameModel(username);
+            const checkAdminUsername = await this.model.getAdminByUsernameModel(adminDetails.username);
+            if (checkAdminUsername.length === 0) return { error : 'Incorrect Username or Password'} 
             const user = checkAdminUsername[0];
-            if (!user.username) return {error : 'Incorrect Username or Password'};
-            const passwordMatch = await bcrypt.compare(password, user.password);
-            if (!passwordMatch) return {error : 'Incorrect Username or Password'};
-            const token = jwt.sign({ userID : user.id, username : user.name }, process.env.JWTSECRETKEY, { expiresIn : '1h' });
-            return {token};
+            if (!user.username) return { error : 'Incorrect Username or Password' };
+            const passwordMatch = await bcrypt.compare(adminDetails.password, user.password);
+            if (!passwordMatch) return { error : 'Incorrect Username or Password' };
+            const token = jwt.sign({ 
+                userID : user.id, 
+                username : user.name }, 
+                process.env.JWTSECRETKEY, 
+                { expiresIn : '1h' }
+            );
+            return { token };
         } catch (error) {
             console.error('service:', error.message);
         }

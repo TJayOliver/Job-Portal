@@ -1,9 +1,10 @@
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'
 import { useState } from 'react';
-import logo from '../../assets/logo.png'
-import {useNavigate} from 'react-router-dom'
 
 const Administrator = () =>{
+    const navigate = useNavigate();
+
     const [credentials, setCredentials] = useState({username:"", password:""});
     const [message, setMessage] = useState('')
 
@@ -12,11 +13,18 @@ const Administrator = () =>{
         setCredentials(prev =>({...prev, [name] :value}))
     }
 
-    const submit = (e) =>{
+    axios.defaults.withCredentials = true;
+
+    const submit = async (e) =>{
         e.preventDefault();
-        axios.post('http://localhost:4040/admin/signin', credentials)
-        .then(response => setMessage(response.data.message))
-        .catch(error => console.error(error.message))
+        try {
+            const response = await axios.post('http://localhost:4040/admin/signin', credentials);
+            setMessage(response.data.message)
+            navigate('/dashboard')
+        } catch (error) {
+            setMessage(error.response.data.message)
+            console.error('authentication failed',error.message)
+        }
     }
 
     return(
@@ -29,7 +37,7 @@ const Administrator = () =>{
                         <small>@Administrator</small>
                     </div>
 
-                    <form className='flex flex-col gap-8'>
+                    <form onSubmit={ submit } className='flex flex-col gap-8'>
                         <div className=' flex flex-col gap-4'>
                             <label className='font-medium'>Username</label>
                             <input 
@@ -51,6 +59,8 @@ const Administrator = () =>{
                                 className='border-[0.5px] bg-gray-50 focus:bg-white outline-none rounded-md px-2 h-10'
                             />
                         </div>
+
+                        <small className=' text-red-600'>{ message }</small>
 
                         <button className='rounded-md h-10 px-2 bg-blue-500 text-white font-medium hover:bg-blue-600'>Sign In</button>
                     </form>

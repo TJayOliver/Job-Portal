@@ -1,9 +1,6 @@
 import axios from "axios";
 import FormInputs from "../formInputs";
 import { useState } from "react";
-import SubmittedBox from "../submittedBox";
-import LeftPanel from "../Panels/LeftPanel";
-import FormsDashboardHead from "../DashboardHeaders/FormsDashboardHead";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { modules, formats } from "../../reactquillmodules"; 
@@ -13,7 +10,8 @@ const ArticleForm = () =>{
     const [aform, setAform] = useState({image:null,title:"",post:"",mainfeatured:false,featured:false,mustread:false, category:""})
 
     const [submitted, setSubmitted] = useState(false);
-
+    const [message, setMessage] = useState('')
+    
     const formValues = (e) =>{
         const {name, value, type, checked} = e.target;
         setAform(prev=>({...prev, [name] : type === 'checkbox' ? checked : value}))
@@ -44,114 +42,105 @@ const ArticleForm = () =>{
             setMessage(error.message)
         }  
     }
-    const [message, setMessage] = useState('')
+
+
     return(
-        <main>
-            {/* Left Panel */}
-            <LeftPanel />
-            
-            <section className=" md:ml-64 relative">
-
-                {submitted && <SubmittedBox successMessage={message} /> }
-
-                <FormsDashboardHead title='Article Form' />
+        <section className=" relative">
+            <form className=' w-full p-3 flex flex-col gap-4 text-md' onSubmit={submit}>  
                 
-                <form className=' w-full p-3 flex flex-col gap-4 ' onSubmit={submit}>  
-                    
-                    <FormInputs 
-                        label='Title' 
-                        htmlFor='title'
-                        type='text'
-                        id='title'
-                        name='title'
-                        value={aform.title}
-                        onChange={formValues}
-                        placeholder='e.g. How to write a Personal Statement'
-                    />
+                <FormInputs 
+                    label='Title' 
+                    htmlFor='title'
+                    type='text'
+                    id='title'
+                    name='title'
+                    value={aform.title}
+                    onChange={formValues}
+                    placeholder='e.g. How to write a Personal Statement'
+                />
 
-                    <div>
-                        <p className="text-xl">Content</p>
-                        <ReactQuill
-                            className="text-xl border-black border-[1px] rounded-lg"
-                            theme="snow"
-                            modules={modules}
-                            formats={formats}
-                            value={content} 
-                            onChange={setContent}
+                <div>
+                    <p>Content</p>
+                    <ReactQuill
+                        className="text-xl border-black border-[1px] rounded-lg"
+                        theme="snow"
+                        modules={modules}
+                        formats={formats}
+                        value={content} 
+                        onChange={setContent}
+                    />
+                </div>
+
+                <div className=" flex flex-col gap-1">
+                    <label htmlFor='category'>Category</label>
+                    <select 
+                    id='category' 
+                    name='category' 
+                    value={aform.category}
+                    onChange={formValues}
+                    className="bg-transparent border-[1px] border-black p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" required>
+                        <option value='' disabled>-- Select Category -- </option>
+                        <option value='Job' >Job</option>
+                        <option value='Scholarship' >Scholarship</option>
+                        <option value='Internship' >Internship</option>
+                        <option value='Business' >Business</option>
+                        <option value='Other' >Other</option>
+                    </select>                 
+                </div>
+
+                {/* checkbox */}
+                <div className=" flex gap-4 items-center">
+                    {/* main featured */}
+                    <div className="flex items-center gap-1">
+                        <label htmlFor='mainfeatured'>Main Featured</label>
+                        <input 
+                            className=" accent-teal-600"
+                            type='checkbox'
+                            id='mainfeatured'
+                            name='mainfeatured'
+                            onChange={formValues}
                         />
                     </div>
 
-                    <div className=" flex flex-col gap-1">
-                        <label htmlFor='category' className=" text-xl">Category</label>
-                        <select 
-                        id='category' 
-                        name='category' 
-                        value={aform.category}
-                        onChange={formValues}
-                        className="bg-transparent border-[1px] border-blue-600 p-2 w-full outline-teal-600 focus-within:bg-white rounded-md" required>
-                            <option value='' disabled>-- Select Category -- </option>
-                            <option value='Job' >Job</option>
-                            <option value='Scholarship' >Scholarship</option>
-                            <option value='Internship' >Internship</option>
-                            <option value='Business' >Business</option>
-                            <option value='Other' >Other</option>
-                        </select>                 
+                    {/* featured */}
+                    <div className="flex items-center gap-1">
+                        <label htmlFor='featured'>Featured</label>
+                        <input 
+                            className=" accent-teal-600"
+                            type='checkbox'
+                            id='featured'
+                            name='featured'
+                            onChange={formValues}
+                        />
                     </div>
 
-                    {/* checkbox */}
-                    <div className=" flex gap-4 items-center">
-                        {/* main featured */}
-                        <div className="flex items-center gap-1">
-                            <label htmlFor='mainfeatured' className=" text-lg">Main Featured</label>
-                            <input 
-                                type='checkbox'
-                                id='mainfeatured'
-                                name='mainfeatured'
-                                onChange={formValues}
-                            />
-                        </div>
-
-                        {/* featured */}
-                        <div className="flex items-center gap-1">
-                            <label htmlFor='featured' className=" text-lg">Featured</label>
-                            <input 
-                                type='checkbox'
-                                id='featured'
-                                name='featured'
-                                onChange={formValues}
-                            />
-                        </div>
-
-                        {/* must read */}
-                        <div className="flex items-center gap-1">
-                            <label htmlFor='mustread' className=" text-lg">Must Read</label>
-                            <input 
-                                type='checkbox'
-                                id='mustread'
-                                name='mustread'
-                                onChange={formValues}
-                            />      
-                        </div>
+                    {/* must read */}
+                    <div className="flex items-center gap-1">
+                        <label htmlFor='mustread'>Must Read</label>
+                        <input 
+                            className=" accent-teal-600"
+                            type='checkbox'
+                            id='mustread'
+                            name='mustread'
+                            onChange={formValues}
+                        />      
                     </div>
+                </div>
 
-                    <FormInputs 
-                        label='Upload Article Flyer' 
-                        htmlFor='image'
-                        type='file'
-                        id='image'
-                        name='image'
-                        onChange={formFiles}
-                        accept='.jpg, .jpeg, .png, .JPG'
-                    />
+                <FormInputs 
+                    label='Upload Article Flyer' 
+                    htmlFor='image'
+                    type='file'
+                    id='image'
+                    name='image'
+                    onChange={formFiles}
+                    accept='.jpg, .jpeg, .png, .JPG'
+                />
 
-                    <button className=" text-xl p-2 bg-[#004242] hover:bg-[#1d3d3d] rounded-md text-white w-full">POST</button>
-                    
-                </form>
+                <button className=" p-2 bg-teal-600 rounded-md text-white w-full">POST</button>
                 
-                
-            </section>
-        
-        </main>
+            </form>
+        </section>
     )
 }
 

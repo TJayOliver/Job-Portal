@@ -28,4 +28,7 @@ administratorRouter.delete('/admin/delete/:id',
     async (req,res) => administratorController.deleteAdmin(req, res)
 );
 
+administratorRouter.get('/admin/dashboard', verifyToken,
+    async (req,res) => administratorController.dashboard(req, res)
+);
 export default administratorRouter;

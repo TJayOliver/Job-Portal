@@ -1,10 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import FormInputs from "../formInputs";
-import SubmittedBox from "../submittedBox";
-import LeftPanel from "../Panels/LeftPanel";
-import FormsDashboardHead from "../DashboardHeaders/FormsDashboardHead";
-
 
 const CategoriesForm = () =>{
     const [cForm, setCForm] = useState({categoryname:""});
@@ -39,37 +35,21 @@ const CategoriesForm = () =>{
     }, []);
 
     return(
-        
-        <main>
-            {/* Left Panel */}
-            <LeftPanel />
-
-            <section className=" md:ml-64 relative">
-
-                {submitted && <SubmittedBox successMessage={message} /> }
-
-                <FormsDashboardHead title='Categories Form' />
-
-                <form className=' p-3 flex flex-col gap-4' onSubmit={submit}>
-
-                    <FormInputs 
-                    label='Name of Job Category' 
-                    htmlFor='categoryname'
-                    type='text'
-                    id='categoryname'
-                    name='categoryname'
-                    value={cForm.categoryname}
-                    onChange={formValues}
-                    placeholder='e.g. Name of Job Category'
-                    />
-
-                    <button className=" text-xl bg-blue-600 p-2 rounded-md text-white hover:bg-blue-500">ADD</button>
-
-                </form>
-
-            </section>
-
-        </main>
+        <section className=" relative" >
+            <form className=' p-3 flex flex-col gap-4 texy-md' onSubmit={submit}>
+                <FormInputs 
+                label='Name of Job Category' 
+                htmlFor='categoryname'
+                type='text'
+                id='categoryname'
+                name='categoryname'
+                value={cForm.categoryname}
+                onChange={formValues}
+                placeholder='e.g. Name of Job Category'
+                />
+                <button className=" bg-teal-600 p-2 rounded-md text-white hover:bg-teah-500">ADD</button>
+            </form>
+        </section>
     )
 }
 
